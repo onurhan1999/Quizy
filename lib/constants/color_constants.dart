@@ -6,5 +6,6 @@ class ColorConstants{
   static Color mainOrange=const Color(0xffF6B939);
 
   static Color deepPurple=const Color(0xffBE9FE1);
+  static Color logoRed=const Color(0xffF64A4A);
 
 }

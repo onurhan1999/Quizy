@@ -36,18 +36,24 @@ dependencies:
   cupertino_icons: ^1.0.2
   fluttertoast: ^8.0.9
   firebase_auth: ^3.3.11
-
+  animated_splash_screen: ^1.2.0
+  flutter_native_splash: ^2.1.6
+  flutter_lints: ^1.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_native_splash:
+  image: assets/images/logo.png
+  color: "#F64A4A"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^1.0.0
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
