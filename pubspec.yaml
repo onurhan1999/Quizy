@@ -39,6 +39,7 @@ dependencies:
   animated_splash_screen: ^1.2.0
   flutter_native_splash: ^2.1.6
   flutter_lints: ^1.0.0
+  percent_indicator: ^4.2.1
 
 dev_dependencies:
   flutter_test:
