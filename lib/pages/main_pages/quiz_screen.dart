@@ -53,81 +53,90 @@ class QuizScreenMain extends StatelessWidget {
                 width: context.dynamicWidth(1),
                 height: context.dynamicHeight(0.3),
                 color: Colors.grey,
+                child: Text("safhasfhashfa"),
               ),
               SizedBox(
                 height: context.dynamicHeight(0.06),
               ),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(35.0),
-                ),
-                child: InkWell(
-                  onTap: () {},
-                  child: SizedBox(
-                    height: 40,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 40),
-                      child: Row(
-                        children: const [Text("A-) DENEME")],
+              Expanded(
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(35.0),
+                  ),
+                  child: InkWell(
+                    onTap: () {},
+                    child: SizedBox(
+                      height: 40,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 40),
+                        child: Row(
+                          children: const [Text("A-) DENEME")],
+                        ),
                       ),
                     ),
                   ),
+                  elevation: 5,
                 ),
-                elevation: 5,
               ),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(35.0),
-                ),
-                child: InkWell(
-                  onTap: () {},
-                  child: SizedBox(
-                    height: 40,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 40),
-                      child: Row(
-                        children: const [Text("A-) DENEME")],
+              Expanded(
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(35.0),
+                  ),
+                  child: InkWell(
+                    onTap: () {},
+                    child: SizedBox(
+                      height: 40,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 40),
+                        child: Row(
+                          children: const [Text("A-) DENEME")],
+                        ),
                       ),
                     ),
                   ),
+                  elevation: 5,
                 ),
-                elevation: 5,
               ),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(35.0),
-                ),
-                child: InkWell(
-                  onTap: () {},
-                  child: SizedBox(
-                    height: 40,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 40),
-                      child: Row(
-                        children: const [Text("A-) DENEME")],
+              Expanded(
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(35.0),
+                  ),
+                  child: InkWell(
+                    onTap: () {},
+                    child: SizedBox(
+                      height: 40,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 40),
+                        child: Row(
+                          children: const [Text("A-) DENEME")],
+                        ),
                       ),
                     ),
                   ),
+                  elevation: 5,
                 ),
-                elevation: 5,
               ),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(35.0),
-                ),
-                child: InkWell(
-                  onTap: () {},
-                  child: SizedBox(
-                    height: 40,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 40),
-                      child: Row(
-                        children: const [Text("D-) DENEME")],
+              Expanded(
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(35.0),
+                  ),
+                  child: InkWell(
+                    onTap: () {},
+                    child: SizedBox(
+                      height: 40,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 40),
+                        child: Row(
+                          children: const [Text("D-) DENEME")],
+                        ),
                       ),
                     ),
                   ),
+                  elevation: 5,
                 ),
-                elevation: 5,
               ),
               const SizedBox(height: 30),
               Card(
@@ -145,9 +154,14 @@ class QuizScreenMain extends StatelessWidget {
                       action: SnackBarAction(
                         textColor: Colors.amber,
                         label: 'Tamam',
+
                         onPressed: () {
                           // Some code to undo the change.
                         },
+
+                      ),
+                      shape:  const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25)),
                       ),
                     );
 

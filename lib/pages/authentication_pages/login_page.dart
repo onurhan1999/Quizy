@@ -17,6 +17,7 @@ class _LoginPageState extends State<LoginPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
           decoration:  DecorationProperties.backgroundDecoration,
           child: Padding(
