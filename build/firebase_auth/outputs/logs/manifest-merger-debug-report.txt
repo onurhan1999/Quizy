@@ -1,0 +1,31 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml:1:1-9:12
+INJECTED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml:1:1-9:12
+INJECTED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml:1:1-9:12
+	package
+		ADDED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml:2:3-45
+		INJECTED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml
+		INJECTED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml:1:11-69
+application
+ADDED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml:3:5-8:19
+service#com.google.firebase.components.ComponentDiscoveryService
+ADDED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml:4:9-7:19
+	android:name
+		ADDED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml:4:18-89
+meta-data#com.google.firebase.components:io.flutter.plugins.firebase.auth.FlutterFirebaseAuthRegistrar
+ADDED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml:5:13-6:92
+	android:value
+		ADDED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml:6:24-89
+	android:name
+		ADDED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml:5:24-131
+uses-sdk
+INJECTED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml
+INJECTED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml
+		ADDED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml
+		INJECTED from /home/cheet0/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.20/android/src/main/AndroidManifest.xml

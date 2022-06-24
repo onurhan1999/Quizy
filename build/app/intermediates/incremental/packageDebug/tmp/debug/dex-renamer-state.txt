@@ -1,0 +1,4 @@
+#Thu Jun 23 13:21:44 TRT 2022
+base.0=/home/cheet0/Documents/dev/testPush/quizdeneme/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "268377042819",
+    "project_id": "quiz-app-8ef0e",
+    "storage_bucket": "quiz-app-8ef0e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:268377042819:android:aa9a051e2d3def9eb450b6",
+        "android_client_info": {
+          "package_name": "com.cookca.quizapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "268377042819-a44lv50v2one3g5h239mlk221167vaho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZi2LKv3F_haxlVaAIPFtmNpb2L6_HBbA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "268377042819-a44lv50v2one3g5h239mlk221167vaho.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "268377042819-ekoprlsps9mieup7aafjrv4g124a7kte.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.quizlen.quizlen"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:268377042819:android:59a7a874ec28a1acb450b6",
+        "android_client_info": {
+          "package_name": "com.quizlen.quizlen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "268377042819-a44lv50v2one3g5h239mlk221167vaho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZi2LKv3F_haxlVaAIPFtmNpb2L6_HBbA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "268377042819-a44lv50v2one3g5h239mlk221167vaho.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "268377042819-ekoprlsps9mieup7aafjrv4g124a7kte.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.quizlen.quizlen"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
