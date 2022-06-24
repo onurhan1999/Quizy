@@ -1,8 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:quizlen/components/decoration.dart';
 import 'package:quizlen/components/reusable_widgets.dart';
 import 'package:quizlen/constants/color_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
+
+import '../../firebase_options.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,8 +16,28 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  
+  late final TextEditingController _email;
+  late final TextEditingController _password;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _email=TextEditingController();
+    _password=TextEditingController();
+    super.initState();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
+
+  
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -37,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                 Flexible(
                   flex: 15,
                   child: TextFormField(
+                    controller: _email,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
@@ -54,6 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                 Flexible(
                   flex: 15,
                   child: TextFormField(
+                    controller: _password,
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
                     decoration: InputDecoration(
@@ -96,7 +122,14 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(100),
                         color: ColorConstants.logoRed),
                     child: MaterialButton(
-                      onPressed: () {},
+                      onPressed: () async{
+                        await Firebase.initializeApp(
+                        options: DefaultFirebaseOptions.currentPlatform,);
+                        final email=_email.text;
+                        final password=_password.text;
+                        final userCredntial=await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                        print(userCredntial);
+                      },
                       child: const Text(
                         "Giriş Yap",
                         style: TextStyle(fontSize: 25, color: Colors.white),
@@ -159,7 +192,14 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(color: Colors.black.withOpacity(0.7)),
                       ),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await Firebase.initializeApp(
+                        options: DefaultFirebaseOptions.currentPlatform,);
+                        final email=_email.text;
+                        final password=_password.text;
+                        final userCredntial=await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+                        print(userCredntial);
+                          },
                           child:  Text("Kaydolun",style: TextStyle(color: ColorConstants.logoRed),))
                     ],
                   ),

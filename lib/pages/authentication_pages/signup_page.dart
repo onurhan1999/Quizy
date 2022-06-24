@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:quizlen/components/decoration.dart';
 import 'package:quizlen/constants/color_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
+import '../../firebase_options.dart';
+
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -11,6 +15,25 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+
+  late final TextEditingController _email;
+  late final TextEditingController _password;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _email=TextEditingController();
+    _password=TextEditingController();
+    super.initState();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -54,6 +77,7 @@ class _SignupPageState extends State<SignupPage> {
                 Flexible(
                   flex: 15,
                   child: TextFormField(
+                    controller: _email,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
@@ -71,6 +95,7 @@ class _SignupPageState extends State<SignupPage> {
                 Flexible(
                   flex: 15,
                   child: TextFormField(
+                    controller: _password,
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
                     decoration: InputDecoration(
@@ -88,23 +113,7 @@ class _SignupPageState extends State<SignupPage> {
                 const Spacer(
                   flex: 5,
                 ),
-                Flexible(
-                  flex: 15,
-                  child: TextFormField(
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: ColorConstants.deepPurple, width: 2.5),
-                        borderRadius: const BorderRadius.all(Radius.circular(30)),
-                      ),
-                      labelText: "Şifre giriniz",
-                      prefixIcon: Icon(Icons.lock),
-                      suffixIcon: Icon(Icons.remove_red_eye),
-                    ),
-                  ),
-                ),
+                
                 const Spacer(
                   flex: 5,
                 ),
@@ -117,7 +126,14 @@ class _SignupPageState extends State<SignupPage> {
                         borderRadius: BorderRadius.circular(100),
                         color: ColorConstants.logoRed),
                     child: MaterialButton(
-                      onPressed: () {},
+                      onPressed: ()async {
+                        await Firebase.initializeApp(
+                        options: DefaultFirebaseOptions.currentPlatform,);
+                        final email=_email.text;
+                        final password=_password.text;
+                        final userCredntial=await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+                        print(userCredntial);
+                      },
                       child: const Text(
                         "Kayıt Ol ",
                         style: TextStyle(fontSize: 25, color: Colors.white),

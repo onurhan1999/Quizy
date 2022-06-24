@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "624499135514",
+    "project_id": "cookcaquiz",
+    "storage_bucket": "cookcaquiz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:624499135514:android:35f3a604909e1518ebeda3",
+        "android_client_info": {
+          "package_name": "com.quizlen.quizlen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "624499135514-gkqgl3t4ug24vs1cpqjcvbdh7f34psaq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOKYhAki1htJR38EKY87pgFRbnbSFM6BU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "624499135514-gkqgl3t4ug24vs1cpqjcvbdh7f34psaq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "624499135514-925h9tqqtg1fl9grrk5qq1lj31ebqfmj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.quizlen.quizlen"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
