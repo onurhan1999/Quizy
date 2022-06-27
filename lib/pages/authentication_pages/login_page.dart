@@ -1,13 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:quizlen/components/decoration.dart';
 import 'package:quizlen/constants/color_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
 import 'package:quizlen/pages/authentication_pages/signup_page.dart';
 import 'package:quizlen/services/AuthenticationService.dart';
+import 'package:quizlen/services/UserServices.dart';
 
-import '../../firebase_options.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -131,11 +129,33 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () async{
                         final email=_email.text.trim();
                         final password=_password.text.trim();
-                        final userCredential = _authService.Login(email, password);
-                        print(userCredential);
+                        _authService.Login(email, password);
                       },
                       child: const Text(
                         "Giriş Yap",
+                        style: TextStyle(fontSize: 25, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+                const Spacer(
+                  flex: 5,
+                ),
+                Flexible(
+                  flex: 20,
+                  child: Container(
+                    height: 60,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: ColorConstants.logoRed),
+                    child: MaterialButton(
+                      onPressed: () async{
+                        UserService _user = UserService();
+                        _user.TestCozuldu(_email.text.trim());
+                      },
+                      child: const Text(
+                        "deneme",
                         style: TextStyle(fontSize: 25, color: Colors.white),
                       ),
                     ),
