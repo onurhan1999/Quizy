@@ -132,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                         final email=_email.text.trim();
                         final password=_password.text.trim();
                         final userCredential = _authService.Login(email, password);
-                        print(userCredential);
+                        
                       },
                       child: const Text(
                         "Giriş Yap",
