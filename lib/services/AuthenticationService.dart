@@ -12,6 +12,10 @@ class AuthService {
       email: mail,
       password: pass,
     );
+    print("deneme2");
+    print(userCredential);
+    print("deneme2");
+
     return userCredential;
   }
 
