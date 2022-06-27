@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:quizlen/components/decoration.dart';
-import 'package:quizlen/components/reusable_widgets.dart';
 import 'package:quizlen/constants/color_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
+import 'package:quizlen/pages/authentication_pages/signup_page.dart';
+import 'package:quizlen/services/AuthenticationService.dart';
 
 import '../../firebase_options.dart';
 
@@ -19,6 +20,8 @@ class _LoginPageState extends State<LoginPage> {
   
   late final TextEditingController _email;
   late final TextEditingController _password;
+
+  final AuthService _authService = AuthService();
 
   @override
   void initState() {
@@ -103,7 +106,10 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            final email=_email.text.trim();
+                            _authService.ResetPassword(email);
+                          },
                           child:  Text("Şifrenizi mi unuttunuz?",style: TextStyle(
                             color: ColorConstants.logoRed
                           ),))
@@ -123,12 +129,10 @@ class _LoginPageState extends State<LoginPage> {
                         color: ColorConstants.logoRed),
                     child: MaterialButton(
                       onPressed: () async{
-                        await Firebase.initializeApp(
-                        options: DefaultFirebaseOptions.currentPlatform,);
-                        final email=_email.text;
-                        final password=_password.text;
-                        final userCredntial=await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-                        print(userCredntial);
+                        final email=_email.text.trim();
+                        final password=_password.text.trim();
+                        final userCredential = _authService.Login(email, password);
+                        print(userCredential);
                       },
                       child: const Text(
                         "Giriş Yap",
@@ -193,12 +197,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       TextButton(
                           onPressed: () async {
-                            await Firebase.initializeApp(
-                        options: DefaultFirebaseOptions.currentPlatform,);
-                        final email=_email.text;
-                        final password=_password.text;
-                        final userCredntial=await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-                        print(userCredntial);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => SignupPage()));
                           },
                           child:  Text("Kaydolun",style: TextStyle(color: ColorConstants.logoRed),))
                     ],

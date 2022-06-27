@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:quizlen/components/decoration.dart';
 import 'package:quizlen/constants/color_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
+import 'package:quizlen/pages/authentication_pages/login_page.dart';
+import 'package:quizlen/services/AuthenticationService.dart';
 import '../../firebase_options.dart';
 
 
@@ -18,12 +20,16 @@ class _SignupPageState extends State<SignupPage> {
 
   late final TextEditingController _email;
   late final TextEditingController _password;
+  late final TextEditingController _username;
+
+  final AuthService _authService = AuthService();
 
   @override
   void initState() {
     // TODO: implement initState
     _email=TextEditingController();
     _password=TextEditingController();
+    _username=TextEditingController();
     super.initState();
   }
   @override
@@ -31,6 +37,7 @@ class _SignupPageState extends State<SignupPage> {
     // TODO: implement dispose
     _email.dispose();
     _password.dispose();
+    _username.dispose();
     super.dispose();
   }
 
@@ -60,6 +67,7 @@ class _SignupPageState extends State<SignupPage> {
                 Flexible(
                   flex: 15,
                   child: TextFormField(
+                    controller: _username,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
@@ -127,12 +135,11 @@ class _SignupPageState extends State<SignupPage> {
                         color: ColorConstants.logoRed),
                     child: MaterialButton(
                       onPressed: ()async {
-                        await Firebase.initializeApp(
-                        options: DefaultFirebaseOptions.currentPlatform,);
-                        final email=_email.text;
-                        final password=_password.text;
-                        final userCredntial=await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-                        print(userCredntial);
+                        final email=_email.text.trim();
+                        final password=_password.text.trim();
+                        final username=_username.text.trim();
+                        final userCredential = _authService.SignUp(email, password, username);
+                        print(userCredential);
                       },
                       child: const Text(
                         "Kayıt Ol ",
@@ -189,7 +196,11 @@ class _SignupPageState extends State<SignupPage> {
                   children: [
 
                   Text("Hesabınız var mı?",style: Theme.of(context).textTheme.headline6,),
-                  TextButton(onPressed: (){}, child: Text("Giriş Yapın")),
+                  TextButton(onPressed: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()));
+                  }, child: Text("Giriş Yapın")),
 
                 ],)
 
