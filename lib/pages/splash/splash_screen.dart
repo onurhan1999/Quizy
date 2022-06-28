@@ -5,6 +5,7 @@ import 'package:quizlen/constants/color_constants.dart';
 import 'package:quizlen/pages/authentication_pages/login_page.dart';
 import 'package:quizlen/pages/authentication_pages/signup_page.dart';
 import 'package:quizlen/pages/main_pages/after_game_screen.dart';
+import 'package:quizlen/pages/main_pages/edit_profile_screen.dart';
 import 'package:quizlen/pages/main_pages/leaderboard_screen.dart';
 
 import 'package:quizlen/pages/main_pages/quiz_screen.dart';
@@ -20,7 +21,7 @@ class SplashScreen extends StatelessWidget {
         home: AnimatedSplashScreen(
             duration: 3000,
             splash: Image.asset("assets/images/logo.png"),
-            nextScreen: AfterGame(),
+            nextScreen: EditProfile(),
             splashIconSize: 250,
             splashTransition: SplashTransition.fadeTransition,
             pageTransitionType: PageTransitionType.leftToRightWithFade,
