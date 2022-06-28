@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quizlen/components/decoration.dart';
 import 'package:quizlen/constants/color_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
+import 'package:quizlen/models/QuizModel.dart';
 import 'package:quizlen/pages/authentication_pages/signup_page.dart';
 import 'package:quizlen/services/AuthenticationService.dart';
 import 'package:quizlen/services/UserServices.dart';
@@ -152,7 +153,6 @@ class _LoginPageState extends State<LoginPage> {
                     child: MaterialButton(
                       onPressed: () async{
                         UserService _user = UserService();
-                        _user.TestCozuldu(_email.text.trim());
                       },
                       child: const Text(
                         "deneme",

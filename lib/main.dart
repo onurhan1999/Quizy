@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:quizlen/pages/splash/splash_screen.dart';
+import 'package:quizlen/pages/testing_pages/aa.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Material App',
       home: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: SplashScreen(),
+        body: ManagementProductView(),
       ),
     );
   }

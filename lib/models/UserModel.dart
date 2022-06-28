@@ -13,7 +13,7 @@ class UserModel{
     'Score': score,
   };
 
-  static UserModel fromJson(Map<String, dynamic> json) => UserModel(
+  UserModel fromJson(Map<String, dynamic> json) => UserModel(
     username: json['UserName'],
     score: json['Score'],
   );
