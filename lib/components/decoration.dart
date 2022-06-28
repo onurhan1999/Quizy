@@ -10,4 +10,7 @@ class DecorationProperties{
   image: ReusableWidgets.getAssetImage("background.png"),
   fit: BoxFit.fill));
 
+
+
+
 }
