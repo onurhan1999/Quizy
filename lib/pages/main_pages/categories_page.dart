@@ -18,21 +18,17 @@ class _CategoriesPageState extends State<CategoriesPage> {
       debugShowCheckedModeBanner: false,
       title: 'Material App',
       home: Scaffold(
-
         backgroundColor: Colors.deepPurple,
         body: Padding(
           padding: EdgeInsets.only(top: context.dynamicHeight(0.06)),
           child: Container(
-
             decoration: BoxDecoration(color: ColorConstants.mainPurple),
             child: Column(
               children: [
                 Container(
                   color: Colors.deepPurple,
-
                   height: 74,
                   child: ListView(
-
                     padding: const EdgeInsets.all(8.0),
                     scrollDirection: Axis.horizontal,
                     children: <Widget>[
@@ -100,11 +96,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     borderRadius: BorderRadius.circular(35.0),
                   ),
                   shadowColor: ColorConstants.mainOrange,
-
                   child: Container(
-                    decoration:  const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(35)),
-                        ),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(35)),
+                    ),
                     height: 120,
                     child: Row(
                       children: [
@@ -152,17 +147,18 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   ),
                   elevation: 8,
                   margin: const EdgeInsets.all(10),
-
                 ),
                 Card(
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(color: ColorConstants.mainOrange,width: 2.0,style: BorderStyle.solid),
+                    side: BorderSide(
+                        color: ColorConstants.mainOrange,
+                        width: 2.0,
+                        style: BorderStyle.solid),
                     borderRadius: BorderRadius.circular(35.0),
-
                   ),
                   shadowColor: ColorConstants.mainOrange,
                   child: Container(
-                    decoration:  const BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(35)),
                     ),
                     height: 120,
@@ -219,7 +215,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   ),
                   shadowColor: ColorConstants.mainOrange,
                   child: Container(
-                    decoration:  const BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(35)),
                     ),
                     height: 120,
