@@ -9,13 +9,9 @@ void main() => runApp(QuizScreen());
 class QuizScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'SnackBar Demo',
-      home: Scaffold(
+    return Scaffold(
         body: QuizScreenMain(),
-      ),
-    );
+      );
   }
 }
 

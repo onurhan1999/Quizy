@@ -40,9 +40,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Container(
           decoration: DecorationProperties.backgroundDecoration,
@@ -51,8 +49,8 @@ class _LoginPageState extends State<LoginPage> {
             child: ColumnWidget(context),
           ),
         ),
-      ),
-    );
+      );
+
   }
 
   Column ColumnWidget(BuildContext context) {

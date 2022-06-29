@@ -42,9 +42,7 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: Container(
+    return Container(
         decoration: DecorationProperties.backgroundDecoration,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -54,8 +52,7 @@ class _SignupPageState extends State<SignupPage> {
             child: ColumnWidget(context),
           ),
         ),
-      ),
-    );
+      );
   }
 
   Column ColumnWidget(BuildContext context) {

@@ -14,10 +14,7 @@ class LeaderboardScreen extends StatefulWidget {
 class _LeaderboardScreenState extends State<LeaderboardScreen> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Material App',
-      home: Container(
+    return Container(
         decoration: DecorationProperties.leaderBoardContainerDecoration,
         child: Scaffold(
           backgroundColor: Colors.transparent,
@@ -40,8 +37,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 
   Expanded FirstPlayer() {

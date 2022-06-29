@@ -2,31 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:quizlen/components/reusable_widgets.dart';
 import 'package:quizlen/extension/context_extension.dart';
 
-void main() => runApp(AfterGame());
+void main() => runApp(AfterGameScreen());
 
-class AfterGame extends StatefulWidget {
+class AfterGameScreen extends StatefulWidget {
   @override
-  State<AfterGame> createState() => _AfterGameState();
+  State<AfterGameScreen> createState() => _AfterGameScreenState();
 }
 
-class _AfterGameState extends State<AfterGame> {
+class _AfterGameScreenState extends State<AfterGameScreen> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-
-      debugShowCheckedModeBanner: false,
-      title: 'Material App',
-      home: Scaffold(
+    return Scaffold(
         backgroundColor: Color(0xffEAEAEA),
-
         body: Padding(
-          padding:  EdgeInsets.only(top: context.dynamicHeight(0.1)),
+          padding: EdgeInsets.only(top: context.dynamicHeight(0.1)),
           child: Column(
-
             children: [
               Center(
                   child: Column(
-
                 children: [
                   Text(
                     "Tebrikler!",
@@ -47,7 +40,7 @@ class _AfterGameState extends State<AfterGame> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         InkWell(
-                          onTap: (){},
+                          onTap: () {},
                           child: SizedBox(
                             width: context.dynamicWidth(0.4),
                             height: context.dynamicHeight(0.15),
@@ -84,7 +77,7 @@ class _AfterGameState extends State<AfterGame> {
                           ),
                         ),
                         InkWell(
-                          onTap: (){},
+                          onTap: () {},
                           child: SizedBox(
                             width: context.dynamicWidth(0.4),
                             height: context.dynamicHeight(0.15),
@@ -126,26 +119,25 @@ class _AfterGameState extends State<AfterGame> {
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Container(
-
                       height: context.dynamicHeight(0.1),
                       width: context.dynamicWidth(0.8),
                       child: InkWell(
-                        onTap: (){},
+                        onTap: () {},
                         child: Card(
-
-                                color: Color(0xff00B2FF),
+                          color: Color(0xff00B2FF),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Center(
+                            child: Text(
+                              "BİLGİ",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5
+                                  ?.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                            ),
                           ),
-                          child: Center(child: Text(
-                            "BİLGİ",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline5
-                                ?.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),),
                         ),
                       ),
                     ),
@@ -156,21 +148,22 @@ class _AfterGameState extends State<AfterGame> {
                       height: context.dynamicHeight(0.1),
                       width: context.dynamicWidth(0.8),
                       child: InkWell(
-                        onTap: (){},
+                        onTap: () {},
                         child: Card(
                           color: Color(0xff26CE55),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Center(
+                            child: Text(
+                              "BİLGİ",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5
+                                  ?.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                            ),
                           ),
-                          child: Center(child: Text(
-                            "BİLGİ",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline5
-                                ?.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),),
                         ),
                       ),
                     ),
@@ -180,7 +173,6 @@ class _AfterGameState extends State<AfterGame> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
