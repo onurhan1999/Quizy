@@ -1,16 +1,23 @@
 
 class QuizModel{
-  final String aab;
+  final String title;
+  final String category;
+  //final List<Question> questions;
+
 
   QuizModel({
-    required this.aab,
+    required this.title,
+    required this.category,
+    //required this.questions,
   });
 
   Map<String, dynamic> toJson() => {
-    'aaa': aab,
+    'title': title,
+    'category':category,
   };
 
   QuizModel fromJson(Map<String, dynamic> json) => QuizModel(
-    aab: json['aaa'],
+    title: json['title'],
+    category: json['category'],
   );
 }

@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:quizlen/pages/main_pages/categories_page.dart';
 import 'package:quizlen/pages/splash/splash_screen.dart';
 import 'package:quizlen/pages/testing_pages/aa.dart';
 
@@ -22,7 +24,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Material App',
       home: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: ManagementProductView(),
+        body: const CategoriesPage(),
       ),
     );
   }

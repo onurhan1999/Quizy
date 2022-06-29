@@ -7,7 +7,7 @@ void main() => runApp( QuizScreen());
 
 class QuizScreen extends StatelessWidget {
 
-
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,7 +22,9 @@ class QuizScreen extends StatelessWidget {
 }
 
 class QuizScreenMain extends StatelessWidget {
-
+  
+  String? qId;
+  QuizScreenMain({this.qId});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,7 @@ class QuizScreenMain extends StatelessWidget {
                 width: context.dynamicWidth(1),
                 height: context.dynamicHeight(0.3),
                 color: Colors.grey,
-                child: Text("safhasfhashfa"),
+                child: Text(qId!),
               ),
               SizedBox(
                 height: context.dynamicHeight(0.06),

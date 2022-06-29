@@ -1,23 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:quizlen/services/QuizService.dart';
 import 'package:quizlen/services/UserServices.dart';
+
+import '../../constants/color_constants.dart';
 
 
 class ManagementProductView extends StatelessWidget {
-  const ManagementProductView({Key? key}) : super(key: key);
-
+  String title='';
+  
+  ManagementProductView({
+    Key? key,
+    required this.title,
+  }) :super(key: key);
+  
+  
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height - kToolbarHeight - 200) / 2;
-    final double itemWidth = size.width / 2;
+    final double itemHeight = (size.height - kToolbarHeight - 200) /2;
+    final double itemWidth = size.width /3;
     UserService userService = UserService();
     return MaterialApp(
       // Hide the debug banner
       debugShowCheckedModeBanner: false,
 
       home: StreamBuilder<QuerySnapshot>(
-          stream: userService.getStatus(),
+          stream: getQuizes(title),
           builder: (context, snapshot) {
             return !snapshot.hasData
                 ? const CircularProgressIndicator()
@@ -40,37 +49,63 @@ class ManagementProductView extends StatelessWidget {
 
 
 
-                      return ElevatedButton(
-                        onPressed: () {
-
-                        },
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                const Color(0xA1DCD4D3)),
-                            elevation: MaterialStateProperty.all(0)),
-                        child: Card(
-                          elevation: 0,
-                          color: Colors.transparent,
-                          clipBehavior: Clip.antiAlias,
-                          child: Column(
-                            children: [
-                              ListTile(
-                                title: Text(
-                                  "${mypost['aaa']}",
-                                  style: const TextStyle(fontSize: 13),
-                                ),
-                          /*      subtitle:
-                                Text("${mypost['Ürünün Fiyatı:']}"),
-                              ),
-                              Expanded(
-                                  child: Image(
-                                    image: NetworkImage(
-                                        mypost['Ürün Görsel URL Adresi']),
-                                  )*/),
-                            ],
+                     return Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(35.0),
+                  ),
+                  shadowColor: ColorConstants.mainOrange,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(35)),
+                    ),
+                    height: 120,
+                    child: Row(
+                      children: [
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                          
                           ),
                         ),
-                      );
+                        Expanded(
+                          child: Container(
+                            alignment: Alignment.topLeft,
+                            child: Column(
+                              children: [
+                                 Expanded(
+                                  flex: 5,
+                                  child: ListTile(
+                                    title: Text("${mypost['title']}"),
+                                    subtitle: Text(
+                                        "Buraya da bir şey Buraya da bir şey Buraya da bir şey Buraya da bir şey Buraya da bir şey Buraya da bir şey"),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 4,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      TextButton(
+                                        child: const Text("OYNA  "),
+                                        onPressed: () {},
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          flex: 8,
+                        ),
+                      ],
+                    ),
+                  ),
+                  elevation: 8,
+                  margin: const EdgeInsets.all(10),
+                );
                     }),
               ),
             );

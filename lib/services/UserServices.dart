@@ -31,8 +31,8 @@ class UserService {
     for(int i=0;i<20;i++){
       if(quizler.contains(i)==true){
         DocumentSnapshot doc1 = await FirebaseFirestore.instance.collection('quizes').doc(i.toString()).get();
-        QuizModel quizModel = QuizModel(aab: doc1['aaa']);
-        print(quizModel.aab);
+        //QuizModel quizModel = QuizModel(aab: doc1['aaa']);
+        //print(quizModel.aab);
       }
     }
   }
