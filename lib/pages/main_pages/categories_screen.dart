@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizlen/constants/color_constants.dart';
+import 'package:quizlen/constants/text_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
 
 void main() => runApp(const CategoriesPage());
@@ -19,7 +20,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: Text("Kategoriler",style: Theme.of(context).textTheme.headline5?.copyWith(color: Colors.white)),
+        title: Text("Kategoriler",style: TextConstants.greyAppBarTextStyle(context)),
       ),
         backgroundColor: Colors.deepPurple,
         body: Container(

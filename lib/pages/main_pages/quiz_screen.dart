@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quizlen/components/decoration.dart';
+import 'package:quizlen/constants/text_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
 
 import '../../constants/color_constants.dart';
@@ -31,7 +33,7 @@ class QuizScreenMain extends StatelessWidget {
                 width: context.dynamicWidth(1),
                 height: context.dynamicHeight(0.3),
                 color: Colors.grey,
-                child: Text("safhasfhashfa"),
+                child: Text(" Arjantin bayrağındaki mavi kısım gökyüzünde ki beyaz bulutları temsil eder. Ortadaki güneş ise Arjantin’in bitmeyen enerjisini simgeler",style :TextConstants.quizTextStyle),
               ),
               SizedBox(
                 height: context.dynamicHeight(0.06),
@@ -104,7 +106,7 @@ class QuizScreenMain extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 40),
               child: Row(
-                children: const [Text("D-) DENEME")],
+                children:  [Text("D-) DENEME",style: TextConstants.quizTextStyle,)],
               ),
             ),
           ),
@@ -127,7 +129,7 @@ class QuizScreenMain extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 40),
               child: Row(
-                children: const [Text("C-) DENEME")],
+                children:  [Text("C-) DENEME",style: TextConstants.quizTextStyle)],
               ),
             ),
           ),
@@ -150,7 +152,7 @@ class QuizScreenMain extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 40),
               child: Row(
-                children: const [Text("B-) DENEME")],
+                children:  [Text("B-) DENEME",style: TextConstants.quizTextStyle)],
               ),
             ),
           ),
@@ -173,7 +175,7 @@ class QuizScreenMain extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 40),
               child: Row(
-                children: const [Text("A-) DENEME")],
+                children:  [Text("A-) DENEME",style: TextConstants.quizTextStyle)],
               ),
             ),
           ),

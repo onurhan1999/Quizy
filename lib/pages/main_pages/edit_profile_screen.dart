@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:quizlen/constants/text_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
 
 import '../../components/reusable_widgets.dart';
@@ -26,7 +28,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               child: Padding(
                 padding: EdgeInsets.only(top: context.dynamicHeight(0.03)),
                 child: Container(
-                  decoration: const BoxDecoration(
+                  decoration:  BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(40),
                           topLeft: Radius.circular(40)),
@@ -159,11 +169,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           children: [
             Text(
               "Favori",
-              style: Theme.of(context).textTheme.titleLarge,
+              style: TextConstants.favCategoryTextStyle(context),
             ),
             Text(
               "Kategori",
-              style: Theme.of(context).textTheme.titleLarge,
+              style: TextConstants.favCategoryTextStyle(context),
             ),
           ],
         ),
@@ -171,11 +181,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           children: [
             Text(
               "Favori",
-              style: Theme.of(context).textTheme.titleLarge,
+              style: TextConstants.favCategoryTextStyle(context),
             ),
             Text(
               "Kategori",
-              style: Theme.of(context).textTheme.titleLarge,
+              style: TextConstants.favCategoryTextStyle(context),
             ),
           ],
         ),
@@ -183,11 +193,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           children: [
             Text(
               "Favori",
-              style: Theme.of(context).textTheme.titleLarge,
+              style: TextConstants.favCategoryTextStyle(context),
             ),
             Text(
               "Kategori",
-              style: Theme.of(context).textTheme.titleLarge,
+              style: TextConstants.favCategoryTextStyle(context),
             ),
           ],
         ),
@@ -222,11 +232,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       centerTitle: true,
       backgroundColor: Colors.transparent,
       title: Text(
-        'Profil',
-        style: Theme.of(context)
-            .textTheme
-            .headline5
-            ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+        'Liderlik',
+        style: TextConstants.whiteAppBarTextStyle(context),
       ),
     );
   }
