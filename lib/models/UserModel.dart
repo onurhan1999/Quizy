@@ -1,7 +1,7 @@
 
 class UserModel{
   final String username;
-  final String score;
+  final int score;
 
   UserModel({
     required this.username,
@@ -11,9 +11,10 @@ class UserModel{
   Map<String, dynamic> toJson() => {
     'UserName': username,
     'Score': score,
+    'cozulenTestler': [],
   };
 
-  static UserModel fromJson(Map<String, dynamic> json) => UserModel(
+  UserModel fromJson(Map<String, dynamic> json) => UserModel(
     username: json['UserName'],
     score: json['Score'],
   );
