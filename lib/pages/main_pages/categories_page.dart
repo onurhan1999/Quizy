@@ -223,15 +223,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         _streamController.add(ll);
       });
     }
-    Future quesitonsHere(girilen) async{
-      DocumentReference docRef = FirebaseFirestore.instance.collection('quizes').doc(girilen);
-    QuerySnapshot doc = await docRef.collection('questions').get();
-    
-
-      setState(() {
-        xd=List.from(doc.docs.map((doc) => doc['question']));
-      });
-    }
+   
 
 
 }

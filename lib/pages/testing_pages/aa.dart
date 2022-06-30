@@ -13,7 +13,7 @@ class ManagementProductView extends StatelessWidget {
     Key? key,
     required this.title,
   }) :super(key: key);
-  
+  QuizService quizService=QuizService();
   
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class ManagementProductView extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       home: StreamBuilder<QuerySnapshot>(
-          stream: getQuizes(title),
+          stream: quizService.getQuizes(title),
           builder: (context, snapshot) {
             return !snapshot.hasData
                 ? const CircularProgressIndicator()
