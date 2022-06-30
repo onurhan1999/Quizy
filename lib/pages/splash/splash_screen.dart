@@ -21,7 +21,7 @@ class SplashScreen extends StatelessWidget {
         home: AnimatedSplashScreen(
             duration: 3000,
             splash: Image.asset("assets/images/logo.png"),
-            nextScreen: EditProfileScreen(),
+            nextScreen: LoginPage(),
             splashIconSize: 250,
             splashTransition: SplashTransition.fadeTransition,
             pageTransitionType: PageTransitionType.leftToRightWithFade,

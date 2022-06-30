@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:quizlen/components/decoration.dart';
 import 'package:quizlen/constants/color_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
 import 'package:quizlen/pages/authentication_pages/signup_page.dart';
+import 'package:quizlen/pages/main_pages/main_bottombar_screen.dart';
 import 'package:quizlen/services/AuthenticationService.dart';
 
 import '../../firebase_options.dart';
@@ -178,6 +180,12 @@ class _LoginPageState extends State<LoginPage> {
             final email = _email.text.trim();
             final password = _password.text.trim();
             final userCredential = _authService.Login(email, password);
+
+            Navigator.of(context).push(PageTransition(
+                child: MainBottomBarScreen(),
+                type: PageTransitionType.rightToLeftWithFade,
+                duration: Duration(milliseconds: 400),
+                reverseDuration: Duration(milliseconds: 400)));
           },
           child: const Text(
             "Giriş Yap",

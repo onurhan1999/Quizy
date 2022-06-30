@@ -24,7 +24,7 @@ class QuizScreenMain extends StatelessWidget {
       decoration: DecorationProperties.quizScreenContainerDecoration,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: buildAppBar(),
+        appBar: buildAppBar(context),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -85,7 +85,7 @@ class QuizScreenMain extends StatelessWidget {
           height: 60,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [Center(child: Text("DEVAM"))],
+            children:  [Center(child: Text("DEVAM",style: TextConstants.quizTextStyle,))],
           ),
         ),
       ),
@@ -185,16 +185,13 @@ class QuizScreenMain extends StatelessWidget {
     );
   }
 
-  AppBar buildAppBar() {
+  AppBar buildAppBar(BuildContext context) {
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,
-      leading: IconButton(
-        icon: Icon(Icons.close),
-        onPressed: () {},
-      ),
+      
       centerTitle: true,
-      title: const Text('Tarih Test 1'),
+      title:  Text('Tarih Test 1',style: TextConstants.whiteAppBarTextStyle(context),),
     );
   }
 }
