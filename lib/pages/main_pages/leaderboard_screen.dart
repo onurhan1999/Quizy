@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quizlen/components/decoration.dart';
 import 'package:quizlen/components/reusable_widgets.dart';
 import 'package:quizlen/constants/color_constants.dart';
+import 'package:quizlen/constants/text_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
 
 void main() => runApp(LeaderboardScreen());
@@ -272,9 +274,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
       centerTitle: true,
       backgroundColor: Colors.transparent,
       elevation: 0,
-      title: const Text(
+      title:  Text(
         'Liderlik',
-        style: TextStyle(color: Colors.white, fontSize: 30),
+        style: TextConstants.greyAppBarTextStyle(context),
       ),
     );
   }
