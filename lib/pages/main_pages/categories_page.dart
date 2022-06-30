@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:quizlen/constants/color_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
 import 'package:quizlen/pages/main_pages/quiz_screen.dart';
-import 'package:quizlen/pages/testing_pages/aa.dart';
-import 'package:quizlen/services/QuizService.dart';
+
 
 void main() => runApp(const CategoriesPage());
 
@@ -19,20 +18,22 @@ class CategoriesPage extends StatefulWidget {
 }
 
 class _CategoriesPageState extends State<CategoriesPage> {
-  String? qId='d';
+  String quizId='';
+  String? qId='';
    String title='Geo';
+   List<String>? xd=[];
     List<Object> ll=[];
     List<Object> llT=[];
     StreamController<List> _streamController=StreamController();
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
+    
     getList(title);
     super.didChangeDependencies();
   }
   @override
   Widget build(BuildContext context) {
-    
     
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -104,7 +105,11 @@ class _CategoriesPageState extends State<CategoriesPage> {
                       CircleAvatar(
                         radius: 50,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                           
+                            
+                            
+                          },
                           style: ButtonStyle(
                               elevation: MaterialStateProperty.all(0),
                               backgroundColor: MaterialStateProperty.all(
@@ -174,8 +179,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                           child: const Text("OYNA  "),
                                           onPressed: () {
 
+                                            quizId=llT[index].toString();
+                                            print(quizId);
                                             Navigator.of(context).push(MaterialPageRoute(
-                                              builder: (context) => QuizScreenMain(qId :qId),
+                                              builder: (context) => QuizScreenMain(quizId:quizId),
                                               ));
                                           },
                                         ),
@@ -212,8 +219,19 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
       setState(() {
         ll=List.from(data.docs.map((doc) => doc['title']));
-        llT=List.from(data.docs.map((doc) => doc));
+        llT=List.from(data.docs.map((doc) => doc.id.toString()));
         _streamController.add(ll);
       });
     }
+    Future quesitonsHere(girilen) async{
+      DocumentReference docRef = FirebaseFirestore.instance.collection('quizes').doc(girilen);
+    QuerySnapshot doc = await docRef.collection('questions').get();
+    
+
+      setState(() {
+        xd=List.from(doc.docs.map((doc) => doc['question']));
+      });
+    }
+
+
 }
