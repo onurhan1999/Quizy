@@ -9,6 +9,13 @@ class QuizService {
   Future<QuerySnapshot> getQuestions(String docid) async{
     return await _firestore.collection('quizes').doc(docid).collection('questions').get();
   }
+  getQuizes(String girilen) {
+
+    var ref=FirebaseFirestore.instance.collection('quizes').where("category", isEqualTo: girilen).snapshots();
+    ref;
+
+
+  }
 
 
 
