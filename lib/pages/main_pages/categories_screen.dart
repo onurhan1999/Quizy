@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:quizlen/constants/color_constants.dart';
 import 'package:quizlen/constants/text_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
+import 'package:quizlen/pages/main_pages/quiz_screen.dart';
 
 void main() => runApp(const CategoriesPage());
 
@@ -20,7 +22,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: Text("Kategoriler",style: TextConstants.greyAppBarTextStyle(context)),
+        title: Text("Kategoriler",style: TextConstants.whiteAppBarTextStyle(context)),
       ),
         backgroundColor: Colors.deepPurple,
         body: Container(
@@ -131,7 +133,13 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                   children: [
                                     TextButton(
                                       child: const Text("OYNA  "),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.of(context).push(PageTransition(
+                                            child: QuizScreen(),
+                                            type: PageTransitionType.rightToLeftWithFade,
+                                            duration: Duration(milliseconds: 400),
+                                            reverseDuration: Duration(milliseconds: 400)));
+                                      },
                                     ),
                                     const SizedBox(
                                       width: 8,
@@ -192,7 +200,14 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                   children: [
                                     TextButton(
                                       child: const Text("OYNA  "),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.of(context).push(PageTransition(
+                                            child: QuizScreen(),
+                                            type: PageTransitionType.rightToLeftWithFade,
+                                            duration: Duration(milliseconds: 400),
+                                            reverseDuration: Duration(milliseconds: 400)));
+
+                                      },
                                     ),
                                     const SizedBox(
                                       width: 8,

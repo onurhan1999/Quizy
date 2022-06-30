@@ -77,9 +77,10 @@ class _MainBottomBarScreenState extends State<MainBottomBarScreen> {
             setState(() => _selectedIndex = index);
           },
           children: <Widget>[
-            CategoriesPage(),
-            EditProfileScreen(),
             HomeScreen(),
+            LeaderboardScreen(),
+            EditProfileScreen(),
+
           ],
         ),
       ),

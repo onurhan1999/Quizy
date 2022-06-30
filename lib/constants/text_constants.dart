@@ -17,11 +17,11 @@ class TextConstants{
     return Theme.of(context).textTheme.titleLarge?.copyWith(color: Color(0xff5E5F5E));
   }
 
-  static whiteAppBarTextStyle(BuildContext context){
+  static greyAppBarTextStyle(BuildContext context){
     return   GoogleFonts.montserrat(textStyle: Theme.of(context).textTheme.headline4,color: Color(0xff5E5F5E),fontWeight: FontWeight.w600);
   }
 
-  static greyAppBarTextStyle(BuildContext context){
+  static whiteAppBarTextStyle(BuildContext context){
     return  GoogleFonts.montserrat(textStyle: Theme.of(context).textTheme.headline4,color: Colors.white,fontWeight: FontWeight.w600);
   }
 
