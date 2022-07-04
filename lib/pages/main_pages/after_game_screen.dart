@@ -5,9 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:quizlen/components/reusable_widgets.dart';
 import 'package:quizlen/extension/context_extension.dart';
 
-void main() => runApp(AfterGameScreen());
+void main() => runApp(AfterGameScreen(score: 0,));
 
 class AfterGameScreen extends StatefulWidget {
+  final int score;
+
+  const AfterGameScreen({Key? key, required this.score})
+      : super(key: key);
+
   @override
   State<AfterGameScreen> createState() => _AfterGameScreenState();
 }
@@ -25,6 +30,7 @@ class _AfterGameScreenState extends State<AfterGameScreen> {
 
   @override
   void initState() {
+
 
     super.initState();
     _controllerTopCenter = ConfettiController(duration: const Duration(seconds: 5));
@@ -83,7 +89,7 @@ class _AfterGameScreenState extends State<AfterGameScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "+17",
+                                        widget.score.toString(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline5
@@ -216,4 +222,6 @@ class _AfterGameScreenState extends State<AfterGameScreen> {
       ],
     );
   }
+
+
 }

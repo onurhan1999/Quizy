@@ -206,6 +206,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () {
                 final email = _email.text.trim();
                 _authService.ResetPassword(email);
+
               },
               child: Text(
                 "Şifrenizi mi unuttunuz?",

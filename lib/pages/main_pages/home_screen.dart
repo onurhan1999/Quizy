@@ -138,11 +138,19 @@ class _HomeScreenState extends State<HomeScreen> {
             color: ColorConstants.mainOrange),
         child: MaterialButton(
           onPressed: () {
+
+
+
+
             Navigator.of(context).push(PageTransition(
                 child: CategoriesPage(),
                 type: PageTransitionType.rightToLeftWithFade,
                 duration: Duration(milliseconds: 400),
                 reverseDuration: Duration(milliseconds: 400)));
+
+
+
+
           },
           child:
               Text("OYNA", style: TextConstants.playButtonTextStyles(context)),
@@ -161,9 +169,10 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: new Text("Takımımız Hakkında"),
+            content: Text("Onurhan KAYA-Selçuk Üniversitesi 3.Sınıf\nKaan Güler-Kocaeli Üniversitesi 3.Sınıf\nDurmuş Cem Koca-Kocaeli Üniversitesi 3.Sınıf\nÇiğdem Bircan-Pamukkale Üniversitesi 3.Sınıf\nAvni Burak Çıtlak-Bilgi Üniversitesi 3.Sınıf"),
             actions: <Widget>[
               new FlatButton(
-                child: new Text("Back"),
+                child: new Text("Geri"),
                 onPressed: () {
                   //Navigator.pushNamed(context, "/screen1");
                   Navigator.pop(context);
