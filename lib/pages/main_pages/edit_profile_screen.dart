@@ -180,11 +180,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         Column(
           children: [
             Text(
-              "Favori",
+              "Toplam",
               style: TextConstants.favCategoryTextStyle(context),
             ),
             Text(
-              "Kategori",
+              "Puan",
               style: TextConstants.favCategoryTextStyle(context),
             ),
           ],
@@ -192,11 +192,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         Column(
           children: [
             Text(
-              "Favori",
+              "Başarı",
               style: TextConstants.favCategoryTextStyle(context),
             ),
             Text(
-              "Kategori",
+              "Sırası",
               style: TextConstants.favCategoryTextStyle(context),
             ),
           ],

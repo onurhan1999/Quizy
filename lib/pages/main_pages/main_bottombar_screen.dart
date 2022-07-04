@@ -8,7 +8,9 @@ import 'package:quizlen/pages/main_pages/categories_screen.dart';
 import 'package:quizlen/pages/main_pages/edit_profile_screen.dart';
 import 'package:quizlen/pages/main_pages/home_screen.dart';
 import 'package:quizlen/pages/main_pages/leaderboard_screen.dart';
+import 'package:quizlen/pages/main_pages/quiz_copy.dart';
 import 'package:quizlen/pages/main_pages/quiz_screen.dart';
+import 'package:quizlen/pages/main_pages/tester.dart';
 
 
 void main() => runApp(MainBottomBarScreen());

@@ -6,6 +6,8 @@ import 'package:quizlen/components/reusable_widgets.dart';
 import 'package:quizlen/constants/text_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
 import 'package:quizlen/pages/main_pages/categories_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../constants/color_constants.dart';
 
@@ -17,8 +19,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future<void>? _launched;
+
+  void initState() {
+    super.initState();
+    // Check for phone call support.
+    canLaunchUrl(Uri(scheme: 'tel', path: '123')).then((bool result) {});
+  }
+
+  Future<void> _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final Uri toLaunch =
+        Uri(scheme: 'https', host: 'turkiye.un.org', path: '/tr/sdgs');
+
     return Container(
       decoration: DecorationProperties.backgroundDecoration,
       child: Scaffold(
@@ -30,6 +52,55 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Align(
+                  alignment: Alignment.topLeft,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            color: ColorConstants.deepPurple,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: IconButton(
+                          iconSize: 30,
+                          color: Colors.white,
+                          onPressed: () {
+                            _launched = _launchInBrowser(toLaunch);
+                          },
+                          icon: Icon(
+                            Icons.info_outline,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: ColorConstants.deepPurple,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: IconButton(
+                          iconSize: 30,
+                          color: Colors.white,
+                          onPressed: () {
+
+                            _showDialog(context);
+
+
+
+
+
+
+
+
+                          },
+                          icon: Icon(
+
+                            Icons.alternate_email,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
               Spacer(
                 flex: 2,
               ),
@@ -83,4 +154,23 @@ class _HomeScreenState extends State<HomeScreen> {
   Expanded LogoImage() {
     return Expanded(flex: 8, child: ReusableWidgets.getImageAsset("logo.png"));
   }
+
+  _showDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text("Takımımız Hakkında"),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("Back"),
+                onPressed: () {
+                  //Navigator.pushNamed(context, "/screen1");
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });}
+
 }
