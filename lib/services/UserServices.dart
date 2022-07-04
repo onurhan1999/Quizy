@@ -30,11 +30,14 @@ class UserService {
       );
   }
 
+
+
   Future<QuerySnapshot> showUnSolved() async{
+
     DocumentReference docRef = _firestore.collection('users').doc(_auth.currentUser!.uid);
     DocumentSnapshot doc = await docRef.get();
     List quizler = doc['cozulenTestler'];
-    print("bura"+ quizler.isEmpty.toString());
+   // print("bura"+ quizler.isEmpty.toString());
     if(quizler.isEmpty){
       return await _firestore.collection("quizes").get();
     }else{
@@ -47,7 +50,7 @@ class UserService {
     DocumentReference docRef = _firestore.collection('users').doc(_auth.currentUser!.uid);
     DocumentSnapshot doc = await docRef.get();
     List quizler = doc['cozulenTestler'];
-    print("bura"+ quizler.isEmpty.toString());
+   // print("bura"+ quizler.isEmpty.toString());
     if(quizler.isEmpty){
       // -------------------------------------- BURADA NE DÖNDÜRECEĞİMİZİ SONRA BELİRLERİZ -----------------------------------------------------------
       return await _firestore.collection("quizes").where("q_id", whereIn: [0]).get();
