@@ -46,10 +46,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     return Expanded(
       child: Column(
         children: [
-          const Text(
-            "1",
-            style: const TextStyle(color: Colors.white, fontSize: 20),
-          ),
+
           Padding(
             padding: const EdgeInsets.only(top: 5),
             child: CircleAvatar(
@@ -226,10 +223,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
   Column ThirdPlayer() {
     return Column(
       children: [
-        const Text(
-          "3",
-          style: const TextStyle(color: Colors.white, fontSize: 20),
-        ),
+
         Padding(
           padding: const EdgeInsets.only(top: 5, bottom: 5),
           child: CircleAvatar(
@@ -249,10 +243,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
   Column SecondPlayer() {
     return Column(
       children: [
-        const Text(
-          "2",
-          style: const TextStyle(color: Colors.white, fontSize: 20),
-        ),
+
         Padding(
           padding: const EdgeInsets.only(top: 5),
           child: CircleAvatar(
@@ -275,7 +266,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
       backgroundColor: Colors.transparent,
       elevation: 0,
       title:  Text(
-        'Liderlik',
+        '',
         style: TextConstants.greyAppBarTextStyle(context),
       ),
     );
