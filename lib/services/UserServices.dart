@@ -60,7 +60,12 @@ class UserService {
   }
   ///////////////////////////// FİREBASETE DESCENDING ORDER OLMADIĞI İÇİN SAYFA İÇERİSİNDE TERS BASTIR  ------------------------------------------
   Future<QuerySnapshot> sortScore() async{
-    return await _firestore.collection('users').orderBy('Score').get();
+    return await _firestore.collection('users').orderBy('Score',descending: true).limit(6).get();
   }
 
+  Future <List> getTopThree() async {
+    List a=[];
+    a.add(_firestore.collection('users').orderBy('Score',descending: true).get().toString());
+    return a;
+  }
 }
