@@ -32,7 +32,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         body: FutureBuilder<List<String>>(
           future: _userService.getCurrentUser(),
           builder: (context,snapshot) {
-            return Center(
+            return !snapshot.hasData
+              ? Container(
+                  alignment: Alignment.center,
+                  child: const CircularProgressIndicator(
+                    backgroundColor: Colors.grey,
+                    color: Colors.purple,
+                    strokeWidth: 10,
+                  ))
+              :  Center(
                 child: Column(
               children: [
                 CircleAvatarWidget(context),
