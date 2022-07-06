@@ -13,13 +13,19 @@ import '../../constants/text_constants.dart';
 void main() => runApp(QuizScreen(
       quizId: '',
       quizTitle: '',
+      isSolved: true,
     ));
 
 class QuizScreen extends StatefulWidget {
   final String quizTitle;
   final String quizId;
-  const QuizScreen({Key? key, required this.quizTitle, required this.quizId})
-      : super(key: key);
+  final bool isSolved;
+  const QuizScreen({
+    Key? key,
+    required this.quizTitle,
+    required this.quizId,
+    required this.isSolved,
+  }) : super(key: key);
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -30,6 +36,7 @@ class _QuizScreenState extends State<QuizScreen> {
   Color colorControllerB = Colors.white;
   Color colorControllerC = Colors.white;
   Color colorControllerD = Colors.white;
+
   TextEditingController answerTextController = TextEditingController();
   TextEditingController optionController = TextEditingController();
   TextEditingController correctAnswerTextController = TextEditingController();
@@ -39,9 +46,13 @@ class _QuizScreenState extends State<QuizScreen> {
   TextEditingController optionControllerD = TextEditingController();
   bool continueButtonState = false;
   bool buttonVisibilitiyState = true;
+
+  bool optionColorController =
+      true; //şıklara tıklandığında renk değiştirecek fakat devam butonuna bastıktan sonra renk değiştirmeyecek
+
   int score = 0;
 
-  UserService _userService=UserService();
+  UserService _userService = UserService();
 
   void correctAnswerControl() {
     if (correctAnswerTextController.text == optionControllerA.text) {
@@ -162,6 +173,8 @@ class _QuizScreenState extends State<QuizScreen> {
         child: FutureBuilder<QuerySnapshot>(
             future: quizService.getQuestions(widget.quizId),
             builder: (context, snapshot) {
+              print("quizscreen isSolved" + widget.isSolved.toString());
+
               return !snapshot.hasData
                   ? const CircularProgressIndicator()
                   : Scaffold(
@@ -178,7 +191,8 @@ class _QuizScreenState extends State<QuizScreen> {
                         child: ListView.builder(
                           itemCount: 1,
                           itemBuilder: (context, index) {
-                            DocumentSnapshot mypost = snapshot.data!.docs[indexs];
+                            DocumentSnapshot mypost =
+                                snapshot.data!.docs[indexs];
                             correctAnswerTextController.text = mypost['answer'];
                             optionControllerA.text = mypost['answers'][0];
                             optionControllerB.text = mypost['answers'][1];
@@ -187,170 +201,224 @@ class _QuizScreenState extends State<QuizScreen> {
 
                             return Column(
                               children: [
-                                Container(
+                                SizedBox(
                                   width: context.dynamicWidth(1),
-                                  height: context.dynamicHeight(0.3),
-                                  color: Colors.grey,
-                                  child: Row(
-                                    children: [
-                                      Text("${mypost['question']}",
-                                          style: TextConstants.quizTextStyle)
-                                    ],
+                                  height: context.dynamicHeight(0.35),
+                                  child: Container(
+                                    alignment: Alignment.topLeft,
+                                    decoration: BoxDecoration(
+                                        color: Color(0xffD9D9D9),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Text("${mypost['question']}",
+                                          style: TextConstants.quizTextStyle),
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
                                   height: context.dynamicHeight(0.06),
                                 ),
-                                Card(
-                                  color: colorControllerA,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(35.0),
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      answerTextController.text =
-                                          mypost['answers'][0];
-                                      optionController.text = "A";
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Card(
+                                    color: colorControllerA,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(35.0),
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+                                        optionColorController
+                                            ? setState(() {
+                                                cleanOptionColors();
 
-                                      buttonVisibilitiyState
-                                          ? setState(() {
-                                              continueButtonState = true;
-                                              buttonVisibilitiyState = false;
-                                            })
-                                          : null;
-                                    },
-                                    child: SizedBox(
-                                      height: 40,
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 40),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                                "A-)  " +
-                                                    "${mypost['answers'][0]}",
-                                                style:
-                                                    TextConstants.quizTextStyle)
-                                          ],
+                                                colorControllerA =
+                                                    ColorConstants.mainOrange;
+                                              })
+                                            : null;
+
+                                        answerTextController.text =
+                                            mypost['answers'][0];
+                                        optionController.text = "A";
+
+                                        buttonVisibilitiyState
+                                            ? setState(() {
+                                                continueButtonState = true;
+                                                buttonVisibilitiyState = false;
+                                              })
+                                            : null;
+                                      },
+                                      child: SizedBox(
+                                        height: 50,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 40),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                  "A-)  " +
+                                                      "${mypost['answers'][0]}",
+                                                  style: TextConstants
+                                                      .quizTextStyle)
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
+                                    elevation: 5,
                                   ),
-                                  elevation: 5,
                                 ),
-                                Card(
-                                  color: colorControllerB,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(35.0),
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      answerTextController.text =
-                                          mypost['answers'][1];
-                                      optionControllerB.text =
-                                          mypost['answers'][1];
-                                      optionController.text = "B";
-                                      buttonVisibilitiyState
-                                          ? setState(() {
-                                              continueButtonState = true;
-                                              buttonVisibilitiyState = false;
-                                            })
-                                          : null;
-                                    },
-                                    child: SizedBox(
-                                      height: 40,
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 40),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                                "B-)  " +
-                                                    "${mypost['answers'][1]}",
-                                                style:
-                                                    TextConstants.quizTextStyle)
-                                          ],
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Card(
+                                    color: colorControllerB,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(35.0),
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+                                        optionColorController
+                                            ? setState(() {
+                                                cleanOptionColors();
+
+                                                colorControllerB =
+                                                    ColorConstants.mainOrange;
+                                              })
+                                            : null;
+
+                                        answerTextController.text =
+                                            mypost['answers'][1];
+                                        optionControllerB.text =
+                                            mypost['answers'][1];
+                                        optionController.text = "B";
+                                        buttonVisibilitiyState
+                                            ? setState(() {
+                                                continueButtonState = true;
+                                                buttonVisibilitiyState = false;
+                                              })
+                                            : null;
+                                      },
+                                      child: SizedBox(
+                                        height: 50,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 40),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                  "B-)  " +
+                                                      "${mypost['answers'][1]}",
+                                                  style: TextConstants
+                                                      .quizTextStyle)
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
+                                    elevation: 5,
                                   ),
-                                  elevation: 5,
                                 ),
-                                Card(
-                                  color: colorControllerC,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(35.0),
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      answerTextController.text =
-                                          mypost['answers'][2];
-                                      optionControllerC.text =
-                                          mypost['answers'][2];
-                                      optionController.text = "C";
-                                      buttonVisibilitiyState
-                                          ? setState(() {
-                                              continueButtonState = true;
-                                              buttonVisibilitiyState = false;
-                                            })
-                                          : null;
-                                    },
-                                    child: SizedBox(
-                                      height: 40,
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 40),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                                "C-)  " +
-                                                    "${mypost['answers'][2]}",
-                                                style:
-                                                    TextConstants.quizTextStyle)
-                                          ],
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Card(
+                                    color: colorControllerC,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(35.0),
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+                                        optionColorController
+                                            ? setState(() {
+                                                print(optionColorController);
+                                                cleanOptionColors();
+                                                colorControllerC =
+                                                    ColorConstants.mainOrange;
+                                              })
+                                            : null;
+
+                                        answerTextController.text =
+                                            mypost['answers'][2];
+                                        optionControllerC.text =
+                                            mypost['answers'][2];
+                                        optionController.text = "C";
+
+                                        buttonVisibilitiyState
+                                            ? setState(() {
+                                                continueButtonState = true;
+                                                buttonVisibilitiyState = false;
+                                              })
+                                            : null;
+                                      },
+                                      child: SizedBox(
+                                        height: 50,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 40),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                  "C-)  " +
+                                                      "${mypost['answers'][2]}",
+                                                  style: TextConstants
+                                                      .quizTextStyle)
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
+                                    elevation: 5,
                                   ),
-                                  elevation: 5,
                                 ),
-                                Card(
-                                  color: colorControllerD,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(35.0),
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      answerTextController.text =
-                                          mypost['answers'][3];
-                                      optionControllerD.text =
-                                          mypost['answers'][3];
-                                      optionController.text = "D";
-                                      buttonVisibilitiyState
-                                          ? setState(() {
-                                              continueButtonState = true;
-                                              buttonVisibilitiyState = false;
-                                            })
-                                          : null;
-                                    },
-                                    child: SizedBox(
-                                      height: 40,
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 40),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                                "D-)  " +
-                                                    "${mypost['answers'][3]}",
-                                                style:
-                                                    TextConstants.quizTextStyle)
-                                          ],
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Card(
+                                    color: colorControllerD,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(35.0),
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+                                        optionColorController
+                                            ? setState(() {
+                                                cleanOptionColors();
+
+                                                colorControllerD =
+                                                    ColorConstants.mainOrange;
+                                              })
+                                            : null;
+
+                                        answerTextController.text =
+                                            mypost['answers'][3];
+                                        optionControllerD.text =
+                                            mypost['answers'][3];
+                                        optionController.text = "D";
+                                        buttonVisibilitiyState
+                                            ? setState(() {
+                                                continueButtonState = true;
+                                                buttonVisibilitiyState = false;
+                                              })
+                                            : null;
+                                      },
+                                      child: SizedBox(
+                                        height: 50,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 40),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                  "D-)  " +
+                                                      "${mypost['answers'][3]}",
+                                                  style: TextConstants
+                                                      .quizTextStyle)
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
+                                    elevation: 5,
                                   ),
-                                  elevation: 5,
                                 ),
                                 const SizedBox(height: 30),
                                 continueButtonState
@@ -362,6 +430,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                         ),
                                         child: InkWell(
                                           onTap: () {
+                                            optionColorController = false;
+
                                             continueButtonState = false;
                                             answerControl(
                                                 answerTextController.text);
@@ -389,6 +459,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                                 label: 'Tamam',
                                                 onPressed: () {
                                                   setState(() {
+                                                    optionColorController =
+                                                        true;
+
                                                     /* print("length");
                                   print(snapshot.data!.docs.length);
 
@@ -403,32 +476,36 @@ class _QuizScreenState extends State<QuizScreen> {
                                                     } else {
                                                       print("test bitti");
 
+                                                      _userService.addSolved(
+                                                          widget.quizId);
 
-                                                      _userService.addSolved(widget.quizId);
-                                                      _userService.updateScore(score.toString());
+                                                      if (widget.isSolved) {
+                                                        null;
+                                                      } else {
+                                                        _userService
+                                                            .updateScore(score
+                                                                .toString());
+                                                      }
 
-
-
-
-
-                                                     Navigator.of(context).
-                                                      push(PageTransition(
-                                                          child:
-                                                              AfterGameScreen(score: score,),
-                                                          type: PageTransitionType
-                                                              .rightToLeftWithFade,
-                                                          duration: Duration(
-                                                              milliseconds:
-                                                                  400),
-                                                          reverseDuration:
-                                                              Duration(
+                                                      Navigator.of(context)
+                                                          .push(PageTransition(
+                                                              child:
+                                                                  AfterGameScreen(
+                                                                score: score,
+                                                              ),
+                                                              type: PageTransitionType
+                                                                  .rightToLeftWithFade,
+                                                              duration: Duration(
                                                                   milliseconds:
-                                                                      400))).then((value) => setState(() => {}));
-
-
-
+                                                                      400),
+                                                              reverseDuration:
+                                                                  Duration(
+                                                                      milliseconds:
+                                                                          400)))
+                                                          .then((value) =>
+                                                              setState(
+                                                                  () => {}));
                                                     }
-
 
                                                     correctAnswerControl();
                                                     cleanOptionColors();

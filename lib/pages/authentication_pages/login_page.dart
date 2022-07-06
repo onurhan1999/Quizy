@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -42,16 +43,27 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          decoration: DecorationProperties.backgroundDecoration,
-          child: Padding(
-            padding: EdgeInsets.all(context.dynamicHeight(0.05)),
-            child: ColumnWidget(context),
-          ),
-        ),
-      );
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+
+        if(snapshot.data!=null)
+          return MainBottomBarScreen();
+        else{
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Container(
+              decoration: DecorationProperties.backgroundDecoration,
+              child: Padding(
+                padding: EdgeInsets.all(context.dynamicHeight(0.05)),
+                child: ColumnWidget(context),
+              ),
+            ),
+          );
+        }
+
+      }
+    );
 
   }
 
@@ -109,8 +121,11 @@ class _LoginPageState extends State<LoginPage> {
           ),
           TextButton(
               onPressed: () async {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SignupPage()));
+                Navigator.of(context).push(PageTransition(
+                    child: SignupPage(),
+                    type: PageTransitionType.rightToLeftWithFade,
+                    duration: Duration(milliseconds: 400),
+                    reverseDuration: Duration(milliseconds: 400)));
               },
               child: Text(
                 "Kaydolun",
@@ -179,13 +194,19 @@ class _LoginPageState extends State<LoginPage> {
           onPressed: () async {
             final email = _email.text.trim();
             final password = _password.text.trim();
-            final userCredential = _authService.Login(email, password);
+            _authService.Login(email, password);
 
-            Navigator.of(context).push(PageTransition(
-                child: MainBottomBarScreen(),
-                type: PageTransitionType.rightToLeftWithFade,
-                duration: Duration(milliseconds: 400),
-                reverseDuration: Duration(milliseconds: 400)));
+            if(await FirebaseAuth.instance.currentUser != null){
+              print("current içi");
+              Navigator.of(context).push(PageTransition(
+                  child: MainBottomBarScreen(),
+                  type: PageTransitionType.rightToLeftWithFade,
+                  duration: Duration(milliseconds: 400),
+                  reverseDuration: Duration(milliseconds: 400)));
+            }else{
+              null;
+            }
+
           },
           child: const Text(
             "Giriş Yap",

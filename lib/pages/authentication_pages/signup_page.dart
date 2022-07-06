@@ -1,12 +1,17 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:quizlen/components/decoration.dart';
 import 'package:quizlen/constants/color_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
 import 'package:quizlen/pages/authentication_pages/login_page.dart';
 import 'package:quizlen/services/AuthenticationService.dart';
 import '../../firebase_options.dart';
+import '../main_pages/main_bottombar_screen.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -42,17 +47,29 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: DecorationProperties.backgroundDecoration,
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.transparent,
-          body: Padding(
-            padding: EdgeInsets.all(context.dynamicHeight(0.05)),
-            child: ColumnWidget(context),
-          ),
-        ),
-      );
+    return StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+
+          if(snapshot.data!=null)
+            return LoginPage();
+          else{
+            return Container(
+              decoration: DecorationProperties.backgroundDecoration,
+              child: Scaffold(
+                resizeToAvoidBottomInset: false,
+                backgroundColor: Colors.transparent,
+                body: Padding(
+                  padding: EdgeInsets.all(context.dynamicHeight(0.05)),
+                  child: ColumnWidget(context),
+                ),
+              ),
+            );
+          }
+
+
+      }
+    );
   }
 
   Column ColumnWidget(BuildContext context) {
@@ -80,9 +97,7 @@ class _SignupPageState extends State<SignupPage> {
               const Spacer(
                 flex: 5,
               ),
-              const Spacer(
-                flex: 5,
-              ),
+
               SignUpButton(),
               const Spacer(
                 flex: 5,
@@ -110,8 +125,11 @@ class _SignupPageState extends State<SignupPage> {
         ),
         TextButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LoginPage()));
+              Navigator.of(context).pushReplacement(PageTransition(
+                  child: LoginPage(),
+                  type: PageTransitionType.rightToLeftWithFade,
+                  duration: Duration(milliseconds: 400),
+                  reverseDuration: Duration(milliseconds: 400)));
             },
             child: Text("Giriş Yapın")),
       ],
@@ -164,12 +182,18 @@ class _SignupPageState extends State<SignupPage> {
             color: ColorConstants.logoRed),
         child: MaterialButton(
           onPressed: () async {
+
             final email = _email.text.trim();
             final password = _password.text.trim();
             final username = _username.text.trim();
-            final userCredential =
-                _authService.SignUp(email, password, username);
-            print(userCredential);
+            _authService.SignUp(email, password, username).then((value) => (){print("whencomplete içi");});
+
+            Navigator.of(context).push(PageTransition(
+                child: LoginPage(),
+                type: PageTransitionType.rightToLeftWithFade,
+                duration: Duration(milliseconds: 400),
+                reverseDuration: Duration(milliseconds: 400)));
+
           },
           child: const Text(
             "Kayıt Ol ",

@@ -19,6 +19,7 @@ class AfterGameScreen extends StatefulWidget {
 
 class _AfterGameScreenState extends State<AfterGameScreen> {
 
+  late double correctNumber;
   bool isPlaying=false;
   late ConfettiController _controllerTopCenter;
 
@@ -30,6 +31,7 @@ class _AfterGameScreenState extends State<AfterGameScreen> {
 
   @override
   void initState() {
+    correctNumber=widget.score/10;
 
 
     super.initState();
@@ -40,6 +42,10 @@ class _AfterGameScreenState extends State<AfterGameScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    int correctNumberInt =correctNumber.toInt();
+
+
     setState(() {
       _controllerTopCenter.play();
     });
@@ -126,7 +132,7 @@ class _AfterGameScreenState extends State<AfterGameScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "7/10",
+                                       correctNumberInt.toString()+"/10",
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline5

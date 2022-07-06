@@ -22,39 +22,242 @@ class CategoriesPage extends StatefulWidget {
 class _CategoriesPageState extends State<CategoriesPage> {
   late final String title;
   late final String description;
+  bool isSolved=false;
+
   UserService userService = UserService();
 
   TextEditingController categoryController = TextEditingController();
 
   @override
-  void dispose() {
-    print("dispose içinde");
-    // TODO: implement dispose
-    super.dispose();
-  }
-  @override
-  void initState() {
-    print("init içinde");
-    // TODO: implement initState
-    super.initState();
-  }
-  @override
-  void setState(VoidCallback fn) {
-
-    print("setstate içinde");
-    // TODO: implement setState
-    super.setState(fn);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    return DefaultTabController(
+        length: 2,
+        child: Container(
+          decoration: BoxDecoration(color: ColorConstants.mainPurple),
+          child: Container(
+            color: Colors.deepPurple,
+            height: 50,
+            child: Scaffold(
+              backgroundColor: Colors.deepPurple,
+              appBar: PreferredSize(
+                preferredSize: Size(200, 150),
+                child: AppBar(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  centerTitle: true,
+                  flexibleSpace: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(categoryController.text,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4
+                              ?.copyWith(color: Colors.white)),
+                      Container(
+                        color: Colors.deepPurpleAccent,
+                        height: 71,
+                        child: ListView(
+                          padding: const EdgeInsets.all(8.0),
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            CircleAvatar(
+                              radius: 50,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    categoryController.text = "Tarih";
+                                  });
+                                },
+                                style: ButtonStyle(
+                                    elevation: MaterialStateProperty.all(0),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.transparent)),
+                                child: Image.asset("assets/images/tarih.png"),
+                              ),
+                            ),
+                            CircleAvatar(
+                              radius: 50,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    categoryController.text = "Doğa";
+                                  });
+                                },
+                                style: ButtonStyle(
+                                    elevation: MaterialStateProperty.all(0),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.transparent)),
+                                child: Image.asset("assets/images/tarih.png"),
+                              ),
+                            ),
+                            CircleAvatar(
+                              radius: 50,
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                style: ButtonStyle(
+                                    elevation: MaterialStateProperty.all(0),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.transparent)),
+                                child: Image.asset("assets/images/tarih.png"),
+                              ),
+                            ),
+                            CircleAvatar(
+                              radius: 50,
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                style: ButtonStyle(
+                                    elevation: MaterialStateProperty.all(0),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.transparent)),
+                                child: Image.asset("assets/images/tarih.png"),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      TabBar(
 
-    categoryController.text = "Tarih";
+                        tabs: [
+                          Container(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text('Çözülmemiş'),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text('Çözülmüş'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              body: Container(
+                decoration: BoxDecoration(color: ColorConstants.mainPurple),
+                child: TabBarView(
+                  children: [
+                    ShowUnsolvedFutureBuilder(),
+                    ShowSolvedFutureBuilder()
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ));
+  }
+
+  FutureBuilder<QuerySnapshot<Object?>> ShowUnsolvedFutureBuilder() {
     return FutureBuilder<QuerySnapshot>(
-
         future: userService.showUnSolved(),
         builder: (context, snapshot) {
 
+
+          isSolved=false;
+          print("isSolved="+isSolved.toString());
+
+
+
+          return !snapshot.hasData
+              ? Container(
+                  alignment: Alignment.center,
+                  child: const CircularProgressIndicator(
+                    backgroundColor: Colors.grey,
+                    color: Colors.purple,
+                    strokeWidth: 10,
+                  ))
+              : Column(children: [
+                  //Listview içerisindeki kategoriyle birlikte gelecek oyunlar
+
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        DocumentSnapshot mypost = snapshot.data!.docs[index];
+
+                        return Card(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                                color: ColorConstants.mainOrange,
+                                width: 2.0,
+                                style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          shadowColor: ColorConstants.mainOrange,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(35)),
+                            ),
+                            height: 120,
+                            child: SizedBox(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child:
+                                          Image.asset("assets/images/logo.png"),
+                                    ),
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("${mypost['category']}"),
+                                      Text("TEST ADI"),
+                                    ],
+                                  ),
+                                  TextButton(
+                                    child: Text(
+                                      "OYNA  ",
+                                      style:
+                                          Theme.of(context).textTheme.headline5,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pushReplacement(PageTransition(
+                                              child: QuizScreen(
+                                                quizTitle: '${mypost['title']}',
+                                                quizId: "${mypost['q_id']}",
+                                                isSolved: isSolved,
+                                              ),
+                                              type: PageTransitionType
+                                                  .rightToLeftWithFade,
+                                              duration:
+                                                  Duration(milliseconds: 400),
+                                              reverseDuration:
+                                                  Duration(milliseconds: 400)))
+                                          .then((value) => setState(() {}));
+
+                                      print("navigeden sonra");
+                                    },
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          elevation: 8,
+                          margin: const EdgeInsets.all(10),
+                        );
+                      },
+                    ),
+                  ),
+                ]);
+        });
+  }
+
+  FutureBuilder<QuerySnapshot<Object?>> ShowSolvedFutureBuilder() {
+    return FutureBuilder<QuerySnapshot>(
+        future: userService.showSolved(),
+        builder: (context, snapshot) {
+
+          isSolved=true;
+          print("isSolved="+isSolved.toString());
 
           return !snapshot.hasData
               ? Container(
@@ -65,193 +268,86 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     color: Colors.purple,
                     strokeWidth: 10,
                   ))
-              : Scaffold(
-                  appBar: AppBar(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
-                    centerTitle: true,
-                    title: Text("Kategoriler",
-                        style: TextConstants.whiteAppBarTextStyle(context)),
-                  ),
-                  backgroundColor: Colors.deepPurple,
-                  body: Container(
-                    decoration: BoxDecoration(color: ColorConstants.mainPurple),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
+              : Column(children: [
+                  //Listview içerisindeki kategoriyle birlikte gelecek oyunlar
+
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        DocumentSnapshot mypost = snapshot.data!.docs[index];
+
+                        return Card(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                                color: ColorConstants.mainOrange,
+                                width: 2.0,
+                                style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          shadowColor: ColorConstants.mainOrange,
                           child: Container(
-                            color: Colors.deepPurpleAccent,
-                            height: 74,
-                            child: ListView(
-                              padding: const EdgeInsets.all(8.0),
-                              scrollDirection: Axis.horizontal,
-                              children: <Widget>[
-                                CircleAvatar(
-                                  radius: 45,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      categoryController.text = "Tarih";
-                                    },
-                                    style: ButtonStyle(
-                                        elevation: MaterialStateProperty.all(0),
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.transparent)),
-                                    child: Column(
-                                      children: [
-                                        Image.asset("assets/images/tarih.png"),
-                                      ],
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(35)),
+                            ),
+                            height: 120,
+                            child: SizedBox(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child:
+                                          Image.asset("assets/images/logo.png"),
                                     ),
                                   ),
-                                ),
-                                CircleAvatar(
-                                  radius: 50,
-                                  child: ElevatedButton(
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("${mypost['category']}"),
+                                      Text("TEST ADI"),
+                                    ],
+                                  ),
+                                  TextButton(
+                                    child: Text(
+                                      "OYNA  ",
+                                      style:
+                                          Theme.of(context).textTheme.headline5,
+                                    ),
                                     onPressed: () {
-                                      categoryController.text = "Doğa";
+                                      Navigator.of(context)
+                                          .pushReplacement(PageTransition(
+                                              child: QuizScreen(
+                                                quizTitle: '${mypost['title']}',
+                                                quizId: "${mypost['q_id']}",
+                                                isSolved: isSolved,
+                                              ),
+                                              type: PageTransitionType
+                                                  .rightToLeftWithFade,
+                                              duration:
+                                                  Duration(milliseconds: 400),
+                                              reverseDuration:
+                                                  Duration(milliseconds: 400)))
+                                          .then((value) => setState(() {}));
+
+                                      print("navigeden sonra");
                                     },
-                                    style: ButtonStyle(
-                                        elevation: MaterialStateProperty.all(0),
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.transparent)),
-                                    child:
-                                        Image.asset("assets/images/tarih.png"),
-                                  ),
-                                ),
-                                CircleAvatar(
-                                  radius: 50,
-                                  child: ElevatedButton(
-                                    onPressed: () {},
-                                    style: ButtonStyle(
-                                        elevation: MaterialStateProperty.all(0),
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.transparent)),
-                                    child:
-                                        Image.asset("assets/images/tarih.png"),
-                                  ),
-                                ),
-                                CircleAvatar(
-                                  radius: 50,
-                                  child: ElevatedButton(
-                                    onPressed: () {},
-                                    style: ButtonStyle(
-                                        elevation: MaterialStateProperty.all(0),
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.transparent)),
-                                    child:
-                                        Image.asset("assets/images/tarih.png"),
-                                  ),
-                                ),
-                              ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            categoryController.text,
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                        ),
-                        //Listview içerisindeki kategoriyle birlikte gelecek oyunlar
-
-                        Expanded(
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: snapshot.data!.docs.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              DocumentSnapshot mypost =
-                                  snapshot.data!.docs[index];
-
-                              return Card(
-
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                      color: ColorConstants.mainOrange,
-                                      width: 2.0,
-                                      style: BorderStyle.solid),
-                                  borderRadius: BorderRadius.circular(35.0),
-                                ),
-                                shadowColor: ColorConstants.mainOrange,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(35)),
-                                  ),
-                                  height: 120,
-                                  child: SizedBox(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Center(
-                                          child: Padding(
-                                            padding: EdgeInsets.all(10),
-                                            child: Image.asset(
-                                                "assets/images/logo.png"),
-                                          ),
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text("${mypost['category']}"),
-                                            Text("TEST ADI"),
-                                          ],
-                                        ),
-                                        TextButton(
-                                          child: Text(
-                                            "OYNA  ",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline5,
-                                          ),
-                                          onPressed: () {
-
-
-
-
-
-                                            Navigator.of(context)
-                                                .pushReplacement(PageTransition(
-                                                    child: QuizScreen(
-                                                      quizTitle:
-                                                          '${mypost['title']}',
-                                                      quizId:
-                                                          "${mypost['q_id']}",
-                                                    ),
-                                                    type: PageTransitionType
-                                                        .rightToLeftWithFade,
-                                                    duration: Duration(
-                                                        milliseconds: 400),
-                                                    reverseDuration: Duration(
-                                                        milliseconds: 400))).then((value) => setState(() { }));
-
-                                            print("navigeden sonra");
-
-
-
-
-                                          },
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                elevation: 8,
-                                margin: const EdgeInsets.all(10),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
+                          elevation: 8,
+                          margin: const EdgeInsets.all(10),
+                        );
+                      },
                     ),
                   ),
-                );
+                ]);
         });
   }
 }
