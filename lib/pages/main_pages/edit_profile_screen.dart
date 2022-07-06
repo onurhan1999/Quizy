@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:quizlen/constants/text_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
+import 'package:quizlen/pages/authentication_pages/login_page.dart';
+import 'package:quizlen/services/AuthenticationService.dart';
 
 import '../../components/reusable_widgets.dart';
 
@@ -13,6 +18,9 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
+
+  AuthService _authService=AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +33,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             CircleAvatarWidget(context),
             nickNameText(context),
             Expanded(
+              flex: 4,
               child: Padding(
                 padding: EdgeInsets.only(top: context.dynamicHeight(0.03)),
                 child: Container(
@@ -91,7 +100,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         IconButton(
-            iconSize: 35, onPressed: () {}, icon: Icon(Icons.exit_to_app))
+            iconSize: 35, onPressed: () {
+              _authService.Logout(context);
+
+        }, icon: Icon(Icons.exit_to_app))
       ],
     );
   }
@@ -215,13 +227,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-  Padding CircleAvatarWidget(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: context.dynamicHeight(0.05)),
-      child: CircleAvatar(
-        backgroundColor: Colors.transparent,
-        child: ReusableWidgets.getImageAsset("avatar.png"),
-        radius: 75,
+  Expanded CircleAvatarWidget(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.only(top: context.dynamicHeight(0.05)),
+        child: CircleAvatar(
+          backgroundColor: Colors.transparent,
+          child: ReusableWidgets.getImageAsset("avatar.png"),
+          radius: 75,
+        ),
       ),
     );
   }
@@ -232,7 +246,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       centerTitle: true,
       backgroundColor: Colors.transparent,
       title: Text(
-        'Liderlik',
+        'Profil',
         style: TextConstants.whiteAppBarTextStyle(context),
       ),
     );

@@ -13,9 +13,9 @@ class UserService {
     List quizler = doc['cozulenTestler'];
     if (quizler.contains(int.parse(girilen)) == false){
       docRef.update(
-      {
-        'cozulenTestler': FieldValue.arrayUnion([int.parse(girilen)])
-      }
+          {
+            'cozulenTestler': FieldValue.arrayUnion([int.parse(girilen)])
+          }
       );
     }
   }
@@ -23,11 +23,11 @@ class UserService {
   Future updateScore(String girilen) async{
 
     DocumentReference docRef = _firestore.collection('users').doc(_auth.currentUser!.uid);
-      docRef.update(
-          {
-            'Score': FieldValue.increment(int.parse(girilen))
-          }
-      );
+    docRef.update(
+        {
+          'Score': FieldValue.increment(int.parse(girilen))
+        }
+    );
   }
 
 
@@ -37,7 +37,7 @@ class UserService {
     DocumentReference docRef = _firestore.collection('users').doc(_auth.currentUser!.uid);
     DocumentSnapshot doc = await docRef.get();
     List quizler = doc['cozulenTestler'];
-   // print("bura"+ quizler.isEmpty.toString());
+    // print("bura"+ quizler.isEmpty.toString());
     if(quizler.isEmpty){
       return await _firestore.collection("quizes").get();
     }else{
@@ -50,7 +50,7 @@ class UserService {
     DocumentReference docRef = _firestore.collection('users').doc(_auth.currentUser!.uid);
     DocumentSnapshot doc = await docRef.get();
     List quizler = doc['cozulenTestler'];
-   // print("bura"+ quizler.isEmpty.toString());
+    // print("bura"+ quizler.isEmpty.toString());
     if(quizler.isEmpty){
       // -------------------------------------- BURADA NE DÖNDÜRECEĞİMİZİ SONRA BELİRLERİZ -----------------------------------------------------------
       return await _firestore.collection("quizes").where("q_id", whereIn: [0]).get();
