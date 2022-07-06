@@ -32,10 +32,10 @@ class _AfterGameScreenState extends State<AfterGameScreen> {
   @override
   void initState() {
     correctNumber=widget.score/10;
-
+    _controllerTopCenter = ConfettiController(duration: const Duration(seconds: 5));
 
     super.initState();
-    _controllerTopCenter = ConfettiController(duration: const Duration(seconds: 5));
+
   }
 
 

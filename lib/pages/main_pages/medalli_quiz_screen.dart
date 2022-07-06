@@ -11,17 +11,17 @@ import 'package:quizlen/services/UserServices.dart';
 
 import '../../constants/text_constants.dart';
 
-void main() => runApp(QuizScreen(
+void main() => runApp(QuizScreen1(
   quizId: '',
   quizTitle: '',
   isSolved: true,
 ));
 
-class QuizScreen extends StatefulWidget {
+class QuizScreen1 extends StatefulWidget {
   final String quizTitle;
   final String quizId;
   final bool isSolved;
-  const QuizScreen({
+  const QuizScreen1({
     Key? key,
     required this.quizTitle,
     required this.quizId,
@@ -29,10 +29,10 @@ class QuizScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<QuizScreen> createState() => _QuizScreenState();
+  State<QuizScreen1> createState() => _QuizScreen1State();
 }
 
-class _QuizScreenState extends State<QuizScreen> {
+class _QuizScreen1State extends State<QuizScreen1> {
 
 
 
@@ -522,11 +522,6 @@ class _QuizScreenState extends State<QuizScreen> {
                                                         Navigator.of(context).pop();
 
                                                       } else {
-
-
-
-
-
                                                         print(
                                                             "test bitti");
 
@@ -543,10 +538,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                                               score.toString());
                                                         }
 
-                                                        Navigator.of(context)
-                                                            .pushNamedAndRemoveUntil('/mainbottombarscreen', (Route<dynamic> route) => false);
 
-                                                        /*Navigator.of(context)
+
+                                                        Navigator.of(context)
                                                             .push(PageTransition(
                                                             child: AfterGameScreen(
                                                               score: score,
@@ -554,11 +548,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                                             type: PageTransitionType.rightToLeftWithFade,
                                                             duration: Duration(milliseconds: 400),
                                                             reverseDuration: Duration(milliseconds: 400)))
-                                                            .then((value) => setState(() => {
-
-                                                        }));*/
-
-
+                                                            .then((value) => setState(() => {}));
                                                       }
 
                                                       correctAnswerControl();

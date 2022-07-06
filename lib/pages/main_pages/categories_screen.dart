@@ -20,6 +20,15 @@ class CategoriesPage extends StatefulWidget {
 }
 
 class _CategoriesPageState extends State<CategoriesPage> {
+
+
+  void initState() {
+
+    categoryController.text="Kategori";
+    super.initState();
+  }
+
+
   late final String title;
   late final String description;
   bool isSolved=false;
@@ -27,6 +36,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   UserService userService = UserService();
 
   TextEditingController categoryController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
