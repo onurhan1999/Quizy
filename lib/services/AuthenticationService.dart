@@ -10,6 +10,7 @@ import '../pages/authentication_pages/login_page.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+
   Future Login(String mail, String pass) async {
     try {
       await _auth.signInWithEmailAndPassword(
@@ -62,12 +63,14 @@ class AuthService {
     }
   }
 
+
   Future SignUp(String mail, String pass, String username) async {
     try {
       await _auth.createUserWithEmailAndPassword(email: mail, password: pass);
       final docUser = FirebaseFirestore.instance
           .collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid);
+
       final UserModel user = UserModel(username: username, score: 0);
       final json = user.toJson();
       docUser.set(json);
