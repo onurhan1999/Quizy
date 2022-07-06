@@ -24,7 +24,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
   void initState() {
 
-    categoryController.text="Kategori";
+    categoryController.text="Tarih";
     super.initState();
   }
 
@@ -161,7 +161,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
   FutureBuilder<QuerySnapshot<Object?>> ShowUnsolvedFutureBuilder() {
     return FutureBuilder<QuerySnapshot>(
-        future: userService.showUnSolved(),
+        future: userService.showUnSolved(categoryController.text),
         builder: (context, snapshot) {
 
 
@@ -263,7 +263,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
   FutureBuilder<QuerySnapshot<Object?>> ShowSolvedFutureBuilder() {
     return FutureBuilder<QuerySnapshot>(
-        future: userService.showSolved(),
+        future: userService.showSolved(categoryController.text),
         builder: (context, snapshot) {
 
           isSolved=true;
