@@ -32,30 +32,30 @@ class UserService {
 
 
 
-  Future<QuerySnapshot> showUnSolved() async{
+  Future<QuerySnapshot> showUnSolved(String category) async{
 
     DocumentReference docRef = _firestore.collection('users').doc(_auth.currentUser!.uid);
     DocumentSnapshot doc = await docRef.get();
     List quizler = doc['cozulenTestler'];
-    // print("bura"+ quizler.isEmpty.toString());
+    print("bura"+ quizler.length.toString());
     if(quizler.isEmpty){
-      return await _firestore.collection("quizes").get();
+      return await _firestore.collection("quizes").where("category", isEqualTo: category).get();
     }else{
-      return await _firestore.collection("quizes").where("q_id", whereNotIn: quizler).get();
+      return await _firestore.collection("quizes").where("q_id", whereNotIn: quizler).where("category", isEqualTo: category).get();
     }
   }
 
 
-  Future<QuerySnapshot> showSolved() async{
+  Future<QuerySnapshot> showSolved(String category) async{
     DocumentReference docRef = _firestore.collection('users').doc(_auth.currentUser!.uid);
     DocumentSnapshot doc = await docRef.get();
     List quizler = doc['cozulenTestler'];
     // print("bura"+ quizler.isEmpty.toString());
     if(quizler.isEmpty){
       // -------------------------------------- BURADA NE DÖNDÜRECEĞİMİZİ SONRA BELİRLERİZ -----------------------------------------------------------
-      return await _firestore.collection("quizes").where("q_id", whereIn: [0]).get();
+      return await _firestore.collection("quizes").where("q_id", whereIn: [-1]).where("category", isEqualTo: category).get();
     }else{
-      return await _firestore.collection("quizes").where("q_id", whereIn: quizler).get();
+      return await _firestore.collection("quizes").where("q_id", whereIn: quizler).where("category", isEqualTo: category).get();
     }
   }
   ///////////////////////////// FİREBASETE DESCENDING ORDER OLMADIĞI İÇİN SAYFA İÇERİSİNDE TERS BASTIR  ------------------------------------------

@@ -12,6 +12,17 @@ class DecorationProperties{
   image: ReusableWidgets.getAssetImage("background.png"),
   fit: BoxFit.fill));
 
+  static BoxDecoration quizBackgroundDecoration = BoxDecoration(
+      image: DecorationImage(
+          image: ReusableWidgets.getAssetImage("quiz_background.png"),
+          fit: BoxFit.fill));
+
+  static BoxDecoration questionBackgroundDecoration = BoxDecoration(
+      image: DecorationImage(
+          image: ReusableWidgets.getAssetImage("question_background.png"),
+          fit: BoxFit.fill));
+
+
   static BoxDecoration leaderBoardContainerDecoration=const BoxDecoration(
   gradient: LinearGradient(
   begin: Alignment.topCenter,

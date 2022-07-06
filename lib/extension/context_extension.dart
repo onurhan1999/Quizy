@@ -6,6 +6,8 @@ extension ContextExtension on BuildContext{
 
   double appBarWidth(double value)=>MediaQuery.of(this).size.width*0.12;
 
+  double contextWidth()=>MediaQuery.of(this).size.width;
+  double contextHeight()=>MediaQuery.of(this).size.height;
 
 
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,91 +20,118 @@ class EditProfileScreen extends StatefulWidget {
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
+
+
 class _EditProfileScreenState extends State<EditProfileScreen> {
+
+  void initState() {
+
+    print("init leader");
+    // TODO: implement initState
+    getList();
+    super.initState();
+  }
+
+  List<Object> userRank = [];
+
+  Future getList() async {
+    var data = await FirebaseFirestore.instance
+        .collection('users')
+        .orderBy('Score', descending: true)
+        .get();
+
+    setState(() {
+      userRank = List.from(data.docs.map((doc) => doc.id));
+      print(userRank.indexOf(FirebaseAuth.instance.currentUser!.uid)+1);
+    });
+  }
+
 
   AuthService _authService=AuthService();
   UserService _userService=UserService();
   @override
   Widget build(BuildContext context) {
+    print(userRank.indexOf(FirebaseAuth.instance.currentUser!.uid)+1);
+
     return Scaffold(
-        backgroundColor: Color(0xffE1CCEC),
-        resizeToAvoidBottomInset: false,
-        appBar: buildAppBar(context),
-        body: FutureBuilder<List<String>>(
+      backgroundColor: Color(0xffE1CCEC),
+      resizeToAvoidBottomInset: false,
+      appBar: buildAppBar(context),
+      body: FutureBuilder<List<String>>(
           future: _userService.getCurrentUser(),
           builder: (context,snapshot) {
             return !snapshot.hasData
-              ? Container(
-                  alignment: Alignment.center,
-                  child: const CircularProgressIndicator(
-                    backgroundColor: Colors.grey,
-                    color: Colors.purple,
-                    strokeWidth: 10,
-                  ))
-              :  Center(
+                ? Container(
+                alignment: Alignment.center,
+                child: const CircularProgressIndicator(
+                  backgroundColor: Colors.grey,
+                  color: Colors.purple,
+                  strokeWidth: 10,
+                ))
+                :  Center(
                 child: Column(
-              children: [
-                CircleAvatarWidget(context),
-                nickNameText(context,snapshot.data![0]),
-                Expanded(
-                  flex: 4,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: context.dynamicHeight(0.03)),
-                    child: Container(
-                      decoration:  BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset: Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(40),
-                              topLeft: Radius.circular(40)),
-                          color: Colors.white),
+                  children: [
+                    CircleAvatarWidget(context),
+                    nickNameText(context,snapshot.data![0]),
+                    Expanded(
+                      flex: 4,
                       child: Padding(
-                        padding: EdgeInsets.only(
-                            left: context.dynamicWidth(0.1),
-                            right: context.dynamicWidth(0.1),
-                            top: context.dynamicHeight(0.03)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            TabTexts(context),
-                            Tabs(context,snapshot.data![1]),
-                            const Divider(height: 5, thickness: 3),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: context.dynamicHeight(0.02),
-                                  left: 10,
-                                  right: 10,
-                                  bottom: 10),
-                              child: Column(
-                                children: [
-                                  ChooseAvatar(context),
-                                  ChangePassword(context),
-                                ],
-                              ),
+                        padding: EdgeInsets.only(top: context.dynamicHeight(0.03)),
+                        child: Container(
+                          decoration:  BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(0, 3), // changes position of shadow
+                                ),
+                              ],
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(40),
+                                  topLeft: Radius.circular(40)),
+                              color: Colors.white),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: context.dynamicWidth(0.1),
+                                right: context.dynamicWidth(0.1),
+                                top: context.dynamicHeight(0.03)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                TabTexts(context),
+                                Tabs(context,snapshot.data![1],(userRank.indexOf(FirebaseAuth.instance.currentUser!.uid)+1).toString()),
+                                const Divider(height: 5, thickness: 3),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      top: context.dynamicHeight(0.02),
+                                      left: 10,
+                                      right: 10,
+                                      bottom: 10),
+                                  child: Column(
+                                    children: [
+                                      ChooseAvatar(context),
+                                      ChangePassword(context),
+                                    ],
+                                  ),
+                                ),
+                                const Divider(
+                                  height: 5,
+                                  thickness: 2,
+                                  color: Colors.black,
+                                ),
+                                SignOut(context),
+                              ],
                             ),
-                            const Divider(
-                              height: 5,
-                              thickness: 2,
-                              color: Colors.black,
-                            ),
-                            SignOut(context),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                )
-              ],
-            ));
+                    )
+                  ],
+                ));
           }
-        ),
-      );
+      ),
+    );
   }
 
   Row SignOut(BuildContext context) {
@@ -116,7 +144,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         IconButton(
             iconSize: 35, onPressed: () {
-              _authService.Logout(context);
+          _authService.Logout(context);
 
         }, icon: Icon(Icons.exit_to_app))
       ],
@@ -149,7 +177,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-  Padding Tabs(BuildContext context,puan) {
+  Padding Tabs(BuildContext context,puan,userRank) {
     return Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 10),
       child: Row(
@@ -176,7 +204,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             radius: 30,
             backgroundColor: Color(0xffFF0000),
             child: Text(
-              "%70",
+              userRank,
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
