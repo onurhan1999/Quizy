@@ -68,4 +68,12 @@ class UserService {
     a.add(_firestore.collection('users').orderBy('Score',descending: true).get().toString());
     return a;
   }
+
+  Future<List<String>> getCurrentUser() async{
+    List<String> userInfo=[];
+    var doc=await _firestore.collection('users').doc(_auth.currentUser!.uid).get();
+    userInfo.add(doc['UserName'].toString());
+    userInfo.add(doc['Score'].toString());
+    return userInfo;
+  }
 }
