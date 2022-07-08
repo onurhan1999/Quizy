@@ -1,6 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:quizlen/components/reusable_widgets.dart';
 import 'package:quizlen/constants/color_constants.dart';
 import 'package:quizlen/pages/authentication_pages/login_page.dart';
 import 'package:quizlen/pages/authentication_pages/signup_page.dart';
@@ -20,12 +21,12 @@ class SplashScreen extends StatelessWidget {
         title: 'Clean Code',
         home: AnimatedSplashScreen(
             duration: 3000,
-            splash: Image.asset("assets/images/logo.png"),
+            splash: ReusableWidgets.getImageAsset("logo.png"),
             nextScreen: LoginPage(),
             splashIconSize: 250,
             splashTransition: SplashTransition.fadeTransition,
             pageTransitionType: PageTransitionType.leftToRightWithFade,
-            backgroundColor: ColorConstants.deepPurple));
+            backgroundColor: Color(0xff1E2059)));
   }
 }
 

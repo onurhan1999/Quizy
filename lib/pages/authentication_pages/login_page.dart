@@ -47,9 +47,9 @@ class _LoginPageState extends State<LoginPage> {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
 
-        if(snapshot.data!=null)
+        if(snapshot.data!=null) {
           return MainBottomBarScreen();
-        else{
+        } else{
           return Scaffold(
             resizeToAvoidBottomInset: false,
             body: Container(

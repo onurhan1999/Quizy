@@ -25,7 +25,17 @@ class TextConstants{
     return  GoogleFonts.montserrat(textStyle: Theme.of(context).textTheme.headline4,color: Colors.white,fontWeight: FontWeight.w600);
   }
 
+  static leaderboardAppBarTextStyle(BuildContext context){
+    return  GoogleFonts.montserrat(textStyle: Theme.of(context).textTheme.headline4,color: Color(0xff595CFF),fontWeight: FontWeight.w600);
+  }
 
+
+  static leaderboardUserTextStyleGreen(BuildContext context){
+    return  GoogleFonts.inter(fontSize: 25,color: Color(0xff4CC082));
+  }
+  static leaderboardUserTextStyleWhite(BuildContext context){
+    return  GoogleFonts.inter(fontSize: 25,color: Color(0xffE8E8E8));
+  }
   static playButtonTextStyles(BuildContext context){
     return GoogleFonts.acme(textStyle: Theme.of(context).textTheme.headline2,color: Colors.white).copyWith(color: Colors.white,shadows: [
       Shadow(

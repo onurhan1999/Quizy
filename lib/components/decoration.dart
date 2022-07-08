@@ -24,11 +24,7 @@ class DecorationProperties{
 
 
   static BoxDecoration leaderBoardContainerDecoration=const BoxDecoration(
-  gradient: LinearGradient(
-  begin: Alignment.topCenter,
-  end: Alignment.bottomCenter,
-  colors: [Color(0xffFF5ED2), Color(0xff5263FF)],
-  ),
+  color: Color(0xff1E2059),
   );
 
   static BoxDecoration quizScreenContainerDecoration= BoxDecoration(
