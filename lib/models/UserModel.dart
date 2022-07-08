@@ -3,6 +3,7 @@ class UserModel{
   final String username;
   final int score;
 
+
   UserModel({
     required this.username,
     required this.score,
@@ -12,6 +13,7 @@ class UserModel{
     'UserName': username,
     'Score': score,
     'cozulenTestler': [],
+    'Avatar':"https://firebasestorage.googleapis.com/v0/b/cookcaquiz.appspot.com/o/1.png?alt=media&token=abcd8ce4-6227-4454-99b2-a3590b95246a"
   };
 
   UserModel fromJson(Map<String, dynamic> json) => UserModel(

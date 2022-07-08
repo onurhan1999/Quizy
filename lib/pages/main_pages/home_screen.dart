@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Uri(scheme: 'https', host: 'turkiye.un.org', path: '/tr/sdgs');
 
     return Container(
-      decoration: DecorationProperties.backgroundDecoration,
+      color: Color(0xff0E0F37),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Padding(

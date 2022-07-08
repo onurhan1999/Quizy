@@ -42,33 +42,40 @@ class _MainBottomBarScreenState extends State<MainBottomBarScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
-              bottomNavigationBar: BottomNavigationBar(
-                showUnselectedLabels: false,
-                unselectedItemColor: Colors.grey,
-                iconSize: 35,
-                backgroundColor: Color(0xFF8E69B9),
-                landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home_outlined),
-                    label: 'Home',
-                    backgroundColor: Colors.grey,
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.leaderboard_outlined),
-                    label: 'Leaderboard',
-                    backgroundColor: Colors.grey,
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.account_circle_outlined),
-                    label: 'Profile',
-                    backgroundColor: Colors.grey,
-                  ),
-                ],
-                selectedLabelStyle: GoogleFonts.montserrat(),
-                currentIndex: _selectedIndex,
-                selectedItemColor: Colors.white,
-                onTap: _onItemTapped,
+              bottomNavigationBar: Container(
+                decoration: const BoxDecoration(
+                    border: Border(top: BorderSide(color: Color(0xff595CFF),width: 2))
+                ),
+                child: BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
+                  showUnselectedLabels: false,
+                  unselectedItemColor: Colors.grey,
+                  iconSize: 35,
+                  backgroundColor: Color(0xFF1E2059),
+                  landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
+                  items: const <BottomNavigationBarItem>[
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home_outlined),
+                      label: 'Home',
+                      backgroundColor: Colors.grey,
+                    ),
+                    BottomNavigationBarItem(
+
+                      icon: Icon(Icons.leaderboard_outlined),
+                      label: 'Leaderboard',
+                      backgroundColor: Colors.grey,
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.account_circle_outlined),
+                      label: 'Profile',
+                      backgroundColor: Colors.grey,
+                    ),
+                  ],
+                  selectedLabelStyle: GoogleFonts.montserrat(),
+                  currentIndex: _selectedIndex,
+                  selectedItemColor: Colors.white,
+                  onTap: _onItemTapped,
+                ),
               ),
               body: SizedBox.expand(
                 child: PageView(
@@ -102,7 +109,7 @@ class _MainBottomBarScreenState extends State<MainBottomBarScreen> {
       //
       //using this page controller you can make beautiful animation effects
       _pageController.animateToPage(index,
-          duration: Duration(milliseconds: 500), curve: Curves.easeOut);
+          duration: Duration(milliseconds: 250), curve: Curves.easeOut);
     });
   }
 }
