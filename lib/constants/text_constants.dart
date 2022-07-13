@@ -12,9 +12,11 @@ class TextConstants{
   }
 
 
-  static TextStyle quizTextStyle = GoogleFonts.fredoka().copyWith(fontSize: 18);
+  static TextStyle quizTextStyle = GoogleFonts.fredoka().copyWith(fontSize: 15);
+  static TextStyle quizTextStyleAnswers = GoogleFonts.fredoka().copyWith(fontSize: 13);
+
   static favCategoryTextStyle(BuildContext context){
-    return Theme.of(context).textTheme.titleLarge?.copyWith(color: Color(0xff5E5F5E));
+    return Theme.of(context).textTheme.titleLarge?.copyWith(color: Color(0xff4EBD2F));
   }
 
   static greyAppBarTextStyle(BuildContext context){

@@ -20,35 +20,30 @@ class CategoriesPage extends StatefulWidget {
 }
 
 class _CategoriesPageState extends State<CategoriesPage> {
-
-
   void initState() {
-
-    categoryController.text="Tarih";
+    categoryController.text = "Tarih";
     super.initState();
   }
 
-
   late final String title;
   late final String description;
-  bool isSolved=false;
+  bool isSolved = false;
 
   UserService userService = UserService();
 
   TextEditingController categoryController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 2,
         child: Container(
-          decoration: BoxDecoration(color: ColorConstants.mainPurple),
+          decoration: BoxDecoration(color: Colors.red),
           child: Container(
             color: Colors.deepPurple,
             height: 50,
             child: Scaffold(
-              backgroundColor: Colors.deepPurple,
+              backgroundColor: Color(0xff14154F),
               appBar: PreferredSize(
                 preferredSize: Size(200, 150),
                 child: AppBar(
@@ -67,7 +62,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                               .headline4
                               ?.copyWith(color: Colors.white)),
                       Container(
-                        color: Colors.deepPurpleAccent,
+                        color: Color(0xff14154F),
                         height: 71,
                         child: ListView(
                           padding: const EdgeInsets.all(8.0),
@@ -106,7 +101,11 @@ class _CategoriesPageState extends State<CategoriesPage> {
                             CircleAvatar(
                               radius: 50,
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  setState(() {
+                                    categoryController.text = "Çevre";
+                                  });
+                                },
                                 style: ButtonStyle(
                                     elevation: MaterialStateProperty.all(0),
                                     backgroundColor: MaterialStateProperty.all(
@@ -130,8 +129,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
                       ),
                       TabBar(
 
+
                         tabs: [
                           Container(
+
                             padding: EdgeInsets.all(8.0),
                             child: Text('Çözülmemiş'),
                           ),
@@ -146,7 +147,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 ),
               ),
               body: Container(
-                decoration: BoxDecoration(color: ColorConstants.mainPurple),
+                decoration: BoxDecoration(color:Colors.blue),
                 child: TabBarView(
                   children: [
                     ShowUnsolvedFutureBuilder(),
@@ -163,12 +164,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
     return FutureBuilder<QuerySnapshot>(
         future: userService.showUnSolved(categoryController.text),
         builder: (context, snapshot) {
-
-
-          isSolved=false;
-          print("isSolved="+isSolved.toString());
-
-
+          isSolved = false;
+          print("isSolved=" + isSolved.toString());
 
           return !snapshot.hasData
               ? Container(
@@ -219,7 +216,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text("${mypost['category']}"),
-                                      Text("TEST ADI"),
+                                      Text("${mypost['title']}"),
                                     ],
                                   ),
                                   TextButton(
@@ -235,6 +232,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                                 quizTitle: '${mypost['title']}',
                                                 quizId: "${mypost['q_id']}",
                                                 isSolved: isSolved,
+                                                quizCategory:
+                                                    "${mypost['category']}",
                                               ),
                                               type: PageTransitionType
                                                   .rightToLeftWithFade,
@@ -265,9 +264,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
     return FutureBuilder<QuerySnapshot>(
         future: userService.showSolved(categoryController.text),
         builder: (context, snapshot) {
-
-          isSolved=true;
-          print("isSolved="+isSolved.toString());
+          isSolved = true;
+          print("isSolved=" + isSolved.toString());
 
           return !snapshot.hasData
               ? Container(
@@ -319,7 +317,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text("${mypost['category']}"),
-                                      Text("TEST ADI"),
+                                      Text("${mypost['title']}"),
                                     ],
                                   ),
                                   TextButton(
@@ -335,6 +333,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                                 quizTitle: '${mypost['title']}',
                                                 quizId: "${mypost['q_id']}",
                                                 isSolved: isSolved,
+                                                quizCategory:
+                                                    "${mypost['category']}",
                                               ),
                                               type: PageTransitionType
                                                   .rightToLeftWithFade,

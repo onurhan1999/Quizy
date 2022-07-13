@@ -20,7 +20,16 @@ class UserService {
       );
     }
   }
+  Future updatefav(String girilen) async{
 
+    DocumentReference docRef = _firestore.collection('users').doc(_auth.currentUser!.uid);
+    DocumentSnapshot doc = await docRef.get();
+    List favs = doc['favourite'];
+    favs[int.parse(girilen)]=favs[int.parse(girilen)]+1;
+    docRef.update({
+      "favourite": favs
+    });
+  }
   Future updateScore(String girilen) async{
 
     DocumentReference docRef = _firestore.collection('users').doc(_auth.currentUser!.uid);

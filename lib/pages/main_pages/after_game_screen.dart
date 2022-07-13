@@ -54,9 +54,14 @@ class _AfterGameScreenState extends State<AfterGameScreen> {
       alignment: Alignment.topCenter,
       children: [
         Scaffold(
-            backgroundColor: Color(0xffEAEAEA),
+          appBar: AppBar(
+            elevation: 0,
+          backgroundColor: Colors.transparent,
+            automaticallyImplyLeading: false,
+          ),
+            backgroundColor: Color(0xff14154F),
             body: Padding(
-              padding: EdgeInsets.only(top: context.dynamicHeight(0.1)),
+              padding: EdgeInsets.only(top: context.dynamicHeight(0.05)),
               child: Column(
                 children: [
                   Center(
@@ -71,7 +76,7 @@ class _AfterGameScreenState extends State<AfterGameScreen> {
                         padding: EdgeInsets.only(top: context.dynamicHeight(0.05)),
                         child: CircleAvatar(
                           backgroundColor: Color(0xffD9D9D9),
-                          radius: 80,
+                          radius: 100,
                           child: ReusableWidgets.getImageAsset("kupa.png"),
                         ),
                       ),
@@ -86,7 +91,7 @@ class _AfterGameScreenState extends State<AfterGameScreen> {
                                 width: context.dynamicWidth(0.4),
                                 height: context.dynamicHeight(0.15),
                                 child: Card(
-                                  color: Color(0xffEAEAEA),
+                                  color: Color(0xff14154F),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(25),
                                       side: BorderSide(
@@ -123,7 +128,7 @@ class _AfterGameScreenState extends State<AfterGameScreen> {
                                 width: context.dynamicWidth(0.4),
                                 height: context.dynamicHeight(0.15),
                                 child: Card(
-                                  color: Color(0xffEAEAEA),
+                                  color: Color(0xff14154F),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(25),
                                       side: BorderSide(
@@ -157,46 +162,23 @@ class _AfterGameScreenState extends State<AfterGameScreen> {
                           ],
                         ),
                       ),
+
                       Padding(
-                        padding: const EdgeInsets.only(top: 20),
+                        padding: const EdgeInsets.only(top: 70),
                         child: Container(
-                          height: context.dynamicHeight(0.1),
+                          height: context.dynamicHeight(0.12),
                           width: context.dynamicWidth(0.8),
                           child: InkWell(
-                            onTap: () {},
-                            child: Card(
-                              color: Color(0xff00B2FF),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Center(
-                                child: Text(
-                                  "BİLGİ",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline5
-                                      ?.copyWith(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Container(
-                          height: context.dynamicHeight(0.1),
-                          width: context.dynamicWidth(0.8),
-                          child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
                             child: Card(
                               color: Color(0xff26CE55),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20)),
                               child: Center(
                                 child: Text(
-                                  "BİLGİ",
+                                  "Geri Dön",
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline5

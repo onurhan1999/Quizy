@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:quizlen/components/decoration.dart';
 import 'package:quizlen/constants/color_constants.dart';
@@ -76,11 +77,15 @@ class _SignupPageState extends State<SignupPage> {
     return Column(
             children: [
               const Spacer(
-                flex: 5,
+                flex: 10,
               ),
               Expanded(
                 flex: 50,
                 child: Image.asset("assets/images/logo.png"),
+              ),
+              Expanded(
+                flex: 20,
+                child: Text("QUIZY",style: GoogleFonts.bayon(color: Color(0xff595CFF),fontSize: 48),),
               ),
               const Spacer(
                 flex: 5,
@@ -102,13 +107,11 @@ class _SignupPageState extends State<SignupPage> {
               const Spacer(
                 flex: 5,
               ),
-              GmailSignUpButton(),
-              const Spacer(
-                flex: 10,
-              ),
+
               const Divider(
+                thickness: 1,
                 height: 30,
-                color: Colors.black,
+                color: Color(0xff595CFF),
               ),
               DoYouHaveAccountButton(context)
             ],
@@ -121,7 +124,7 @@ class _SignupPageState extends State<SignupPage> {
       children: [
         Text(
           "Hesabınız var mı?",
-          style: Theme.of(context).textTheme.headline6,
+          style: GoogleFonts.inter(color: Colors.white,fontSize: 22),
         ),
         TextButton(
             onPressed: () {
@@ -131,7 +134,10 @@ class _SignupPageState extends State<SignupPage> {
                   duration: Duration(milliseconds: 400),
                   reverseDuration: Duration(milliseconds: 400)));
             },
-            child: Text("Giriş Yapın")),
+            child: Text("Giriş Yapın",style: GoogleFonts.inter(color: Color(0xff595CFF),fontSize: 20,fontWeight: FontWeight.bold),)
+
+
+        ),
       ],
     );
   }
@@ -179,7 +185,7 @@ class _SignupPageState extends State<SignupPage> {
         width: double.infinity,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
-            color: ColorConstants.logoRed),
+            color: Color(0xff595CFF)),
         child: MaterialButton(
           onPressed: () async {
 
@@ -207,19 +213,22 @@ class _SignupPageState extends State<SignupPage> {
   Flexible PasswordTextField() {
     return Flexible(
       flex: 15,
-      child: TextFormField(
-        controller: _password,
-        keyboardType: TextInputType.visiblePassword,
-        obscureText: true,
-        decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderSide:
-                BorderSide(color: ColorConstants.deepPurple, width: 2.5),
-            borderRadius: const BorderRadius.all(Radius.circular(30)),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Color(0xffE8E8E8),
+            borderRadius: BorderRadius.all(Radius.circular(30))
+        ),
+        child: TextFormField(
+          controller: _password,
+          keyboardType: TextInputType.visiblePassword,
+          obscureText: true,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+
+            labelText: "Şifre giriniz",
+            prefixIcon: Icon(Icons.lock),
+            suffixIcon: Icon(Icons.remove_red_eye),
           ),
-          labelText: "Şifre giriniz",
-          prefixIcon: Icon(Icons.lock),
-          suffixIcon: Icon(Icons.remove_red_eye),
         ),
       ),
     );
@@ -228,17 +237,20 @@ class _SignupPageState extends State<SignupPage> {
   Flexible EmailTextField() {
     return Flexible(
       flex: 15,
-      child: TextFormField(
-        controller: _email,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: ColorConstants.deepPurple, width: 2.5),
-              borderRadius: const BorderRadius.all(Radius.circular(30)),
-            ),
-            labelText: "E-mail giriniz",
-            prefixIcon: const Icon(Icons.email)),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Color(0xffE8E8E8),
+            borderRadius: BorderRadius.all(Radius.circular(30))
+        ),
+        child: TextFormField(
+          controller: _email,
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+              border: InputBorder.none,
+
+              labelText: "E-mail giriniz",
+              prefixIcon: const Icon(Icons.email)),
+        ),
       ),
     );
   }
@@ -246,17 +258,21 @@ class _SignupPageState extends State<SignupPage> {
   Flexible UsernameTextField() {
     return Flexible(
       flex: 15,
-      child: TextFormField(
-        controller: _username,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: ColorConstants.deepPurple, width: 2.5),
-              borderRadius: const BorderRadius.all(Radius.circular(30)),
-            ),
-            labelText: "Kullanıcı adınızı giriniz",
-            prefixIcon: const Icon(Icons.person)),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Color(0xffE8E8E8),
+            borderRadius: BorderRadius.all(Radius.circular(30))
+        ),
+        child: TextFormField(
+          controller: _username,
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+              border: InputBorder.none,
+
+
+              labelText: "Kullanıcı adınızı giriniz",
+              prefixIcon: const Icon(Icons.person)),
+        ),
       ),
     );
   }

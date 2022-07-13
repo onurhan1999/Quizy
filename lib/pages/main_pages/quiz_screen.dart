@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:quizlen/components/decoration.dart';
@@ -15,18 +14,22 @@ void main() => runApp(QuizScreen(
       quizId: '',
       quizTitle: '',
       isSolved: true,
+      quizCategory:'',
     ));
 
 class QuizScreen extends StatefulWidget {
   final String quizTitle;
   final String quizId;
   final bool isSolved;
+  final String quizCategory;
 
   const QuizScreen({
     Key? key,
     required this.quizTitle,
     required this.quizId,
     required this.isSolved,
+    required this.quizCategory,
+
   }) : super(key: key);
 
   @override
@@ -34,6 +37,20 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+
+  String categoryId(String input){
+    switch(input){
+      case "Tarih":
+        return "0";
+      case "Çevre":
+        return "1";
+      case "İnsan Hakları":
+        return "2";
+      default :
+        return "0";
+    }
+  }
+
   Color colorControllerA = Colors.white;
   Color colorControllerB = Colors.white;
   Color colorControllerC = Colors.white;
@@ -54,15 +71,14 @@ class _QuizScreenState extends State<QuizScreen> {
 
   int score = 0;
 
-  UserService _userService = UserService();
+  final UserService _userService = UserService();
 
   QuizService quizService = QuizService();
   int indexs = 0;
 
   @override
   Widget build(BuildContext context) {
-    print(context.contextHeight());
-    print(context.contextWidth());
+
 
     return Container(
       decoration: DecorationProperties.quizBackgroundDecoration,
@@ -94,13 +110,7 @@ class _QuizScreenState extends State<QuizScreen> {
                           optionControllerD.text = mypost['answers'][3];
                           return Column(
                             children: [
-                              Text(
-                                (indexs + 1).toString() + "/10",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline5
-                                    ?.copyWith(color: Colors.white),
-                              ),
+
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Row(
@@ -114,8 +124,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                     ),
                                     AnimatedContainer(
                                       color: Colors.grey.withOpacity(0.25),
-                                      width: context.contextProgressBarWidthGrey(
-                                          indexs + 1.toDouble()),
+                                      width:
+                                          context.contextProgressBarWidthGrey(
+                                              indexs + 1.toDouble()),
                                       height: 20,
                                       duration: Duration(milliseconds: 500),
                                     ),
@@ -143,53 +154,57 @@ class _QuizScreenState extends State<QuizScreen> {
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
-                                          top: isBigScreen() ? 10 : 5),
+                                          top: 5),
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(20.0),
                                         child: Card(
-                                          color: colorControllerA,
                                           shape: Border(
                                               left: BorderSide(
                                                   color: Colors.red, width: 8)),
-                                          child: InkWell(
-                                            onTap: () {
-                                              optionColorController
-                                                  ? setState(() {
-                                                      cleanOptionColors();
+                                          child: AnimatedContainer(
+                                            curve: Curves.linearToEaseOut,
+                                            duration: Duration(milliseconds: 900),
+                                            color: colorControllerA,
+                                            child: InkWell(
+                                              onTap: () {
+                                                optionColorController
+                                                    ? setState(() {
+                                                        cleanOptionColors();
 
-                                                      colorControllerA =
-                                                          ColorConstants
-                                                              .mainOrange;
-                                                    })
-                                                  : null;
+                                                        colorControllerA =
+                                                            ColorConstants
+                                                                .mainOrange;
+                                                      })
+                                                    : null;
 
-                                              answerTextController.text =
-                                                  mypost['answers'][0];
-                                              optionController.text = "A";
+                                                answerTextController.text =
+                                                    mypost['answers'][0];
+                                                optionController.text = "A";
 
-                                              buttonVisibilitiyState
-                                                  ? setState(() {
-                                                      continueButtonState =
-                                                          true;
-                                                      buttonVisibilitiyState =
-                                                          false;
-                                                    })
-                                                  : null;
-                                            },
-                                            child: SizedBox(
-                                              height: isBigScreen() ? 50 : 40,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 40),
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                        "A-)  " +
-                                                            "${mypost['answers'][0]}",
-                                                        style: TextConstants
-                                                            .quizTextStyle)
-                                                  ],
+                                                buttonVisibilitiyState
+                                                    ? setState(() {
+                                                        continueButtonState =
+                                                            true;
+                                                        buttonVisibilitiyState =
+                                                            false;
+                                                      })
+                                                    : null;
+                                              },
+                                              child: SizedBox(
+                                                height: isBigScreen() ? 50 : 40,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      left: 20),
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                          "A-)  " +
+                                                              "${mypost['answers'][0]}",
+                                                          style: TextConstants
+                                                              .quizTextStyleAnswers)
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -200,54 +215,58 @@ class _QuizScreenState extends State<QuizScreen> {
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
-                                          top: isBigScreen() ? 10 : 5),
+                                          top: 5),
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(20.0),
                                         child: Card(
-                                          color: colorControllerB,
                                           shape: Border(
                                               left: BorderSide(
                                                   color: Colors.red, width: 8)),
-                                          child: InkWell(
-                                            onTap: () {
-                                              optionColorController
-                                                  ? setState(() {
-                                                      cleanOptionColors();
+                                          child: AnimatedContainer(
+                                            curve: Curves.linearToEaseOut,
+                                            duration: Duration(milliseconds: 900),
+                                            color: colorControllerB,
+                                            child: InkWell(
+                                              onTap: () {
+                                                optionColorController
+                                                    ? setState(() {
+                                                        cleanOptionColors();
 
-                                                      colorControllerB =
-                                                          ColorConstants
-                                                              .mainOrange;
-                                                    })
-                                                  : null;
+                                                        colorControllerB =
+                                                            ColorConstants
+                                                                .mainOrange;
+                                                      })
+                                                    : null;
 
-                                              answerTextController.text =
-                                                  mypost['answers'][1];
-                                              optionControllerB.text =
-                                                  mypost['answers'][1];
-                                              optionController.text = "B";
-                                              buttonVisibilitiyState
-                                                  ? setState(() {
-                                                      continueButtonState =
-                                                          true;
-                                                      buttonVisibilitiyState =
-                                                          false;
-                                                    })
-                                                  : null;
-                                            },
-                                            child: SizedBox(
-                                              height: isBigScreen() ? 50 : 40,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 40),
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                        "B-)  " +
-                                                            "${mypost['answers'][1]}",
-                                                        style: TextConstants
-                                                            .quizTextStyle)
-                                                  ],
+                                                answerTextController.text =
+                                                    mypost['answers'][1];
+                                                optionControllerB.text =
+                                                    mypost['answers'][1];
+                                                optionController.text = "B";
+                                                buttonVisibilitiyState
+                                                    ? setState(() {
+                                                        continueButtonState =
+                                                            true;
+                                                        buttonVisibilitiyState =
+                                                            false;
+                                                      })
+                                                    : null;
+                                              },
+                                              child: SizedBox(
+                                                height: isBigScreen() ? 50 : 40,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      left: 20),
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                          "B-)  " +
+                                                              "${mypost['answers'][1]}",
+                                                          style: TextConstants
+                                                              .quizTextStyleAnswers)
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -258,56 +277,59 @@ class _QuizScreenState extends State<QuizScreen> {
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
-                                          top: isBigScreen() ? 10 : 5),
+                                          top: 5),
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(20.0),
                                         child: Card(
-                                          color: colorControllerC,
                                           shape: Border(
                                               left: BorderSide(
                                                   color: Colors.red, width: 8)),
-                                          child: InkWell(
-                                            onTap: () {
-                                              optionColorController
-                                                  ? setState(() {
-                                                      print(
-                                                          optionColorController);
-                                                      cleanOptionColors();
-                                                      colorControllerC =
-                                                          ColorConstants
-                                                              .mainOrange;
-                                                    })
-                                                  : null;
+                                          child: AnimatedContainer(
+                                            curve: Curves.linearToEaseOut,
+                                            duration: Duration(milliseconds: 900),
+                                            color: colorControllerC,
+                                            child: InkWell(
+                                              onTap: () {
+                                                optionColorController
+                                                    ? setState(() {
 
-                                              answerTextController.text =
-                                                  mypost['answers'][2];
-                                              optionControllerC.text =
-                                                  mypost['answers'][2];
-                                              optionController.text = "C";
+                                                        cleanOptionColors();
+                                                        colorControllerC =
+                                                            ColorConstants
+                                                                .mainOrange;
+                                                      })
+                                                    : null;
 
-                                              buttonVisibilitiyState
-                                                  ? setState(() {
-                                                      continueButtonState =
-                                                          true;
-                                                      buttonVisibilitiyState =
-                                                          false;
-                                                    })
-                                                  : null;
-                                            },
-                                            child: SizedBox(
-                                              height: isBigScreen() ? 50 : 40,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 40),
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                        "C-)  " +
-                                                            "${mypost['answers'][2]}",
-                                                        style: TextConstants
-                                                            .quizTextStyle)
-                                                  ],
+                                                answerTextController.text =
+                                                    mypost['answers'][2];
+                                                optionControllerC.text =
+                                                    mypost['answers'][2];
+                                                optionController.text = "C";
+
+                                                buttonVisibilitiyState
+                                                    ? setState(() {
+                                                        continueButtonState =
+                                                            true;
+                                                        buttonVisibilitiyState =
+                                                            false;
+                                                      })
+                                                    : null;
+                                              },
+                                              child: SizedBox(
+                                                height: isBigScreen() ? 50 : 40,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      left: 20),
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                          "C-)  " +
+                                                              "${mypost['answers'][2]}",
+                                                          style: TextConstants
+                                                              .quizTextStyleAnswers)
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -318,54 +340,58 @@ class _QuizScreenState extends State<QuizScreen> {
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(
-                                          top: isBigScreen() ? 10 : 5),
+                                          top: 5),
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(20.0),
                                         child: Card(
-                                          color: colorControllerD,
                                           shape: Border(
                                               left: BorderSide(
                                                   color: Colors.red, width: 8)),
-                                          child: InkWell(
-                                            onTap: () {
-                                              optionColorController
-                                                  ? setState(() {
-                                                      cleanOptionColors();
+                                          child: AnimatedContainer(
+                                            curve: Curves.linearToEaseOut,
+                                            duration: Duration(milliseconds: 900),
+                                            color: colorControllerD,
+                                            child: InkWell(
+                                              onTap: () {
+                                                optionColorController
+                                                    ? setState(() {
+                                                        cleanOptionColors();
 
-                                                      colorControllerD =
-                                                          ColorConstants
-                                                              .mainOrange;
-                                                    })
-                                                  : null;
+                                                        colorControllerD =
+                                                            ColorConstants
+                                                                .mainOrange;
+                                                      })
+                                                    : null;
 
-                                              answerTextController.text =
-                                                  mypost['answers'][3];
-                                              optionControllerD.text =
-                                                  mypost['answers'][3];
-                                              optionController.text = "D";
-                                              buttonVisibilitiyState
-                                                  ? setState(() {
-                                                      continueButtonState =
-                                                          true;
-                                                      buttonVisibilitiyState =
-                                                          false;
-                                                    })
-                                                  : null;
-                                            },
-                                            child: SizedBox(
-                                              height: isBigScreen() ? 50 : 40,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 40),
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                        "D-)  " +
-                                                            "${mypost['answers'][3]}",
-                                                        style: TextConstants
-                                                            .quizTextStyle)
-                                                  ],
+                                                answerTextController.text =
+                                                    mypost['answers'][3];
+                                                optionControllerD.text =
+                                                    mypost['answers'][3];
+                                                optionController.text = "D";
+                                                buttonVisibilitiyState
+                                                    ? setState(() {
+                                                        continueButtonState =
+                                                            true;
+                                                        buttonVisibilitiyState =
+                                                            false;
+                                                      })
+                                                    : null;
+                                              },
+                                              child: SizedBox(
+                                                height: isBigScreen() ? 50 : 40,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      left: 20),
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                          "D-)  " +
+                                                              "${mypost['answers'][3]}",
+                                                          style: TextConstants
+                                                              .quizTextStyleAnswers)
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -414,7 +440,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                                                   topLeft: Radius
                                                                       .circular(
                                                                           20))),
-                                                      height: 200,
+                                                      height: 150,
                                                       child: Center(
                                                         child: Padding(
                                                           padding:
@@ -445,7 +471,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                                                       width: 200,
                                                                       height: 50,
                                                                       child: Text(
-                                                                        'ANLADIM',
+                                                                        'Anladım',
                                                                         style: Theme.of(context)
                                                                             .textTheme
                                                                             .headline5
@@ -482,6 +508,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                                                         } else {
                                                                           _userService
                                                                               .updateScore(score.toString());
+                                                                          _userService.updatefav(categoryId(widget.quizCategory));
+
                                                                         }
 
                                                                         Navigator.of(context)
@@ -511,7 +539,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                                   },
                                                 );
                                               },
-                                              child: Container(
+                                              child: SizedBox(
                                                 height: 60,
                                                 child: Center(
                                                     child: Text("DEVAM")),

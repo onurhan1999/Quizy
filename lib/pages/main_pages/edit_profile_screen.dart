@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -11,6 +12,7 @@ import 'package:quizlen/pages/authentication_pages/login_page.dart';
 import 'package:quizlen/services/AuthenticationService.dart';
 import 'package:quizlen/services/UserServices.dart';
 
+import '../../components/decoration.dart';
 import '../../components/reusable_widgets.dart';
 import '../../constants/color_constants.dart';
 
@@ -22,10 +24,14 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
+
+  String imgurl="https://firebasestorage.googleapis.com/v0/b/cookcaquiz.appspot.com/o/d%2F0.png?alt=media&token=36fa8505-e9cc-49bc-af5a-72ce2df2ea0a";
+
   void initState() {
     print("init leader");
     // TODO: implement initState
     getList();
+    getFavourite();
     super.initState();
   }
 
@@ -47,92 +53,88 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   UserService _userService = UserService();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffE1CCEC),
-      resizeToAvoidBottomInset: false,
-      appBar: buildAppBar(context),
-      body: FutureBuilder<List<String>>(
-          future: _userService.getCurrentUser(),
-          builder: (context, snapshot) {
-            return !snapshot.hasData
-                ? Container(
-                    alignment: Alignment.center,
-                    child: const CircularProgressIndicator(
-                      backgroundColor: Colors.grey,
-                      color: Colors.purple,
-                      strokeWidth: 10,
-                    ))
-                : Center(
-                    child: Column(
-                    children: [
-                      CircleAvatarWidget(context,snapshot.data![2]),
-                      nickNameText(context, snapshot.data![0]),
-                      Expanded(
-                        flex: 4,
-                        child: Padding(
-                          padding:
-                              EdgeInsets.only(top: context.dynamicHeight(0.03)),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(40),
-                                    topLeft: Radius.circular(40)),
-                                color: Colors.white),
+    return Container(
+      decoration: DecorationProperties.editProfileBackgroundDecoration,
+
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        resizeToAvoidBottomInset: false,
+        appBar: buildAppBar(context),
+        body: FutureBuilder<List<String>>(
+            future: _userService.getCurrentUser(),
+            builder: (context, snapshot) {
+              return !snapshot.hasData
+                  ? Container(
+                      alignment: Alignment.center,
+                      child: const CircularProgressIndicator(
+                        backgroundColor: Colors.grey,
+                        color: Colors.purple,
+                        strokeWidth: 10,
+                      ))
+                  : Container(
+                    child: Center(
+
+                        child: Column(
+
+                        children: [
+                          CircleAvatarWidget(context,snapshot.data![2]),
+                          nickNameText(context, snapshot.data![0]),
+                          Expanded(
+                            flex: 3,
                             child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: context.dynamicWidth(0.1),
-                                  right: context.dynamicWidth(0.1),
-                                  top: context.dynamicHeight(0.03)),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  TabTexts(context),
-                                  Tabs(
-                                      context,
-                                      snapshot.data![1],
-                                      (userRank.indexOf(FirebaseAuth
-                                                  .instance.currentUser!.uid) +
-                                              1)
+                              padding:
+                                  EdgeInsets.only(top: context.dynamicHeight(0.03)),
+                              child: Container(
+                                decoration: BoxDecoration(
+
+
+                                  color: Color(0xff060718).withOpacity(0.8),
+
+
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: context.dynamicWidth(0.1),
+                                      right: context.dynamicWidth(0.1),
+                                      top: context.dynamicHeight(0.03)),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      TabTexts(context,snapshot.data![1],(userRank.indexOf(FirebaseAuth
+                                          .instance.currentUser!.uid) +
+                                          1)
                                           .toString()),
-                                  const Divider(height: 5, thickness: 3),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        top: context.dynamicHeight(0.02),
-                                        left: 10,
-                                        right: 10,
-                                        bottom: 10),
-                                    child: Column(
-                                      children: [
-                                        ChooseAvatar(context),
-                                        SizedBox(height: 20,),
-                                        ChangePassword(context),
-                                      ],
-                                    ),
+
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: context.dynamicHeight(0.05),
+
+                                            bottom: 30),
+                                        child: Column(
+                                          children: [
+                                            ChooseAvatar(context),
+                                            SizedBox(height: 20,),
+                                            ChangePassword(context),
+                                          ],
+                                        ),
+                                      ),
+                                      const Divider(
+                                        height: 5,
+                                        thickness: 2,
+                                        color: Colors.white,
+                                      ),
+                                      SignOut(context),
+                                    ],
                                   ),
-                                  const Divider(
-                                    height: 5,
-                                    thickness: 2,
-                                    color: Colors.black,
-                                  ),
-                                  SignOut(context),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ));
-          }),
+                          )
+                        ],
+                      )),
+                  );
+            }),
+      ),
     );
   }
 
@@ -142,9 +144,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       children: [
         Text(
           "Çıkış Yap",
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),
         ),
         IconButton(
+          color: Colors.white,
             iconSize: 35,
             onPressed: () {
               _authService.Logout(context);
@@ -161,9 +164,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         children: [
           Text(
             "Şifre Değiştir",
-            style: Theme.of(context).textTheme.titleLarge,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),
           ),
-          Icon(Icons.arrow_forward_ios)
+          Icon(Icons.arrow_forward_ios
+          ,
+          color: Colors.white,)
         ],
       ),
       onTap: (){},
@@ -247,54 +252,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         children: [
           Text(
             "Avatar Seç",
-            style: Theme.of(context).textTheme.titleLarge,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),
           ),
-          Icon(Icons.arrow_forward_ios)
+          Icon(Icons.arrow_forward_ios,color: Colors.white,)
         ],
       ),
     );
   }
 
-  Padding Tabs(BuildContext context, puan, userRank) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          //yazılar
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: Color(0xff26CE55),
-            child: ReusableWidgets.getImageAsset("tarih.png"),
-          ),
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: Color(0xff00B2FF),
-            child: Text(
-              puan,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(color: Colors.white),
-            ),
-          ),
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: Color(0xffFF0000),
-            child: Text(
-              userRank,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(color: Colors.white),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
-  Row TabTexts(BuildContext context) {
+
+  Row TabTexts(BuildContext context,puan,userRank) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -308,6 +276,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               "Kategori",
               style: TextConstants.favCategoryTextStyle(context),
             ),
+            SizedBox(height: 10,),
+
+            CircleAvatar(
+              radius: 30,
+              backgroundColor: Color(0xff26CE55),
+              child: Image.network(imgurl),
+            ),
           ],
         ),
         Column(
@@ -319,6 +294,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             Text(
               "Puan",
               style: TextConstants.favCategoryTextStyle(context),
+            ),
+            SizedBox(height: 10,),
+
+            CircleAvatar(
+              radius: 30,
+              backgroundColor: Color(0xff00B2FF),
+              child: Text(
+                puan,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(color: Colors.white),
+              ),
             ),
           ],
         ),
@@ -332,6 +320,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               "Sırası",
               style: TextConstants.favCategoryTextStyle(context),
             ),
+            SizedBox(height: 10,),
+            CircleAvatar(
+              radius: 30,
+              backgroundColor: Color(0xffFF0000),
+              child: Text(
+                userRank,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(color: Colors.white),
+              ),
+            ),
           ],
         ),
       ],
@@ -344,18 +344,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       style: Theme.of(context)
           .textTheme
           .headline5
-          ?.copyWith(color: Color(0xff5E5F5E)),
+          ?.copyWith(color: Color(0xff4EBD2F)),
     );
   }
 
+
   Expanded CircleAvatarWidget(BuildContext context,avatar) {
     return Expanded(
+
       child: Padding(
         padding: EdgeInsets.only(top: context.dynamicHeight(0.05)),
         child: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          child: Image.network(avatar),
-          radius: 75,
+          backgroundColor: Color(0xffFFCC4D),
+          radius: 80,
+          child: CircleAvatar(
+            backgroundColor: Colors.transparent,
+            child: Image.network(avatar),
+            radius:45,
+          ),
         ),
       ),
     );
@@ -363,13 +369,45 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      elevation: 0,
+      bottom: PreferredSize(
+          child: Container(
+            color: Color(0xff595CFF),
+            height: 2.0,
+          ),
+          preferredSize: Size.fromHeight(4.0)),
       centerTitle: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Color(0xff14154F),
+      elevation: 0,
       title: Text(
         'Profil',
-        style: TextConstants.whiteAppBarTextStyle(context),
+        style: TextConstants.leaderboardAppBarTextStyle(context),
       ),
     );
+
+
+
+
+  }
+
+
+  Future getFavourite() async {
+    DocumentReference docRef = FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid);
+    DocumentSnapshot doc = await docRef.get();
+    List dataListAsInt = doc['favourite'];
+    List favourite = doc['favourite'];
+    dataListAsInt.sort((a, b) => b.compareTo(a));
+    int fav = favourite.indexOf(dataListAsInt.elementAt(0));
+    final storageRef = FirebaseStorage.instanceFor(bucket: "gs://cookcaquiz.appspot.com").ref();
+    final imageUrl = await storageRef.child("d/${fav}.png").getDownloadURL();
+    setState(() {
+      print("deneme");
+      print(imageUrl.toString());
+      print("deneme");
+      imgurl=imageUrl.toString();
+      print("deneme");
+      print(imgurl);
+      print("deneme");
+    });
+
   }
 }

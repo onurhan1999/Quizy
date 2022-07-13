@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:quizlen/components/decoration.dart';
 import 'package:quizlen/constants/color_constants.dart';
@@ -77,6 +78,10 @@ class _LoginPageState extends State<LoginPage> {
           flex: 50,
           child: Image.asset("assets/images/logo.png"),
         ),
+        Expanded(
+          flex: 20,
+          child: Text("QUIZY",style: GoogleFonts.bayon(color: Color(0xff595CFF),fontSize: 48),),
+        ),
         const Spacer(
           flex: 15,
         ),
@@ -96,10 +101,7 @@ class _LoginPageState extends State<LoginPage> {
         const Spacer(
           flex: 5,
         ),
-        GmailSigninButton(),
-        const Spacer(
-          flex: 5,
-        ),
+
         DividerWidget(),
         DontHaveAnAccount(context),
         const Spacer(
@@ -117,8 +119,7 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           Text(
             "Hesabınız yok mu?",
-            style: TextStyle(color: Colors.black.withOpacity(0.7)),
-          ),
+            style: GoogleFonts.inter(color: Colors.white,fontSize: 22),          ),
           TextButton(
               onPressed: () async {
                 Navigator.of(context).push(PageTransition(
@@ -129,57 +130,23 @@ class _LoginPageState extends State<LoginPage> {
               },
               child: Text(
                 "Kaydolun",
-                style: TextStyle(color: ColorConstants.logoRed),
-              ))
+                style: GoogleFonts.inter(color: Color(0xff595CFF),fontSize: 20,fontWeight: FontWeight.bold),
+              ),
+              )
         ],
       ),
     );
   }
 
-  Flexible DividerWidget() {
-    return const Flexible(
-      flex: 5,
-      child: Divider(
-        height: 30,
-        color: Colors.black,
-      ),
+  Divider DividerWidget() {
+    return Divider(
+      height: 30,
+      thickness: 1,
+      color: Color(0xff595CFF),
     );
   }
 
-  Flexible GmailSigninButton() {
-    return Flexible(
-      flex: 10,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Spacer(
-            flex: 22,
-          ),
-          Icon(
-            Icons.mail,
-            size: 50,
-          ),
-          Spacer(
-            flex: 3,
-          ),
-          Icon(
-            Icons.mail,
-            size: 50,
-          ),
-          Spacer(
-            flex: 3,
-          ),
-          Icon(
-            Icons.mail,
-            size: 50,
-          ),
-          Spacer(
-            flex: 22,
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Flexible SigninButton() {
     return Flexible(
@@ -189,7 +156,9 @@ class _LoginPageState extends State<LoginPage> {
         width: double.infinity,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
-            color: ColorConstants.logoRed),
+            color: Color(0xff595CFF)
+
+        ),
         child: MaterialButton(
           onPressed: () async {
             final email = _email.text.trim();
@@ -231,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
               },
               child: Text(
                 "Şifrenizi mi unuttunuz?",
-                style: TextStyle(color: ColorConstants.logoRed),
+                style: TextStyle(color: Color(0xff595CFF)),
               ))
         ],
       ),
@@ -241,19 +210,21 @@ class _LoginPageState extends State<LoginPage> {
   Flexible PasswordTextField() {
     return Flexible(
       flex: 15,
-      child: TextFormField(
-        controller: _password,
-        keyboardType: TextInputType.visiblePassword,
-        obscureText: true,
-        decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderSide:
-                BorderSide(color: ColorConstants.deepPurple, width: 2.5),
-            borderRadius: const BorderRadius.all(Radius.circular(30)),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Color(0xffE8E8E8),
+            borderRadius: BorderRadius.all(Radius.circular(30))
+        ),
+        child: TextFormField(
+          controller: _password,
+          keyboardType: TextInputType.visiblePassword,
+          obscureText: true,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            labelText: "Şifre giriniz",
+            prefixIcon: Icon(Icons.lock),
+            suffixIcon: Icon(Icons.remove_red_eye),
           ),
-          labelText: "Şifre giriniz",
-          prefixIcon: Icon(Icons.lock),
-          suffixIcon: Icon(Icons.remove_red_eye),
         ),
       ),
     );
@@ -262,17 +233,25 @@ class _LoginPageState extends State<LoginPage> {
   Flexible EmailTextField() {
     return Flexible(
       flex: 15,
-      child: TextFormField(
-        controller: _email,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: ColorConstants.deepPurple, width: 2.5),
-              borderRadius: const BorderRadius.all(Radius.circular(30)),
-            ),
-            labelText: "E-mail giriniz",
-            prefixIcon: const Icon(Icons.email)),
+      child: Container(
+
+        decoration: BoxDecoration(
+            color: Color(0xffE8E8E8),
+          borderRadius: BorderRadius.all(Radius.circular(30))
+        ),
+        child: TextFormField(
+
+
+          controller: _email,
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+
+
+
+              labelText: "E-mail giriniz",
+              prefixIcon: const Icon(Icons.email)),
+        ),
       ),
     );
   }
