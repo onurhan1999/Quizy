@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Uri(scheme: 'https', host: 'turkiye.un.org', path: '/tr/sdgs');
 
     return Container(
-      color: Color(0xff0E0F37),
+      decoration: DecorationProperties.mainScreenBackgroundDecoration,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Padding(
@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Expanded LogoImage() {
-    return Expanded(flex: 8, child: ReusableWidgets.getImageAsset("logo.png"));
+    return Expanded(flex: 9, child: ReusableWidgets.getImageAsset("logo_shadow.png"));
   }
 
   _showDialog(BuildContext context) {

@@ -152,10 +152,14 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                                             ),
                                             Spacer(),
                                             CircleAvatar(
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              child: Image.network("${mypost['Avatar']}"),
-                                              radius: 25,
+                                              radius: 27,
+                                              backgroundColor: Color(0xffA6BAFC),
+                                              child: CircleAvatar(
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                child: Image.network("${mypost['Avatar']}"),
+                                                radius: 21,
+                                              ),
                                             ),
                                             Spacer(),
                                             Text("${mypost['UserName']}",
@@ -211,11 +215,15 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                                   ),
                                   Spacer(),
                                   CircleAvatar(
-                                    backgroundColor: Colors.transparent,
-                                    child: Image.network(avatar[username.indexOf(FirebaseAuth
-                                        .instance.currentUser!.uid)]
-                                        .toString(),),
-                                    radius: 25,
+                                    radius: 27,
+                                    backgroundColor: Color(0xffA6BAFC),
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.transparent,
+                                      child: Image.network(avatar[username.indexOf(FirebaseAuth
+                                          .instance.currentUser!.uid)]
+                                          .toString(),),
+                                      radius: 21,
+                                    ),
                                   ),
                                   Spacer(),
                                   Text(

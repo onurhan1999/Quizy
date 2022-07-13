@@ -8,14 +8,26 @@ import '../constants/color_constants.dart';
 class DecorationProperties{
 
   static BoxDecoration backgroundDecoration = BoxDecoration(
-  image: DecorationImage(
-  image: ReusableWidgets.getAssetImage("background.png"),
-  fit: BoxFit.fill));
+  color: Color(0xff14154F)
+  );
 
   static BoxDecoration quizBackgroundDecoration = BoxDecoration(
       image: DecorationImage(
           image: ReusableWidgets.getAssetImage("quiz_background.png"),
           fit: BoxFit.fill));
+
+  static BoxDecoration editProfileBackgroundDecoration = BoxDecoration(
+    color: Colors.transparent,
+      image: DecorationImage(
+          image: ReusableWidgets.getAssetImage("edit_profile_bg.png"),
+          fit: BoxFit.fill));
+
+  static BoxDecoration mainScreenBackgroundDecoration = BoxDecoration(
+      color: Colors.transparent,
+      image: DecorationImage(
+          image: ReusableWidgets.getAssetImage("main_bg.png"),
+          fit: BoxFit.fill));
+
 
   static BoxDecoration questionBackgroundDecoration = BoxDecoration(
       image: DecorationImage(

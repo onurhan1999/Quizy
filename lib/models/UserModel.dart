@@ -1,4 +1,3 @@
-
 class UserModel{
   final String username;
   final int score;
@@ -13,6 +12,7 @@ class UserModel{
     'UserName': username,
     'Score': score,
     'cozulenTestler': [],
+    'favourite': [0,0,0,0],
     'Avatar':"https://firebasestorage.googleapis.com/v0/b/cookcaquiz.appspot.com/o/1.png?alt=media&token=abcd8ce4-6227-4454-99b2-a3590b95246a"
   };
 
