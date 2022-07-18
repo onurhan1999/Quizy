@@ -1,16 +1,25 @@
-# quizlen
+# Quizy
 
-quizlen
+Quizy çocuklar ve gençleri sürdürülebilirlik konusunda eğitirken, öğretmeyi hedefleyen bir bilgi yarışması oyunu. Oyuncular insan hakları,çevre ve kültür gibi konular üzerinde testler çözerek puan kazanabilir ve liderlik tablosundan tüm kullanıcıların puan durumunu görebilirler. 
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+# Ekran Görüntüleri
+
+![alt text](https://github.com/onurhan1999/Quizy/blob/master/screenshots/Screenshot_1658126285.png?raw=true)
+![alt text](https://github.com/onurhan1999/Quizy/blob/master/screenshots/Screenshot_1658126784.png?raw=true)
+![alt text](https://github.com/onurhan1999/Quizy/blob/master/screenshots/Screenshot_1658127489.png?raw=true)
+
+
+# Kullanılan teknolojiler
+- [Dart]
+- [Flutter] 
+- [Firebase]
+- [Figma]
+
+
+
