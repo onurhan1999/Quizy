@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:quizlen/components/decoration.dart';
@@ -188,17 +189,25 @@ class _SignupPageState extends State<SignupPage> {
             color: Color(0xff595CFF)),
         child: MaterialButton(
           onPressed: () async {
+            if(_username.text.length>7||_username.text.length<1)
+              {
+                Fluttertoast.showToast(msg: "Kullanıcı adı 1-7 karakter olmalıdır.");
+              }else{
 
-            final email = _email.text.trim();
-            final password = _password.text.trim();
-            final username = _username.text.trim();
-            _authService.SignUp(email, password, username).then((value) => (){print("whencomplete içi");});
+              final email = _email.text.trim();
+              final password = _password.text.trim();
+              final username = _username.text.trim();
+              _authService.SignUp(email, password, username);
 
-            Navigator.of(context).push(PageTransition(
-                child: LoginPage(),
-                type: PageTransitionType.rightToLeftWithFade,
-                duration: Duration(milliseconds: 400),
-                reverseDuration: Duration(milliseconds: 400)));
+              Navigator.of(context).push(PageTransition(
+                  child: LoginPage(),
+                  type: PageTransitionType.rightToLeftWithFade,
+                  duration: Duration(milliseconds: 400),
+                  reverseDuration: Duration(milliseconds: 400)));
+
+            }
+
+
 
           },
           child: const Text(

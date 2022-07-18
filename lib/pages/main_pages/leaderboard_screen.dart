@@ -17,15 +17,11 @@ class LeaderboardScreen extends StatefulWidget {
 }
 
 class _LeaderboardScreenState extends State<LeaderboardScreen> {
-
-
-
   UserService _userService = UserService();
   List<Object> names = [];
   List<Object> scores = [];
   List<Object> username = [];
   List<Object> avatar = [];
-
 
   @override
   void initState() {
@@ -44,38 +40,15 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
       names = List.from(data.docs.map((doc) => doc['UserName']));
       scores = List.from(data.docs.map((doc) => doc['Score']));
       username = List.from(data.docs.map((doc) => doc.id));
-      avatar=List.from(data.docs.map((doc) => doc['Avatar']));
-
+      avatar = List.from(data.docs.map((doc) => doc['Avatar']));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
-
-
     return FutureBuilder<QuerySnapshot>(
         future: _userService.sortScore(),
         builder: (context, snapshot) {
-
-          print("names kaç tane");
-          print(names.length);
-          print("avatar kaç tane");
-          print(avatar.length);
-
-
-          /* if (snapshot.connectionState != ConnectionState.done) {
-            return
-              Container(
-                  decoration: DecorationProperties.leaderBoardContainerDecoration,
-                  alignment: Alignment.center,
-                  child: const CircularProgressIndicator(
-                    backgroundColor: Colors.grey,
-                    color: Colors.purple,
-                    strokeWidth: 10,
-                  ));
-
-          }*/
           return !snapshot.hasData
               ? Container(
                   alignment: Alignment.center,
@@ -86,7 +59,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                   ))
               : Container(
                   decoration:
-                      DecorationProperties.leaderBoardContainerDecoration,
+                      DecorationProperties.leaderboardBackgroundDecoration,
                   child: Scaffold(
                     backgroundColor: Colors.transparent,
                     appBar: buildAppBar(context),
@@ -95,24 +68,27 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                       child: Column(
                         children: [
                           Expanded(
-                            flex: 5,
+                            flex: 4,
                             child: Stack(
                               children: [
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [FirstPlayer(names, scores,avatar)],
+                                  children: [
+                                    FirstPlayer(names, scores, avatar)
+                                  ],
                                 ),
                                 Positioned(
                                   top: 100,
                                   left: .0,
                                   right: .0,
-
                                   child: Row(
                                     children: [
                                       Spacer(),
-                                      SecondPlayer(names, scores,avatar),
-                                      Spacer(flex: 2,),
-                                      ThirdPlayer(names, scores,avatar),
+                                      SecondPlayer(names, scores, avatar),
+                                      Spacer(
+                                        flex: 2,
+                                      ),
+                                      ThirdPlayer(names, scores, avatar),
                                       Spacer(),
                                     ],
                                   ),
@@ -120,15 +96,84 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                               ],
                             ),
                           ),
-
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      colors: [
+                                        const Color(0xFFBC52C6),
+                                        const Color(0xFF595CFF),
+                                      ],
+                                      begin: const FractionalOffset(0.0, 0.0),
+                                      end: const FractionalOffset(0.0, 1.0),
+                                      stops: [0.0, 1.0],
+                                      tileMode: TileMode.clamp),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30))),
+                              width: context.contextWidth(),
+                              height: 68,
+                              child: Row(
+                                children: [
+                                  Spacer(),
+                                  Text(
+                                    '#' +
+                                        (username.indexOf(FirebaseAuth.instance
+                                                    .currentUser!.uid) +
+                                                1)
+                                            .toString(),
+                                    style: TextConstants
+                                        .leaderboardUserTextStyleGreen(context),
+                                  ),
+                                  Spacer(),
+                                  CircleAvatar(
+                                    radius: 27,
+                                    backgroundColor: Color(0xffA6BAFC),
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.transparent,
+                                      child: Image.network(
+                                        avatar[username.indexOf(FirebaseAuth
+                                                .instance.currentUser!.uid)]
+                                            .toString(),
+                                      ),
+                                      radius: 21,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Text(
+                                    "Güncel Skor",
+                                    style: GoogleFonts.openSans(
+                                        color: Color(0xffE8E8E8),
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 20),
+                                  ),
+                                  Spacer(
+                                    flex: 5,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      scores[username.indexOf(FirebaseAuth
+                                              .instance.currentUser!.uid)]
+                                          .toString(),
+                                      style: TextConstants
+                                          .leaderboardUserTextStyleWhite(
+                                              context),
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                          ),
                           SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
                           Expanded(
                             flex: 3,
                             child: ListView.builder(
                               shrinkWrap: true,
-                              itemCount: snapshot.data!.docs.length - 4,
+                              itemCount: snapshot.data!.docs.length - 3,
                               itemBuilder: (BuildContext context, int index) {
                                 DocumentSnapshot mypost =
                                     snapshot.data!.docs[index + 3];
@@ -138,40 +183,54 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                                     Container(
                                       width: context.contextWidth(),
                                       height: 68,
-                                      color: Color(0xff14154F),
+                                      color: Color(0xff060718).withOpacity(0.8),
                                       child: Padding(
                                         padding: const EdgeInsets.only(
                                             left: 20, right: 20),
                                         child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              '#${(index + 4).toString()}',
-                                              style: TextConstants
-                                                  .leaderboardUserTextStyleGreen(
-                                                      context),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                  '#${(index + 4).toString()}',
+                                                  style: TextConstants
+                                                      .leaderboardUserTextStyleGreen(
+                                                          context),
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                CircleAvatar(
+                                                  radius: 27,
+                                                  backgroundColor:
+                                                      Color(0xffA6BAFC),
+                                                  child: CircleAvatar(
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    child: Image.network(
+                                                        "${mypost['Avatar']}"),
+                                                    radius: 21,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Text("${mypost['UserName']}",
+                                                    style: TextConstants
+                                                        .leaderboardUserTextStyleWhite(
+                                                            context)),
+                                              ],
                                             ),
-                                            Spacer(),
-                                            CircleAvatar(
-                                              radius: 27,
-                                              backgroundColor: Color(0xffA6BAFC),
-                                              child: CircleAvatar(
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                child: Image.network("${mypost['Avatar']}"),
-                                                radius: 21,
-                                              ),
-                                            ),
-                                            Spacer(),
-                                            Text("${mypost['UserName']}",
-                                                style: TextConstants
-                                                    .leaderboardUserTextStyleWhite(
-                                                        context)),
-                                            Spacer(
-                                              flex: 10,
-                                            ),
-                                            Align(
-                                              alignment:
-                                                  Alignment.centerRight,
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 10),
                                               child: Text(
                                                 "${mypost['Score']}",
                                                 style: TextConstants
@@ -191,67 +250,6 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                               },
                             ),
                           ),
-
-                          Container(
-                            width: context.contextWidth(),
-                            height: 68,
-                            color: Color(0xff14154F),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    '#' +
-                                        (username.indexOf(FirebaseAuth
-                                                    .instance
-                                                    .currentUser!
-                                                    .uid) +
-                                                1)
-                                            .toString(),
-                                    style: TextConstants
-                                        .leaderboardUserTextStyleGreen(
-                                            context),
-                                  ),
-                                  Spacer(),
-                                  CircleAvatar(
-                                    radius: 27,
-                                    backgroundColor: Color(0xffA6BAFC),
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.transparent,
-                                      child: Image.network(avatar[username.indexOf(FirebaseAuth
-                                          .instance.currentUser!.uid)]
-                                          .toString(),),
-                                      radius: 21,
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Text(
-                                      names[username.indexOf(FirebaseAuth
-                                              .instance.currentUser!.uid)]
-                                          .toString(),
-                                      style: GoogleFonts.openSans(color: Color(0xffE8E8E8),fontWeight: FontWeight.w700,fontSize: 20),
-
-                                  ),
-                                  Spacer(
-                                    flex: 10,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      scores[username.indexOf(FirebaseAuth
-                                              .instance.currentUser!.uid)]
-                                          .toString(),
-                                      style: TextConstants
-                                          .leaderboardUserTextStyleWhite(
-                                              context),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Spacer(),
                         ],
                       ),
                     ),
@@ -261,9 +259,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
   }
 }
 
-
-Expanded FirstPlayer(names, scores,avatar) {
-
+Expanded FirstPlayer(names, scores, avatar) {
   return Expanded(
     child: Column(
       children: [
@@ -272,9 +268,15 @@ Expanded FirstPlayer(names, scores,avatar) {
             Container(
               margin: EdgeInsets.only(top: 20),
               child: CircleAvatar(
-                radius: 65,
-                backgroundColor: Color(0xffFFCC4D),
-                child: Image.network(avatar[0])
+                radius: 68,
+                backgroundColor: Color(0xffFFE54D),
+                child: CircleAvatar(
+                    radius: 65,
+                    backgroundColor: Color(0xff86A0FA),
+                    child: CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        radius: 50,
+                        child: Image.network(avatar[0]))),
               ),
             ),
             Positioned(
@@ -307,15 +309,17 @@ Expanded FirstPlayer(names, scores,avatar) {
         ),
         Text(
           scores[0].toString(),
-          style: GoogleFonts.openSans(color: Color(0xffE8E8E8),fontWeight: FontWeight.w700,fontSize: 20),
-
+          style: GoogleFonts.openSans(
+              color: Color(0xffE8E8E8),
+              fontWeight: FontWeight.w700,
+              fontSize: 20),
         ),
       ],
     ),
   );
 }
 
-Column ThirdPlayer(names, scores,avatar) {
+Column ThirdPlayer(names, scores, avatar) {
   return Column(
     children: [
       Stack(
@@ -323,12 +327,15 @@ Column ThirdPlayer(names, scores,avatar) {
           Container(
             margin: EdgeInsets.only(top: 20),
             child: CircleAvatar(
-              radius: 45,
+              radius: 48,
               backgroundColor: Color(0xff8B5731),
               child: CircleAvatar(
-                radius: 33,
-                  backgroundColor: Colors.transparent,
-                  child: Image.network(avatar[2]))
+                  radius: 45,
+                  backgroundColor: Color(0xffF5A6FC),
+                  child: CircleAvatar(
+                      radius: 33,
+                      backgroundColor: Colors.transparent,
+                      child: Image.network(avatar[2]))),
             ),
           ),
           Positioned(
@@ -354,19 +361,23 @@ Column ThirdPlayer(names, scores,avatar) {
       ),
       Text(
         names[2].toString(),
-        style: GoogleFonts.openSans(color: Color(0xffE8E8E8),fontWeight: FontWeight.w700,fontSize: 20),
-
+        style: GoogleFonts.openSans(
+            color: Color(0xffE8E8E8),
+            fontWeight: FontWeight.w700,
+            fontSize: 20),
       ),
       Text(
         scores[2].toString(),
-        style: GoogleFonts.openSans(color: Color(0xffE8E8E8),fontWeight: FontWeight.w700,fontSize: 20),
-
+        style: GoogleFonts.openSans(
+            color: Color(0xffE8E8E8),
+            fontWeight: FontWeight.w700,
+            fontSize: 20),
       ),
     ],
   );
 }
 
-Column SecondPlayer(names, scores,avatar) {
+Column SecondPlayer(names, scores, avatar) {
   return Column(
     children: [
       Stack(
@@ -374,12 +385,15 @@ Column SecondPlayer(names, scores,avatar) {
           Container(
             margin: EdgeInsets.only(top: 20),
             child: CircleAvatar(
-              radius: 45,
+              radius: 48,
               backgroundColor: Color(0xffCED5E0),
               child: CircleAvatar(
-                backgroundColor: Colors.transparent,
-                  radius: 33,
-                  child: Image.network(avatar[1]))
+                  radius: 45,
+                  backgroundColor: Color(0xff26CE55),
+                  child: CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      radius: 33,
+                      child: Image.network(avatar[1]))),
             ),
           ),
           Positioned(
@@ -405,13 +419,17 @@ Column SecondPlayer(names, scores,avatar) {
       ),
       Text(
         names[1].toString(),
-        style: GoogleFonts.openSans(color: Color(0xffE8E8E8),fontWeight: FontWeight.w700,fontSize: 20),
-
+        style: GoogleFonts.openSans(
+            color: Color(0xffE8E8E8),
+            fontWeight: FontWeight.w700,
+            fontSize: 20),
       ),
       Text(
         scores[1].toString(),
-        style: GoogleFonts.openSans(color: Color(0xffE8E8E8),fontWeight: FontWeight.w700,fontSize: 20),
-
+        style: GoogleFonts.openSans(
+            color: Color(0xffE8E8E8),
+            fontWeight: FontWeight.w700,
+            fontSize: 20),
       ),
     ],
   );
@@ -419,6 +437,7 @@ Column SecondPlayer(names, scores,avatar) {
 
 AppBar buildAppBar(BuildContext context) {
   return AppBar(
+    automaticallyImplyLeading: false,
     bottom: PreferredSize(
         child: Container(
           color: Color(0xff595CFF),
@@ -426,7 +445,7 @@ AppBar buildAppBar(BuildContext context) {
         ),
         preferredSize: Size.fromHeight(4.0)),
     centerTitle: true,
-    backgroundColor: Colors.transparent,
+    backgroundColor: Color(0xff14154F),
     elevation: 0,
     title: Text(
       'Liderlik',

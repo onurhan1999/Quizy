@@ -76,6 +76,7 @@ class AuthService {
       final UserModel user = UserModel(username: username, score: 0);
       final json = user.toJson();
       docUser.set(json);
+      Fluttertoast.showToast(msg: "Kayıt Başarılı...");
     } on FirebaseAuthException catch (e) {
       print(e);
     }
@@ -89,4 +90,5 @@ class AuthService {
       print(e);
     }
   }
+
 }

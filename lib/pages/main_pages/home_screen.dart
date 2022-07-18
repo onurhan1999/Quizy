@@ -58,44 +58,58 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
+                        width: 55,
+                        height: 40,
                         decoration: BoxDecoration(
-                            color: ColorConstants.deepPurple,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.9),
+                                spreadRadius: 3,
+                                blurRadius: 5.0,
+                                offset: Offset(
+                                    0.0, 3.0), // changes position of shadow
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(25),
+                            color: Color(0xff595CFF)),
                         child: IconButton(
-                          iconSize: 30,
-                          color: Colors.white,
+                          iconSize: 20,
+                          color: Color(0xff14154F),
                           onPressed: () {
                             _launched = _launchInBrowser(toLaunch);
                           },
-                          icon: Icon(
-                            Icons.info_outline,
+                          icon: Text(
+                            "i",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic),
                           ),
                         ),
                       ),
                       Container(
+                        width: 55,
+                        height: 40,
                         decoration: BoxDecoration(
-                            color: ColorConstants.deepPurple,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.9),
+                                spreadRadius: 3,
+                                blurRadius: 5.0,
+                                offset: Offset(
+                                    0.0, 3.0), // changes position of shadow
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(25),
+                            color: Color(0xff595CFF)),
                         child: IconButton(
-                          iconSize: 30,
-                          color: Colors.white,
+                          iconSize: 20,
+                          color: Color(0xff14154F),
                           onPressed: () {
-
                             _showDialog(context);
-
-
-
-
-
-
-
-
                           },
                           icon: Icon(
-
-                            Icons.alternate_email,
+                            Icons.account_circle_sharp,
                           ),
                         ),
                       ),
@@ -128,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
+                color: Colors.black.withOpacity(0.40),
                 spreadRadius: 5,
                 blurRadius: 7,
                 offset: Offset(0, 3), // changes position of shadow
@@ -138,19 +152,11 @@ class _HomeScreenState extends State<HomeScreen> {
             color: ColorConstants.mainOrange),
         child: MaterialButton(
           onPressed: () {
-
-
-
-
             Navigator.of(context).push(PageTransition(
                 child: CategoriesPage(),
                 type: PageTransitionType.rightToLeftWithFade,
                 duration: Duration(milliseconds: 400),
                 reverseDuration: Duration(milliseconds: 400)));
-
-
-
-
           },
           child:
               Text("OYNA", style: TextConstants.playButtonTextStyles(context)),
@@ -160,7 +166,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Expanded LogoImage() {
-    return Expanded(flex: 9, child: ReusableWidgets.getImageAsset("logo_shadow.png"));
+    return Expanded(
+        flex: 9, child: ReusableWidgets.getImageAsset("logo_shadow.png"));
   }
 
   _showDialog(BuildContext context) {
@@ -169,7 +176,8 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: new Text("Takımımız Hakkında"),
-            content: Text("Onurhan KAYA-Selçuk Üniversitesi 3.Sınıf\nKaan Güler-Kocaeli Üniversitesi 3.Sınıf\nDurmuş Cem Koca-Kocaeli Üniversitesi 3.Sınıf\nÇiğdem Bircan-Pamukkale Üniversitesi 3.Sınıf\nAvni Burak Çıtlak-Bilgi Üniversitesi 3.Sınıf"),
+            content: Text(
+                "Onurhan KAYA-Selçuk Üniversitesi 3.Sınıf\nKaan Güler-Kocaeli Üniversitesi 3.Sınıf\nDurmuş Cem Koca-Kocaeli Üniversitesi 3.Sınıf\nÇiğdem Bircan-Pamukkale Üniversitesi 3.Sınıf\nAvni Burak Çıtlak-Bilgi Üniversitesi 3.Sınıf"),
             actions: <Widget>[
               new FlatButton(
                 child: new Text("Geri"),
@@ -180,6 +188,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           );
-        });}
-
+        });
+  }
 }

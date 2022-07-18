@@ -7,6 +7,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:quizlen/components/decoration.dart';
 import 'package:quizlen/constants/color_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
+import 'package:quizlen/pages/authentication_pages/reset_password_screen.dart';
 import 'package:quizlen/pages/authentication_pages/signup_page.dart';
 import 'package:quizlen/pages/main_pages/main_bottombar_screen.dart';
 import 'package:quizlen/services/AuthenticationService.dart';
@@ -45,27 +46,23 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-
-        if(snapshot.data!=null) {
-          return MainBottomBarScreen();
-        } else{
-          return Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: Container(
-              decoration: DecorationProperties.backgroundDecoration,
-              child: Padding(
-                padding: EdgeInsets.all(context.dynamicHeight(0.05)),
-                child: ColumnWidget(context),
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.data != null) {
+            return MainBottomBarScreen();
+          } else {
+            return Scaffold(
+              resizeToAvoidBottomInset: false,
+              body: Container(
+                decoration: DecorationProperties.backgroundDecoration,
+                child: Padding(
+                  padding: EdgeInsets.all(context.dynamicHeight(0.05)),
+                  child: ColumnWidget(context),
+                ),
               ),
-            ),
-          );
-        }
-
-      }
-    );
-
+            );
+          }
+        });
   }
 
   Column ColumnWidget(BuildContext context) {
@@ -80,7 +77,10 @@ class _LoginPageState extends State<LoginPage> {
         ),
         Expanded(
           flex: 20,
-          child: Text("QUIZY",style: GoogleFonts.bayon(color: Color(0xff595CFF),fontSize: 48),),
+          child: Text(
+            "QUIZY",
+            style: GoogleFonts.bayon(color: Color(0xff595CFF), fontSize: 48),
+          ),
         ),
         const Spacer(
           flex: 15,
@@ -101,7 +101,6 @@ class _LoginPageState extends State<LoginPage> {
         const Spacer(
           flex: 5,
         ),
-
         DividerWidget(),
         DontHaveAnAccount(context),
         const Spacer(
@@ -119,20 +118,24 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           Text(
             "Hesabınız yok mu?",
-            style: GoogleFonts.inter(color: Colors.white,fontSize: 22),          ),
+            style: GoogleFonts.inter(color: Colors.white, fontSize: 22),
+          ),
           TextButton(
-              onPressed: () async {
-                Navigator.of(context).push(PageTransition(
-                    child: SignupPage(),
-                    type: PageTransitionType.rightToLeftWithFade,
-                    duration: Duration(milliseconds: 400),
-                    reverseDuration: Duration(milliseconds: 400)));
-              },
-              child: Text(
-                "Kaydolun",
-                style: GoogleFonts.inter(color: Color(0xff595CFF),fontSize: 20,fontWeight: FontWeight.bold),
-              ),
-              )
+            onPressed: () async {
+              Navigator.of(context).pushReplacement(PageTransition(
+                  child: SignupPage(),
+                  type: PageTransitionType.rightToLeftWithFade,
+                  duration: Duration(milliseconds: 400),
+                  reverseDuration: Duration(milliseconds: 400)));
+            },
+            child: Text(
+              "Kaydolun",
+              style: GoogleFonts.inter(
+                  color: Color(0xff595CFF),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+          )
         ],
       ),
     );
@@ -146,8 +149,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
-
   Flexible SigninButton() {
     return Flexible(
       flex: 20,
@@ -155,27 +156,23 @@ class _LoginPageState extends State<LoginPage> {
         height: 60,
         width: double.infinity,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            color: Color(0xff595CFF)
-
-        ),
+            borderRadius: BorderRadius.circular(100), color: Color(0xff595CFF)),
         child: MaterialButton(
           onPressed: () async {
             final email = _email.text.trim();
             final password = _password.text.trim();
             _authService.Login(email, password);
 
-            if(await FirebaseAuth.instance.currentUser != null){
+            if (await FirebaseAuth.instance.currentUser != null) {
               print("current içi");
               Navigator.of(context).push(PageTransition(
                   child: MainBottomBarScreen(),
                   type: PageTransitionType.rightToLeftWithFade,
                   duration: Duration(milliseconds: 400),
                   reverseDuration: Duration(milliseconds: 400)));
-            }else{
+            } else {
               null;
             }
-
           },
           child: const Text(
             "Giriş Yap",
@@ -194,8 +191,13 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           TextButton(
               onPressed: () {
-                final email = _email.text.trim();
-                _authService.ResetPassword(email);
+
+                Navigator.of(context).pushReplacement(PageTransition(
+                    child: ResetPassword(),
+                    type: PageTransitionType.rightToLeftWithFade,
+                    duration: Duration(milliseconds: 400),
+                    reverseDuration: Duration(milliseconds: 400)));
+
 
               },
               child: Text(
@@ -213,8 +215,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Container(
         decoration: BoxDecoration(
             color: Color(0xffE8E8E8),
-            borderRadius: BorderRadius.all(Radius.circular(30))
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(30))),
         child: TextFormField(
           controller: _password,
           keyboardType: TextInputType.visiblePassword,
@@ -234,21 +235,14 @@ class _LoginPageState extends State<LoginPage> {
     return Flexible(
       flex: 15,
       child: Container(
-
         decoration: BoxDecoration(
             color: Color(0xffE8E8E8),
-          borderRadius: BorderRadius.all(Radius.circular(30))
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(30))),
         child: TextFormField(
-
-
           controller: _email,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            border: InputBorder.none,
-
-
-
+              border: InputBorder.none,
               labelText: "E-mail giriniz",
               prefixIcon: const Icon(Icons.email)),
         ),
