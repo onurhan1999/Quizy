@@ -21,15 +21,13 @@ class _LeaderboardScreen1State extends State<LeaderboardScreen1> {
   List<Object> names = [];
   List<Object> scores = [];
   List<Object> username = [];
+  List<Object> avatar = [];
 
   @override
   void initState() {
-
     // TODO: implement initState
     getList();
     super.initState();
-
-
   }
 
   Future getList() async {
@@ -42,31 +40,19 @@ class _LeaderboardScreen1State extends State<LeaderboardScreen1> {
       names = List.from(data.docs.map((doc) => doc['UserName']));
       scores = List.from(data.docs.map((doc) => doc['Score']));
       username = List.from(data.docs.map((doc) => doc.id));
-
-
+      avatar = List.from(data.docs.map((doc) => doc['Avatar']));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
-
-
     return FutureBuilder<QuerySnapshot>(
         future: _userService.sortScore(),
         builder: (context, snapshot) {
-          /* if (snapshot.connectionState != ConnectionState.done) {
-            return
-              Container(
-                  decoration: DecorationProperties.leaderBoardContainerDecoration,
-                  alignment: Alignment.center,
-                  child: const CircularProgressIndicator(
-                    backgroundColor: Colors.grey,
-                    color: Colors.purple,
-                    strokeWidth: 10,
-                  ));
 
-          }*/
+
+
+
           return !snapshot.hasData
               ? Container(
               alignment: Alignment.center,
@@ -77,162 +63,198 @@ class _LeaderboardScreen1State extends State<LeaderboardScreen1> {
               ))
               : Container(
             decoration:
-            DecorationProperties.leaderBoardContainerDecoration,
+            DecorationProperties.leaderboardBackgroundDecoration,
             child: Scaffold(
               backgroundColor: Colors.transparent,
-              appBar: buildAppBar(),
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [FirstPlayer(names, scores)],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SecondPlayer(names, scores),
-                        ThirdPlayer(names, scores)
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: snapshot.data!.docs.length - 4,
-                          itemBuilder: (BuildContext context, int index) {
-                            DocumentSnapshot mypost =
-                            snapshot.data!.docs[index + 3];
+              appBar: buildAppBar(context),
+              body: Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Column(
 
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: Stack(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              FirstPlayer(names, scores, avatar)
+                            ],
+                          ),
+                          Positioned(
+                            top: 100,
+                            left: .0,
+                            right: .0,
+                            child: Row(
                               children: [
-                                Stack(
-                                  children: [
-                                    Container(
-                                        child: Row(
-                                          children: [
-                                            Spacer(
-                                              flex: 4,
-                                            ),
-                                            Text(
-                                              "${mypost['UserName']}",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 25),
-                                            ),
-                                            Spacer(),
-                                            Text(
-                                              "${mypost['Score']}",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 25),
-                                            ),
-                                            Spacer(),
-                                            Text(
-                                              '#${(index + 4).toString()}',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 25),
-                                            ),
-                                            Spacer(
-                                              flex: 2,
-                                            )
-                                          ],
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                        ),
-                                        width: context.dynamicWidth(0.9),
-                                        height: 70,
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xff000000)
-                                              .withOpacity(0.26),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(40)),
-                                        )),
-                                    CircleAvatar(
-                                      backgroundColor: Colors.transparent,
-                                      child: ReusableWidgets.getImageAsset(
-                                          "avatar.png"),
-                                      radius: 40,
-                                    ),
-                                  ],
-                                  alignment: Alignment.centerLeft,
-                                )
-                              ],
-                            );
-                          },
-                        ),
-                        SizedBox(height: 30,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Stack(
-                              children: [
-                                Container(
-                                    child: Row(
-                                      children:  [
-                                        Spacer(
-                                          flex: 4,
-                                        ),
-                                        Text(
-                                          names[username.indexOf(FirebaseAuth.instance.currentUser!.uid)].toString(),
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 25),
-                                        ),
-                                        Spacer(),
-                                        Text(
-                                          scores[username.indexOf(FirebaseAuth.instance.currentUser!.uid)].toString(),
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 25),
-                                        ),
-                                        Spacer(),
-                                        Text(
-                                          '#'+(username.indexOf(FirebaseAuth.instance.currentUser!.uid)+1).toString(),
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 25),
-                                        ),
-                                        Spacer(
-                                          flex: 2,
-                                        )
-                                      ],
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.center,
-                                    ),
-                                    width: context.dynamicWidth(0.9),
-                                    height: 70,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xff000000)
-                                          .withOpacity(0.26),
-
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(40)),
-                                    )),
-                                CircleAvatar(
-                                  backgroundColor: Colors.transparent,
-                                  child: ReusableWidgets.getImageAsset(
-                                      "avatar.png"),
-                                  radius: 40,
+                                Spacer(),
+                                SecondPlayer(names, scores, avatar),
+                                Spacer(
+                                  flex: 2,
                                 ),
+                                ThirdPlayer(names, scores, avatar),
+                                Spacer(),
                               ],
-                              alignment: Alignment.centerLeft,
-                            )
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,right: 20),
+                      child: Container(
+
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.all(Radius.circular(30))
+
+                        ),
+                        width: context.contextWidth(),
+                        height: 68,
+                        child: Row(
+                          children: [
+                            Spacer(),
+                            Text(
+                              '#' +
+                                  (username.indexOf(FirebaseAuth.instance
+                                      .currentUser!.uid) +
+                                      1)
+                                      .toString(),
+                              style: TextConstants
+                                  .leaderboardUserTextStyleGreen(context),
+                            ),
+                            Spacer(),
+                            CircleAvatar(
+                              radius: 27,
+                              backgroundColor: Color(0xffA6BAFC),
+                              child: CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: Image.network(
+                                  avatar[username.indexOf(FirebaseAuth
+                                      .instance.currentUser!.uid)]
+                                      .toString(),
+                                ),
+                                radius: 21,
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              "Güncel Skor",
+                              style: GoogleFonts.openSans(
+                                  color: Color(0xffE8E8E8),
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20),
+                            ),
+                            Spacer(
+                              flex: 5,
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                scores[username.indexOf(FirebaseAuth
+                                    .instance.currentUser!.uid)]
+                                    .toString(),
+                                style: TextConstants
+                                    .leaderboardUserTextStyleWhite(
+                                    context),
+                              ),
+                            ),
+                            Spacer(),
                           ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: snapshot.data!.docs.length - 3,
+                        itemBuilder: (BuildContext context, int index) {
+                          DocumentSnapshot mypost = snapshot.data!.docs[index + 3];
 
-                ],
+                          return Column(
+                            children: [
+                              Container(
+                                width: context.contextWidth(),
+                                height: 68,
+                                color: Color(0xff060718).withOpacity(0.8),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          SizedBox(width: 10,),
+
+
+
+                                          Text(
+                                            '#${(index + 4).toString()}',
+                                            style: TextConstants
+                                                .leaderboardUserTextStyleGreen(
+                                                context),
+                                          ),
+                                          SizedBox(width: 20,),
+
+
+                                          CircleAvatar(
+                                            radius: 27,
+                                            backgroundColor:
+                                            Color(0xffA6BAFC),
+                                            child: CircleAvatar(
+                                              backgroundColor:
+                                              Colors.transparent,
+                                              child: Image.network(
+                                                  "${mypost['Avatar']}"),
+                                              radius: 21,
+                                            ),
+                                          ),
+                                          SizedBox(width: 20,),
+                                          Text("${mypost['UserName']}",
+                                              style: TextConstants
+                                                  .leaderboardUserTextStyleWhite(
+                                                  context)),
+
+
+
+
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 10),
+                                        child: Text(
+
+                                          "${mypost['Score']}",
+                                          style: TextConstants
+                                              .leaderboardUserTextStyleWhite(
+                                              context),
+                                        ),
+                                      ),
+
+                                    ],
+
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -240,84 +262,198 @@ class _LeaderboardScreen1State extends State<LeaderboardScreen1> {
   }
 }
 
-FirstPlayer(names, scores) {
+Expanded FirstPlayer(names, scores, avatar) {
   return Expanded(
     child: Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 5),
-          child: CircleAvatar(
-            backgroundColor: Colors.transparent,
-            child: ReusableWidgets.getImageAsset("avatar.png"),
-            radius: 35,
-          ),
+        Stack(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              child: CircleAvatar(
+                radius: 68,
+                backgroundColor: Color(0xffFFE54D),
+                child: CircleAvatar(
+                    radius: 65,
+                    backgroundColor: Color(0xff86A0FA),
+                    child: CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        radius: 50,
+                        child: Image.network(avatar[0]))),
+              ),
+            ),
+            Positioned(
+                top: .0,
+                left: .0,
+                right: .0,
+                child: Center(
+                    child: CircleAvatar(
+                        backgroundColor: Color(0xffFFCC4D),
+                        radius: 19,
+                        child: CircleAvatar(
+                          radius: 15,
+                          child: Text(
+                            "1",
+                            style: GoogleFonts.openSans(
+                                fontSize: 20,
+                                color: Color(0xffF99D26),
+                                fontWeight: FontWeight.bold),
+                          ),
+                          backgroundColor: Color(0xffFDE256),
+                        ))))
+          ],
         ),
         Text(
           names[0].toString(),
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          style: GoogleFonts.openSans(
+              color: Color(0xffE8E8E8),
+              fontWeight: FontWeight.w700,
+              fontSize: 20),
         ),
         Text(
           scores[0].toString(),
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          style: GoogleFonts.openSans(
+              color: Color(0xffE8E8E8),
+              fontWeight: FontWeight.w700,
+              fontSize: 20),
         ),
       ],
     ),
   );
 }
 
-Column ThirdPlayer(names, scores) {
+Column ThirdPlayer(names, scores, avatar) {
   return Column(
     children: [
-      Padding(
-        padding: const EdgeInsets.only(top: 5, bottom: 5),
-        child: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          child: ReusableWidgets.getImageAsset("avatar.png"),
-          radius: 35,
-        ),
+      Stack(
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 20),
+            child: CircleAvatar(
+              radius: 48,
+              backgroundColor: Color(0xff8B5731),
+              child: CircleAvatar(
+                  radius: 45,
+                  backgroundColor: Color(0xffF5A6FC),
+                  child: CircleAvatar(
+                      radius: 33,
+                      backgroundColor: Colors.transparent,
+                      child: Image.network(avatar[2]))),
+            ),
+          ),
+          Positioned(
+              top: .0,
+              left: .0,
+              right: .0,
+              child: Center(
+                  child: CircleAvatar(
+                      radius: 19,
+                      backgroundColor: Color(0xff8B5731),
+                      child: CircleAvatar(
+                        radius: 15,
+                        child: Text(
+                          "3",
+                          style: GoogleFonts.openSans(
+                              fontSize: 20,
+                              color: Color(0xff8B5731),
+                              fontWeight: FontWeight.bold),
+                        ),
+                        backgroundColor: Color(0xffBF7540),
+                      ))))
+        ],
       ),
       Text(
         names[2].toString(),
-        style: TextStyle(color: Colors.white, fontSize: 20),
+        style: GoogleFonts.openSans(
+            color: Color(0xffE8E8E8),
+            fontWeight: FontWeight.w700,
+            fontSize: 20),
       ),
       Text(
         scores[2].toString(),
-        style: TextStyle(color: Colors.white, fontSize: 20),
+        style: GoogleFonts.openSans(
+            color: Color(0xffE8E8E8),
+            fontWeight: FontWeight.w700,
+            fontSize: 20),
       ),
     ],
   );
 }
 
-Column SecondPlayer(names, scores) {
+Column SecondPlayer(names, scores, avatar) {
   return Column(
     children: [
-      Padding(
-        padding: const EdgeInsets.only(top: 5),
-        child: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          child: ReusableWidgets.getImageAsset("avatar.png"),
-          radius: 35,
-        ),
+      Stack(
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 20),
+            child: CircleAvatar(
+              radius: 48,
+              backgroundColor: Color(0xffCED5E0),
+              child: CircleAvatar(
+                  radius: 45,
+                  backgroundColor: Color(0xff26CE55),
+                  child: CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      radius: 33,
+                      child: Image.network(avatar[1]))),
+            ),
+          ),
+          Positioned(
+              top: .0,
+              left: .0,
+              right: .0,
+              child: Center(
+                  child: CircleAvatar(
+                      backgroundColor: Color(0xffCED5E0),
+                      radius: 19,
+                      child: CircleAvatar(
+                        radius: 15,
+                        child: Text(
+                          "2",
+                          style: GoogleFonts.openSans(
+                              fontSize: 20,
+                              color: Color(0xffB3BAC3),
+                              fontWeight: FontWeight.bold),
+                        ),
+                        backgroundColor: Color(0xffEFF1F4),
+                      ))))
+        ],
       ),
       Text(
         names[1].toString(),
-        style: TextStyle(color: Colors.white, fontSize: 20),
+        style: GoogleFonts.openSans(
+            color: Color(0xffE8E8E8),
+            fontWeight: FontWeight.w700,
+            fontSize: 20),
       ),
       Text(
         scores[1].toString(),
-        style: TextStyle(color: Colors.white, fontSize: 20),
+        style: GoogleFonts.openSans(
+            color: Color(0xffE8E8E8),
+            fontWeight: FontWeight.w700,
+            fontSize: 20),
       ),
     ],
   );
 }
 
-AppBar buildAppBar() {
+AppBar buildAppBar(BuildContext context) {
   return AppBar(
+
+    automaticallyImplyLeading: false,
+    bottom: PreferredSize(
+        child: Container(
+          color: Color(0xff595CFF),
+          height: 2.0,
+        ),
+        preferredSize: Size.fromHeight(4.0)),
     centerTitle: true,
-    backgroundColor: Colors.transparent,
+    backgroundColor: Color(0xff14154F),
     elevation: 0,
-    title: const Text(
-      '',
+    title: Text(
+      'Liderlik',
+      style: TextConstants.leaderboardAppBarTextStyle(context),
     ),
   );
 }

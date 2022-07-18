@@ -49,31 +49,31 @@ class _MainBottomBarScreenState extends State<MainBottomBarScreen> {
                 child: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
                   showUnselectedLabels: false,
-                  unselectedItemColor: Colors.grey,
+                  unselectedItemColor: Color(0xff1A1B69),
                   iconSize: 35,
-                  backgroundColor: Color(0xFF1E2059),
+                  backgroundColor: Color(0xFF0E0F37),
                   landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
                   items: const <BottomNavigationBarItem>[
                     BottomNavigationBarItem(
                       icon: Icon(Icons.home_outlined),
                       label: 'Home',
-                      backgroundColor: Colors.grey,
+                      backgroundColor: Color(0xff1A1B69),
                     ),
                     BottomNavigationBarItem(
 
-                      icon: Icon(Icons.leaderboard_outlined),
+                      icon: Icon(Icons.leaderboard_outlined,),
                       label: 'Leaderboard',
-                      backgroundColor: Colors.grey,
+                      backgroundColor: Colors.red,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.account_circle_outlined),
                       label: 'Profile',
-                      backgroundColor: Colors.grey,
+                      backgroundColor: Color(0xff1A1B69),
                     ),
                   ],
                   selectedLabelStyle: GoogleFonts.montserrat(),
                   currentIndex: _selectedIndex,
-                  selectedItemColor: Colors.white,
+                  selectedItemColor: Color(0xff595CFF),
                   onTap: _onItemTapped,
                 ),
               ),

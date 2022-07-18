@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:quizlen/constants/text_constants.dart';
@@ -24,8 +26,10 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
+  TextEditingController emailController = TextEditingController();
 
-  String imgurl="https://firebasestorage.googleapis.com/v0/b/cookcaquiz.appspot.com/o/d%2F0.png?alt=media&token=36fa8505-e9cc-49bc-af5a-72ce2df2ea0a";
+  String imgurl =
+      "https://firebasestorage.googleapis.com/v0/b/cookcaquiz.appspot.com/o/d%2F0.png?alt=media&token=36fa8505-e9cc-49bc-af5a-72ce2df2ea0a";
 
   void initState() {
     print("init leader");
@@ -55,7 +59,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: DecorationProperties.editProfileBackgroundDecoration,
-
       child: Scaffold(
         backgroundColor: Colors.transparent,
         resizeToAvoidBottomInset: false,
@@ -72,25 +75,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         strokeWidth: 10,
                       ))
                   : Container(
-                    child: Center(
-
-                        child: Column(
-
+                      child: Center(
+                          child: Column(
                         children: [
-                          CircleAvatarWidget(context,snapshot.data![2]),
+                          CircleAvatarWidget(context, snapshot.data![2]),
                           nickNameText(context, snapshot.data![0]),
                           Expanded(
                             flex: 3,
                             child: Padding(
-                              padding:
-                                  EdgeInsets.only(top: context.dynamicHeight(0.03)),
+                              padding: EdgeInsets.only(
+                                  top: context.dynamicHeight(0.03)),
                               child: Container(
                                 decoration: BoxDecoration(
-
-
                                   color: Color(0xff060718).withOpacity(0.8),
-
-
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.only(
@@ -100,20 +97,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      TabTexts(context,snapshot.data![1],(userRank.indexOf(FirebaseAuth
-                                          .instance.currentUser!.uid) +
-                                          1)
-                                          .toString()),
-
+                                      TabTexts(
+                                          context,
+                                          snapshot.data![1],
+                                          (userRank.indexOf(FirebaseAuth
+                                                      .instance
+                                                      .currentUser!
+                                                      .uid) +
+                                                  1)
+                                              .toString()),
                                       Padding(
                                         padding: EdgeInsets.only(
                                             top: context.dynamicHeight(0.05),
-
                                             bottom: 30),
                                         child: Column(
                                           children: [
                                             ChooseAvatar(context),
-                                            SizedBox(height: 20,),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
                                             ChangePassword(context),
                                           ],
                                         ),
@@ -132,7 +134,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           )
                         ],
                       )),
-                  );
+                    );
             }),
       ),
     );
@@ -144,10 +146,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       children: [
         Text(
           "Çıkış Yap",
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge
+              ?.copyWith(color: Colors.white),
         ),
         IconButton(
-          color: Colors.white,
+            color: Colors.white,
             iconSize: 35,
             onPressed: () {
               _authService.Logout(context);
@@ -164,20 +169,33 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         children: [
           Text(
             "Şifre Değiştir",
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(color: Colors.white),
           ),
-          Icon(Icons.arrow_forward_ios
-          ,
-          color: Colors.white,)
+          Icon(
+            Icons.arrow_forward_ios,
+            color: Colors.white,
+          )
         ],
       ),
-      onTap: (){},
+      onTap: () {
+        _authService.ResetPassword(
+                FirebaseAuth.instance.currentUser!.email.toString())
+            .whenComplete(() => Fluttertoast.showToast(
+                  msg: "Sıfırlama maili gönderildi...", // message
+                  toastLength: Toast.LENGTH_SHORT, // length
+                  gravity: ToastGravity.BOTTOM, // location
+                  // duration
+                ));
+      },
     );
   }
 
   InkWell ChooseAvatar(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         showModalBottomSheet<void>(
           backgroundColor: Colors.transparent,
           isScrollControlled: false,
@@ -187,7 +205,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           builder: (context) {
             return Container(
               decoration: BoxDecoration(
-                  color: ColorConstants.deepPurple,
+                  color: Color(0XFF0E0F37),
                   borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(20),
                       topLeft: Radius.circular(20))),
@@ -197,47 +215,34 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   padding: const EdgeInsets.only(left: 15, right: 15),
                   child: Padding(
                     padding: const EdgeInsets.only(top: 15),
-                    child: FutureBuilder<List<String>> (
+                    child: FutureBuilder<List<String>>(
                         future: _userService.getAvatars(),
                         builder: (context, snapshot) {
-
-
-
-
-
-
                           return !snapshot.hasData
                               ? const CircularProgressIndicator(
-                            backgroundColor: Colors.grey,
-                            color: Colors.purple,
-                            strokeWidth: 10,
-                          )
+                                  backgroundColor: Colors.grey,
+                                  color: Colors.purple,
+                                  strokeWidth: 10,
+                                )
                               : GridView.builder(
-
-                              itemCount:snapshot.data?.length,
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-
-
-                                crossAxisCount: 3,
-
-
-
-                              ), itemBuilder: (context,index){
-
-                            return InkWell(
-
-
-                              child: Image.network(snapshot.data!.elementAt(index)),
-                              onTap: (){
-                                setState(() {
-                                  _userService.changeAvatars(snapshot.data!.elementAt(index));
-                                  Navigator.pop(context);
-
-                                });
-                              },
-                            );
-
-                          });
+                                  itemCount: snapshot.data?.length,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      child: Image.network(
+                                          snapshot.data!.elementAt(index)),
+                                      onTap: () {
+                                        setState(() {
+                                          _userService.changeAvatars(
+                                              snapshot.data!.elementAt(index));
+                                          Navigator.pop(context);
+                                        });
+                                      },
+                                    );
+                                  });
                         }),
                   ),
                 ),
@@ -245,24 +250,27 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             );
           },
         );
-
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             "Avatar Seç",
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(color: Colors.white),
           ),
-          Icon(Icons.arrow_forward_ios,color: Colors.white,)
+          Icon(
+            Icons.arrow_forward_ios,
+            color: Colors.white,
+          )
         ],
       ),
     );
   }
 
-
-
-  Row TabTexts(BuildContext context,puan,userRank) {
+  Row TabTexts(BuildContext context, puan, userRank) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -276,8 +284,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               "Kategori",
               style: TextConstants.favCategoryTextStyle(context),
             ),
-            SizedBox(height: 10,),
-
+            SizedBox(
+              height: 10,
+            ),
             CircleAvatar(
               radius: 30,
               backgroundColor: Color(0xff26CE55),
@@ -295,8 +304,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               "Puan",
               style: TextConstants.favCategoryTextStyle(context),
             ),
-            SizedBox(height: 10,),
-
+            SizedBox(
+              height: 10,
+            ),
             CircleAvatar(
               radius: 30,
               backgroundColor: Color(0xff00B2FF),
@@ -320,7 +330,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               "Sırası",
               style: TextConstants.favCategoryTextStyle(context),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             CircleAvatar(
               radius: 30,
               backgroundColor: Color(0xffFF0000),
@@ -348,10 +360,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-
-  Expanded CircleAvatarWidget(BuildContext context,avatar) {
+  Expanded CircleAvatarWidget(BuildContext context, avatar) {
     return Expanded(
-
       child: Padding(
         padding: EdgeInsets.only(top: context.dynamicHeight(0.05)),
         child: CircleAvatar(
@@ -360,7 +370,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           child: CircleAvatar(
             backgroundColor: Colors.transparent,
             child: Image.network(avatar),
-            radius:45,
+            radius: 45,
           ),
         ),
       ),
@@ -383,31 +393,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         style: TextConstants.leaderboardAppBarTextStyle(context),
       ),
     );
-
-
-
-
   }
 
-
   Future getFavourite() async {
-    DocumentReference docRef = FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid);
+    DocumentReference docRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid);
     DocumentSnapshot doc = await docRef.get();
     List dataListAsInt = doc['favourite'];
     List favourite = doc['favourite'];
     dataListAsInt.sort((a, b) => b.compareTo(a));
     int fav = favourite.indexOf(dataListAsInt.elementAt(0));
-    final storageRef = FirebaseStorage.instanceFor(bucket: "gs://cookcaquiz.appspot.com").ref();
+    final storageRef =
+        FirebaseStorage.instanceFor(bucket: "gs://cookcaquiz.appspot.com")
+            .ref();
     final imageUrl = await storageRef.child("d/${fav}.png").getDownloadURL();
     setState(() {
       print("deneme");
       print(imageUrl.toString());
       print("deneme");
-      imgurl=imageUrl.toString();
+      imgurl = imageUrl.toString();
       print("deneme");
       print(imgurl);
       print("deneme");
     });
-
   }
 }

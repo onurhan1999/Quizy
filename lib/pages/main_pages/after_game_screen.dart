@@ -75,8 +75,8 @@ class _AfterGameScreenState extends State<AfterGameScreen> {
                       Padding(
                         padding: EdgeInsets.only(top: context.dynamicHeight(0.05)),
                         child: CircleAvatar(
-                          backgroundColor: Color(0xffD9D9D9),
-                          radius: 100,
+                          backgroundColor: Color(0xff5A88B0),
+                          radius: 120,
                           child: ReusableWidgets.getImageAsset("kupa.png"),
                         ),
                       ),
@@ -164,7 +164,7 @@ class _AfterGameScreenState extends State<AfterGameScreen> {
                       ),
 
                       Padding(
-                        padding: const EdgeInsets.only(top: 70),
+                        padding: const EdgeInsets.only(top: 30),
                         child: Container(
                           height: context.dynamicHeight(0.12),
                           width: context.dynamicWidth(0.8),

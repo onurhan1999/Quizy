@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:quizlen/components/decoration.dart';
 import 'package:quizlen/constants/color_constants.dart';
 import 'package:quizlen/extension/context_extension.dart';
 import 'package:quizlen/pages/main_pages/after_game_screen.dart';
+import 'package:quizlen/pages/main_pages/main_bottombar_screen.dart';
 import 'package:quizlen/services/QuizService.dart';
 import 'package:quizlen/services/UserServices.dart';
 
@@ -14,7 +16,7 @@ void main() => runApp(QuizScreen(
       quizId: '',
       quizTitle: '',
       isSolved: true,
-      quizCategory:'',
+      quizCategory: '',
     ));
 
 class QuizScreen extends StatefulWidget {
@@ -29,7 +31,6 @@ class QuizScreen extends StatefulWidget {
     required this.quizId,
     required this.isSolved,
     required this.quizCategory,
-
   }) : super(key: key);
 
   @override
@@ -37,16 +38,15 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-
-  String categoryId(String input){
-    switch(input){
-      case "Tarih":
+  String categoryId(String input) {
+    switch (input) {
+      case "Kültür":
         return "0";
       case "Çevre":
         return "1";
       case "İnsan Hakları":
         return "2";
-      default :
+      default:
         return "0";
     }
   }
@@ -78,8 +78,6 @@ class _QuizScreenState extends State<QuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Container(
       decoration: DecorationProperties.quizBackgroundDecoration,
       child: FutureBuilder<QuerySnapshot>(
@@ -91,10 +89,17 @@ class _QuizScreenState extends State<QuizScreen> {
                     backgroundColor: Colors.transparent,
                     appBar: AppBar(
                       elevation: 0,
-                      backgroundColor: Colors.transparent,
+                      backgroundColor: Color(0xff14154F),
                       centerTitle: true,
+                      leading: IconButton(
+                          onPressed: () {
+
+
+                          },
+                          icon: Icon(Icons.clear)),
                       title: Text(widget.quizTitle,
-                          style: TextConstants.whiteAppBarTextStyle(context)),
+                          style: TextConstants.leaderboardAppBarTextStyle(
+                              context)),
                     ),
                     body: Padding(
                       padding: const EdgeInsets.only(),
@@ -110,7 +115,6 @@ class _QuizScreenState extends State<QuizScreen> {
                           optionControllerD.text = mypost['answers'][3];
                           return Column(
                             children: [
-
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Row(
@@ -123,7 +127,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                       duration: Duration(milliseconds: 500),
                                     ),
                                     AnimatedContainer(
-                                      color: Colors.grey.withOpacity(0.25),
+                                      color: Colors.white.withOpacity(0.75),
                                       width:
                                           context.contextProgressBarWidthGrey(
                                               indexs + 1.toDouble()),
@@ -141,7 +145,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                       width: context.dynamicWidth(1),
                                       height: context.dynamicHeight(0.35),
                                       child: Container(
-                                        alignment: Alignment.topLeft,
+                                        alignment: Alignment.centerLeft,
                                         decoration: DecorationProperties
                                             .questionBackgroundDecoration,
                                         child: Padding(
@@ -153,8 +157,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 5),
+                                      padding: EdgeInsets.only(top: 5),
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(20.0),
@@ -164,7 +167,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                                   color: Colors.red, width: 8)),
                                           child: AnimatedContainer(
                                             curve: Curves.linearToEaseOut,
-                                            duration: Duration(milliseconds: 900),
+                                            duration:
+                                                Duration(milliseconds: 900),
                                             color: colorControllerA,
                                             child: InkWell(
                                               onTap: () {
@@ -194,8 +198,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                               child: SizedBox(
                                                 height: isBigScreen() ? 50 : 40,
                                                 child: Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 20),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 20),
                                                   child: Row(
                                                     children: [
                                                       Text(
@@ -214,8 +219,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 5),
+                                      padding: EdgeInsets.only(top: 5),
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(20.0),
@@ -225,7 +229,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                                   color: Colors.red, width: 8)),
                                           child: AnimatedContainer(
                                             curve: Curves.linearToEaseOut,
-                                            duration: Duration(milliseconds: 900),
+                                            duration:
+                                                Duration(milliseconds: 900),
                                             color: colorControllerB,
                                             child: InkWell(
                                               onTap: () {
@@ -256,8 +261,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                               child: SizedBox(
                                                 height: isBigScreen() ? 50 : 40,
                                                 child: Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 20),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 20),
                                                   child: Row(
                                                     children: [
                                                       Text(
@@ -276,8 +282,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 5),
+                                      padding: EdgeInsets.only(top: 5),
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(20.0),
@@ -287,13 +292,13 @@ class _QuizScreenState extends State<QuizScreen> {
                                                   color: Colors.red, width: 8)),
                                           child: AnimatedContainer(
                                             curve: Curves.linearToEaseOut,
-                                            duration: Duration(milliseconds: 900),
+                                            duration:
+                                                Duration(milliseconds: 900),
                                             color: colorControllerC,
                                             child: InkWell(
                                               onTap: () {
                                                 optionColorController
                                                     ? setState(() {
-
                                                         cleanOptionColors();
                                                         colorControllerC =
                                                             ColorConstants
@@ -319,8 +324,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                               child: SizedBox(
                                                 height: isBigScreen() ? 50 : 40,
                                                 child: Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 20),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 20),
                                                   child: Row(
                                                     children: [
                                                       Text(
@@ -339,8 +345,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 5),
+                                      padding: EdgeInsets.only(top: 5),
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(20.0),
@@ -350,7 +355,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                                   color: Colors.red, width: 8)),
                                           child: AnimatedContainer(
                                             curve: Curves.linearToEaseOut,
-                                            duration: Duration(milliseconds: 900),
+                                            duration:
+                                                Duration(milliseconds: 900),
                                             color: colorControllerD,
                                             child: InkWell(
                                               onTap: () {
@@ -381,8 +387,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                               child: SizedBox(
                                                 height: isBigScreen() ? 50 : 40,
                                                 child: Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 20),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 20),
                                                   child: Row(
                                                     children: [
                                                       Text(
@@ -427,21 +434,24 @@ class _QuizScreenState extends State<QuizScreen> {
                                                   enableDrag: false,
                                                   context: context,
                                                   builder: (context) {
-                                                    return Container(
-                                                      decoration: BoxDecoration(
-                                                          color: ColorConstants
-                                                              .deepPurple,
-                                                          borderRadius:
-                                                              const BorderRadius
-                                                                      .only(
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                          20),
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          20))),
-                                                      height: 150,
-                                                      child: Center(
+                                                    return WillPopScope(
+                                                      onWillPop: () async {
+                                                        return false;
+                                                      },
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                            color:
+                                                                ColorConstants
+                                                                    .deepPurple,
+                                                            borderRadius: const BorderRadius
+                                                                    .only(
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        20),
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        20))),
+                                                        height: 150,
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
@@ -508,8 +518,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                                                         } else {
                                                                           _userService
                                                                               .updateScore(score.toString());
-                                                                          _userService.updatefav(categoryId(widget.quizCategory));
-
+                                                                          _userService
+                                                                              .updatefav(categoryId(widget.quizCategory));
                                                                         }
 
                                                                         Navigator.of(context)
@@ -537,7 +547,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                                       ),
                                                     );
                                                   },
-                                                );
+                                                ).whenComplete(
+                                                    () => print("medal bitti"));
                                               },
                                               child: SizedBox(
                                                 height: 60,
@@ -675,5 +686,57 @@ class _QuizScreenState extends State<QuizScreen> {
     colorControllerB = Colors.white;
     colorControllerC = Colors.white;
     colorControllerD = Colors.white;
+  }
+
+
+
+  Future showChoiseDialog(BuildContext contextt){
+    return  showDialog(
+        context: contextt,
+        builder: (contextt) {
+          return AlertDialog(
+              title: const Text(
+                "Testten çıkmak istediğinize emin misiniz?",
+                textAlign: TextAlign.center,
+              ),
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                      const Radius.circular(8.0))),
+              content: Container(
+                  height: 30,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment:
+                    MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(contextt);
+                        },
+                        child: const Text(
+                          "Evet",
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight:
+                              FontWeight.bold),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          "Vazgeç",
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight:
+                              FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  )));
+        });
   }
 }
