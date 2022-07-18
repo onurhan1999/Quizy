@@ -9,17 +9,22 @@ Quizy çocuklar ve gençleri sürdürülebilirlik konusunda eğitirken, öğretm
 
 
 # Ekran Görüntüleri
+<div style="display:flex; gap:10px;">
+<img src="https://github.com/onurhan1999/Quizy/blob/master/screenshots/Screenshot_1658126285.png?raw=true" width=32% height=50%>
+<img src="https://github.com/onurhan1999/Quizy/blob/master/screenshots/Screenshot_1658126784.png?raw=true" width=32% height=50%>
+<img src="https://github.com/onurhan1999/Quizy/blob/master/screenshots/Screenshot_1658127489.png?raw=true)" width=32% height=50%>
+</div>
 
-![alt text](https://github.com/onurhan1999/Quizy/blob/master/screenshots/Screenshot_1658126285.png?raw=true)
-![alt text](https://github.com/onurhan1999/Quizy/blob/master/screenshots/Screenshot_1658126784.png?raw=true)
-![alt text](https://github.com/onurhan1999/Quizy/blob/master/screenshots/Screenshot_1658127489.png?raw=true)
+
+
+
 
 
 # Kullanılan teknolojiler
-- [Dart]
-- [Flutter] 
-- [Firebase]
-- [Figma]
+- Dart 
+- Flutter
+- Firebase
+- Figma
 
 
 
