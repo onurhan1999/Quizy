@@ -143,14 +143,9 @@ class _ResetPasswordState extends State<ResetPassword> {
 
               final email = _email.text.trim();
 
-              _authService.ResetPassword(email);
-              Fluttertoast.showToast(msg: "Şifre sıfırlama maili gönderildi.");
+              _authService.ResetPassword(email,context);
 
-              Navigator.of(context).push(PageTransition(
-                  child: LoginPage(),
-                  type: PageTransitionType.rightToLeftWithFade,
-                  duration: Duration(milliseconds: 400),
-                  reverseDuration: Duration(milliseconds: 400)));
+
 
           },
           child: const Text(

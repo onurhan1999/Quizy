@@ -29,7 +29,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController emailController = TextEditingController();
 
   String imgurl =
-      "https://firebasestorage.googleapis.com/v0/b/cookcaquiz.appspot.com/o/d%2F0.png?alt=media&token=36fa8505-e9cc-49bc-af5a-72ce2df2ea0a";
+      "https://firebasestorage.googleapis.com/v0/b/cookcaquiz.appspot.com/o/d%2F0.png?alt=media&token=a8107e6c-9687-4e00-9755-2fa608b1926f";
 
   void initState() {
     print("init leader");
@@ -182,7 +182,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       onTap: () {
         _authService.ResetPassword(
-                FirebaseAuth.instance.currentUser!.email.toString())
+                FirebaseAuth.instance.currentUser!.email.toString(),context)
             .whenComplete(() => Fluttertoast.showToast(
                   msg: "Sıfırlama maili gönderildi...", // message
                   toastLength: Toast.LENGTH_SHORT, // length
@@ -289,7 +289,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
             CircleAvatar(
               radius: 30,
-              backgroundColor: Color(0xff26CE55),
+              backgroundColor: Colors.transparent,
               child: Image.network(imgurl),
             ),
           ],
@@ -309,13 +309,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
             CircleAvatar(
               radius: 30,
-              backgroundColor: Color(0xff00B2FF),
+              backgroundColor: Color(0xffF36AFF),
               child: Text(
                 puan,
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge
-                    ?.copyWith(color: Colors.white),
+                    ?.copyWith(color: Color(0xff0E0F37)),
               ),
             ),
           ],
@@ -335,13 +335,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
             CircleAvatar(
               radius: 30,
-              backgroundColor: Color(0xffFF0000),
+              backgroundColor: Color(0xff6E72FD),
               child: Text(
                 userRank,
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge
-                    ?.copyWith(color: Colors.white),
+                    ?.copyWith(color: Color(0xff0E0F37)),
               ),
             ),
           ],

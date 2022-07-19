@@ -21,15 +21,12 @@ class AuthService {
       );
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
-        case "ERROR_WRONG_PASSWORD":
         case "wrong-password":
           return Fluttertoast.showToast(
-            msg: "E-Mail veya şifre hatalı.", // message
+            msg: "Şifre hatalı.", // message
             toastLength: Toast.LENGTH_SHORT, // length
             gravity: ToastGravity.BOTTOM, // location
           );
-
-        case "ERROR_USER_NOT_FOUND":
         case "user-not-found":
           return Fluttertoast.showToast(
             msg: "Böyle bir kullanıcı bulunamadı.", // message
@@ -37,8 +34,12 @@ class AuthService {
             gravity: ToastGravity.BOTTOM, // location
             // duration
           );
-        case "ERROR_INVALID_EMAIL":
-          return "Email address is invalid.";
+        case "invalid-email":
+          return Fluttertoast.showToast(
+            msg: "Email adresi hatalı.", // message
+            toastLength: Toast.LENGTH_SHORT, // length
+            gravity: ToastGravity.BOTTOM, // location
+          );
         default:
           return "Login failed. Please try again.";
       }
@@ -60,15 +61,27 @@ class AuthService {
     try {
       print("try içi");
       await _auth.signOut();
+
+
+
     } on FirebaseAuthException catch (e) {
-      print(e);
+      Fluttertoast.showToast(
+        msg: "Bir sorun oldu. Lütfen tekrar deneyin.", // message
+        toastLength: Toast.LENGTH_SHORT, // length
+        gravity: ToastGravity.BOTTOM, // location
+        // duration
+      );
     }
+    Fluttertoast.showToast(
+      msg: "Çıkış Başarılı...", // message
+      toastLength: Toast.LENGTH_SHORT, // length
+      gravity: ToastGravity.BOTTOM, // location
+      // duration
+    );
   }
 
-  Future SignUp(String mail, String pass, String username) async {
+  Future SignUp(String mail, String pass, String username,BuildContext context) async {
     try {
-      _userService.changeAvatars("https://firebasestorage.googleapis.com/v0/b/cookcaquiz.appspot.com/o/1.png?alt=media&token=abcd8ce4-6227-4454-99b2-a3590b95246a");
-
       await _auth.createUserWithEmailAndPassword(email: mail, password: pass);
       final docUser = FirebaseFirestore.instance
           .collection('users')
@@ -76,19 +89,67 @@ class AuthService {
       final UserModel user = UserModel(username: username, score: 0);
       final json = user.toJson();
       docUser.set(json);
-      Fluttertoast.showToast(msg: "Kayıt Başarılı...");
+
+      Navigator.of(context).push(PageTransition(
+          child: LoginPage(),
+          type: PageTransitionType.rightToLeftWithFade,
+          duration: Duration(milliseconds: 400),
+          reverseDuration: Duration(milliseconds: 400)));
+      Fluttertoast.showToast(msg: "Kayıt başarılı.");
+
+
     } on FirebaseAuthException catch (e) {
-      print(e);
+      switch (e.code) {
+        case "email-already-in-use":
+          return Fluttertoast.showToast(
+            msg: "Bu email adresine kayıtlı bir kullanıcı zaten var.", // message
+            toastLength: Toast.LENGTH_SHORT, // length
+            gravity: ToastGravity.BOTTOM, // location
+          );
+        case "invalid-email":
+          return Fluttertoast.showToast(
+            msg: "Email adresi hatalı.", // message
+            toastLength: Toast.LENGTH_SHORT, // length
+            gravity: ToastGravity.BOTTOM, // location
+          );
+        default:
+          return "Login failed. Please try again.";
+      }
     }
   }
 
-  Future ResetPassword(String mail) async {
+  Future ResetPassword(String mail,BuildContext context) async {
     try {
       await _auth.sendPasswordResetEmail(email: mail);
+      Fluttertoast.showToast(msg: "Sıfırlama maili gönderildi.");
+      Navigator.of(context).push(PageTransition(
+          child: LoginPage(),
+          type: PageTransitionType.rightToLeftWithFade,
+          duration: Duration(milliseconds: 400),
+          reverseDuration: Duration(milliseconds: 400)));
+
+
+
+
       print("email sent");
     } on FirebaseAuthException catch (e) {
-      print(e);
+      switch (e.code) {
+        case "user-not-found":
+          return Fluttertoast.showToast(
+            msg: "Bu email adresine kayıtlı bir kullanıcı yok.", // message
+            toastLength: Toast.LENGTH_SHORT, // length
+            gravity: ToastGravity.BOTTOM, // location
+          );
+        case "invalid-email":
+          return Fluttertoast.showToast(
+            msg: "Email adresi hatalı.", // message
+            toastLength: Toast.LENGTH_SHORT, // length
+            gravity: ToastGravity.BOTTOM, // location
+          );
+        default:
+          return "Login failed. Please try again.";
+      }
     }
-  }
 
+  }
 }
