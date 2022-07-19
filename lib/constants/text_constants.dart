@@ -12,8 +12,13 @@ class TextConstants{
   }
 
 
-  static TextStyle quizTextStyle = GoogleFonts.fredoka().copyWith(fontSize: 15);
-  static TextStyle quizTextStyleAnswers = GoogleFonts.fredoka().copyWith(fontSize: 13);
+  static popupTextTheme(BuildContext context){
+    return GoogleFonts.inter(fontSize: 15,color: Color(0xff26CE55),fontWeight: FontWeight.w500);
+  }
+
+
+  static TextStyle quizTextStyle = GoogleFonts.inter().copyWith(fontSize: 18);
+  static TextStyle quizTextStyleAnswers = GoogleFonts.inter().copyWith(fontSize: 12);
 
   static favCategoryTextStyle(BuildContext context){
     return Theme.of(context).textTheme.titleLarge?.copyWith(color: Color(0xff4EBD2F));

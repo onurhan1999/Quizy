@@ -51,9 +51,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
         builder: (context, snapshot) {
           return !snapshot.hasData
               ? Container(
+                  color: Color(0xff14154F),
                   alignment: Alignment.center,
                   child: const CircularProgressIndicator(
-                    backgroundColor: Colors.grey,
+                    backgroundColor: Colors.white,
                     color: Colors.purple,
                     strokeWidth: 10,
                   ))

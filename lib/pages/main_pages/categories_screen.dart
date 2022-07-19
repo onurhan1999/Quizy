@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:quizlen/components/decoration.dart';
 import 'package:quizlen/constants/color_constants.dart';
@@ -25,8 +27,18 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
   void initState() {
     categoryController.text = "Kültür";
+    categoryColors = Color(0xff5F2F2C);
     super.initState();
   }
+
+  Color kulturColor = Color(0xff5F2F2C);
+  Color cevreColor = Color(0xffF0F0F0);
+  Color insanColor = Color(0xffF0F0F0);
+  Color enerjiColor = Color(0xffF0F0F0);
+  Color suColor = Color(0xffF0F0F0);
+
+
+  int iconListener=0;
 
   late final String title;
   late final String description;
@@ -35,6 +47,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   UserService userService = UserService();
 
   TextEditingController categoryController = TextEditingController();
+  late Color categoryColors;
 
   @override
   Widget build(BuildContext context) {
@@ -65,76 +78,149 @@ class _CategoriesPageState extends State<CategoriesPage> {
                       children: <Widget>[
                         AnimatedContainer(
                           duration: Duration(milliseconds: 500),
-                          // color: listViewColorController?Color(0xff14154F):Colors.blue,
                           child: CircleAvatar(
+                            backgroundColor: Colors.transparent,
                             radius: 50,
                             child: ElevatedButton(
                               onPressed: () {
                                 setState(() {
                                   categoryController.text = "Kültür";
+                                  iconListener=0;
+                                  categoryColors=Color(0xff7A4A47);
+                                  cleanIconColors();
+                                  kulturColor = Color(0xff7A4A47);
                                 });
                               },
                               style: ButtonStyle(
                                   elevation: MaterialStateProperty.all(0),
                                   backgroundColor: MaterialStateProperty.all(
                                       Colors.transparent)),
-                              child: Image.asset("assets/images/tarih.png"),
+                              child: Icon(
+                                FontAwesomeIcons.earthAmericas,
+                                size: 50,
+                                color: kulturColor,
+                              ),
                             ),
                           ),
                         ),
                         CircleAvatar(
+                          backgroundColor: Colors.transparent,
                           radius: 50,
                           child: ElevatedButton(
                             onPressed: () {
                               setState(() {
+                                iconListener=1;
+
                                 categoryController.text = "Çevre";
+                                categoryColors=Color(0xff4CC082);
+                                cleanIconColors();
+                                cevreColor = Color(0xff4CC082);
                               });
                             },
                             style: ButtonStyle(
                                 elevation: MaterialStateProperty.all(0),
                                 backgroundColor: MaterialStateProperty.all(
                                     Colors.transparent)),
-                            child: Image.asset("assets/images/tarih.png"),
+                            child: Icon(
+                              FontAwesomeIcons.seedling,
+                              size: 50,
+                              color: cevreColor,
+                            ),
                           ),
                         ),
                         CircleAvatar(
+                          backgroundColor: Colors.transparent,
                           radius: 50,
                           child: ElevatedButton(
                             onPressed: () {
                               setState(() {
+                                iconListener=2;
+
                                 categoryController.text = "İnsan Hakları";
+                                categoryColors = Color(0xffFF5454);
+                                cleanIconColors();
+                                insanColor = Color(0xffFF5454);
                               });
                             },
                             style: ButtonStyle(
                                 elevation: MaterialStateProperty.all(0),
                                 backgroundColor: MaterialStateProperty.all(
                                     Colors.transparent)),
-                            child: Image.asset("assets/images/tarih.png"),
+                            child: Icon(
+                              FontAwesomeIcons.dove,
+                              size: 50,
+                              color: insanColor,
+                            ),
                           ),
                         ),
                         CircleAvatar(
+                          backgroundColor: Colors.transparent,
                           radius: 50,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                iconListener=3;
+
+                                categoryController.text = "Enerji";
+                                categoryColors = Color(0xffFFB14E);
+
+                                cleanIconColors();
+                                enerjiColor = Color(0xffFFB14E);
+                              });
+                            },
                             style: ButtonStyle(
                                 elevation: MaterialStateProperty.all(0),
                                 backgroundColor: MaterialStateProperty.all(
                                     Colors.transparent)),
-                            child: Image.asset("assets/images/tarih.png"),
+                            child: Icon(
+                              FontAwesomeIcons.boltLightning,
+                              size: 50,
+                              color: enerjiColor,
+                            ),
+                          ),
+                        ),
+                        CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          radius: 50,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                iconListener=4;
+
+                                categoryController.text = "Su";
+                                categoryColors = Color(0xff68D0FF);
+                                cleanIconColors();
+                                suColor = Color(0xff68D0FF);
+                              });
+                            },
+                            style: ButtonStyle(
+                                elevation: MaterialStateProperty.all(0),
+                                backgroundColor: MaterialStateProperty.all(
+                                    Colors.transparent)),
+                            child: Icon(
+                              FontAwesomeIcons.droplet,
+                              size: 50,
+                              color: suColor,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
                   TabBar(
+                    indicatorColor: Colors.white,
                     tabs: [
                       Container(
                         padding: EdgeInsets.all(8.0),
-                        child: Text('Çözülmemiş'),
+                        child: Text(
+                          'Çözülmedi',
+                          style: TextStyle(letterSpacing: 1),
+                        ),
                       ),
                       Container(
                         padding: EdgeInsets.all(8.0),
-                        child: Text('Çözülmüş'),
+                        child:
+                            Text('Çözüldü', style: TextStyle(letterSpacing: 1)),
                       ),
                     ],
                   ),
@@ -154,14 +240,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         ));
   }
 
-  /*Center(
-  child: Container(
-  width: 100,
-  height: 100,
-  color: Colors.red,
-  child: Text("BOŞ KANKAS",style: TextStyle(fontSize: 50),),
-  ),
-  )*/
+
   FutureBuilder<QuerySnapshot<Object?>> ShowUnsolvedFutureBuilder() {
     return FutureBuilder<QuerySnapshot>(
         future: userService.showUnSolved(categoryController.text),
@@ -179,103 +258,86 @@ class _CategoriesPageState extends State<CategoriesPage> {
               : Column(children: [
                   //Listview içerisindeki kategoriyle birlikte gelecek oyunlar
 
-                  snapshot.data!.docs.length == 0
-                      ? Container(
-                          child: Text(
-                            "Tebrikler!\nHiç Çözülmemiş Test Kalmamış!",
-                            style: TextStyle(
-                              fontSize: 25,
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        DocumentSnapshot mypost = snapshot.data!.docs[index];
+                        print("deneme" + snapshot.data!.docs.length.toString());
+
+                        return Card(
+
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                                style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(25.0),
+                          ),
+
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 500),
+
+                            decoration: BoxDecoration(
+                              color: categoryColors,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25)),
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      : Expanded(
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: snapshot.data!.docs.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              DocumentSnapshot mypost =
-                                  snapshot.data!.docs[index];
-                              print("deneme" +
-                                  snapshot.data!.docs.length.toString());
-
-                              return Card(
-                                color: Color(0xffF6B939),
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                      color: ColorConstants.mainOrange,
-                                      width: 2.0,
-                                      style: BorderStyle.solid),
-                                  borderRadius: BorderRadius.circular(35.0),
+                            height: 120,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Spacer(),
+                                Text(
+                                  "${mypost['title']}",
+                                  style: GoogleFonts.openSans(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
                                 ),
-                                shadowColor: ColorConstants.mainOrange,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(35)),
-                                  ),
-                                  height: 120,
-                                  child: SizedBox(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Center(
-                                          child: Padding(
-                                            padding: EdgeInsets.all(10),
-                                            child: Image.asset(
-                                                "assets/images/logo.png"),
-                                          ),
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text("${mypost['category']}"),
-                                            Text("${mypost['title']}"),
-                                          ],
-                                        ),
-                                        TextButton(
-                                          child: Text(
-                                            "OYNA  ",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline5,
-                                          ),
-                                          onPressed: () {
-                                            Navigator.of(context)
-                                                .pushReplacement(PageTransition(
-                                                    child: QuizScreen(
-                                                      quizTitle:
-                                                          '${mypost['title']}',
-                                                      quizId:
-                                                          "${mypost['q_id']}",
-                                                      isSolved: isSolved,
-                                                      quizCategory:
-                                                          "${mypost['category']}",
-                                                    ),
-                                                    type: PageTransitionType
-                                                        .rightToLeftWithFade,
-                                                    duration: Duration(
-                                                        milliseconds: 400),
-                                                    reverseDuration: Duration(
-                                                        milliseconds: 400)))
-                                                .then(
-                                                    (value) => setState(() {}));
-
-                                            print("navigeden sonra");
-                                          },
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                                Spacer(
+                                  flex: 5,
                                 ),
-                                elevation: 8,
-                                margin: const EdgeInsets.all(10),
-                              );
-                            },
+                                IconButton(
+                                  iconSize: 60,
+                                  icon: Icon(
+                                    Icons.play_circle,
+                                    size: 60,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pushReplacement(PageTransition(
+                                            child: QuizScreen(
+                                              quizTitle: '${mypost['title']}',
+                                              quizId: "${mypost['q_id']}",
+                                              isSolved: isSolved,
+                                              quizCategory:
+                                                  "${mypost['category']}",
+                                              iconListener:iconListener,
+                                            ),
+                                            type: PageTransitionType
+                                                .rightToLeftWithFade,
+                                            duration:
+                                                Duration(milliseconds: 400),
+                                            reverseDuration:
+                                                Duration(milliseconds: 400)))
+                                        .then((value) => setState(() {}));
+
+                                    print("navigeden sonra");
+                                  },
+                                ),
+                                Spacer(),
+                              ],
+                            ),
                           ),
-                        ),
+                          elevation: 8,
+                          margin: const EdgeInsets.all(10),
+                        );
+                      },
+                    ),
+                  ),
                 ]);
         });
   }
@@ -299,99 +361,93 @@ class _CategoriesPageState extends State<CategoriesPage> {
               : Column(children: [
                   //Listview içerisindeki kategoriyle birlikte gelecek oyunlar
 
-                  snapshot.data!.docs.length == 0
-                      ? Container(
-                          child: Text(
-                            "Hadi git birkaç test çöz!!",
-                            style: TextStyle(fontSize: 30),
-                          ),
-                        )
-                      : Expanded(
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: snapshot.data!.docs.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              DocumentSnapshot mypost =
-                                  snapshot.data!.docs[index];
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        DocumentSnapshot mypost = snapshot.data!.docs[index];
 
-                              return Card(
-                                color: Color(0xffF6B939),
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                      color: ColorConstants.mainOrange,
-                                      width: 2.0,
-                                      style: BorderStyle.solid),
-                                  borderRadius: BorderRadius.circular(35.0),
-                                ),
-                                shadowColor: ColorConstants.mainOrange,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(35)),
-                                  ),
-                                  height: 120,
-                                  child: SizedBox(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Center(
-                                          child: Padding(
-                                            padding: EdgeInsets.all(10),
-                                            child: Image.asset(
-                                                "assets/images/logo.png"),
-                                          ),
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text("${mypost['category']}"),
-                                            Text("${mypost['title']}"),
-                                          ],
-                                        ),
-                                        TextButton(
-                                          child: Text(
-                                            "OYNA  ",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline5,
-                                          ),
-                                          onPressed: () {
-                                            Navigator.of(context)
-                                                .pushReplacement(PageTransition(
-                                                    child: QuizScreen(
-                                                      quizTitle:
-                                                          '${mypost['title']}',
-                                                      quizId:
-                                                          "${mypost['q_id']}",
-                                                      isSolved: isSolved,
-                                                      quizCategory:
-                                                          "${mypost['category']}",
-                                                    ),
-                                                    type: PageTransitionType
-                                                        .rightToLeftWithFade,
-                                                    duration: Duration(
-                                                        milliseconds: 400),
-                                                    reverseDuration: Duration(
-                                                        milliseconds: 400)))
-                                                .then(
-                                                    (value) => setState(() {}));
-
-                                            print("navigeden sonra");
-                                          },
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                elevation: 8,
-                                margin: const EdgeInsets.all(10),
-                              );
-                            },
+                        return Card(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                                style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(25.0),
                           ),
-                        ),
+
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 500),
+                            decoration: BoxDecoration(
+                              color: categoryColors,
+
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25)),
+                            ),
+                            height: 120,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Spacer(),
+                                Text(
+                                  "${mypost['title']}",
+                                  style: GoogleFonts.openSans(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                                Spacer(
+                                  flex: 5,
+                                ),
+                                IconButton(
+                                  iconSize: 60,
+                                  icon: Icon(
+                                    Icons.play_circle,
+                                    size: 60,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pushReplacement(PageTransition(
+                                            child: QuizScreen(
+                                              quizTitle: '${mypost['title']}',
+                                              quizId: "${mypost['q_id']}",
+                                              isSolved: isSolved,
+                                              quizCategory:
+                                                  "${mypost['category']}",
+                                              iconListener: iconListener,
+                                            ),
+                                            type: PageTransitionType
+                                                .rightToLeftWithFade,
+                                            duration:
+                                                Duration(milliseconds: 400),
+                                            reverseDuration:
+                                                Duration(milliseconds: 400)))
+                                        .then((value) => setState(() {}));
+
+                                    print("navigeden sonra");
+                                  },
+                                ),
+                                Spacer(),
+                              ],
+                            ),
+                          ),
+                          elevation: 8,
+                          margin: const EdgeInsets.all(10),
+                        );
+                      },
+                    ),
+                  ),
                 ]);
         });
+  }
+
+  void cleanIconColors() {
+    kulturColor = Color(0xffF0F0F0);
+    cevreColor = Color(0xffF0F0F0);
+    insanColor = Color(0xffF0F0F0);
+    enerjiColor = Color(0xffF0F0F0);
+    suColor = Color(0xffF0F0F0);
   }
 }

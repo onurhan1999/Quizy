@@ -197,13 +197,9 @@ class _SignupPageState extends State<SignupPage> {
               final email = _email.text.trim();
               final password = _password.text.trim();
               final username = _username.text.trim();
-              _authService.SignUp(email, password, username);
+              _authService.SignUp(email, password, username,context);
 
-              Navigator.of(context).push(PageTransition(
-                  child: LoginPage(),
-                  type: PageTransitionType.rightToLeftWithFade,
-                  duration: Duration(milliseconds: 400),
-                  reverseDuration: Duration(milliseconds: 400)));
+
 
             }
 
