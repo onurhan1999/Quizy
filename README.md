@@ -11,8 +11,8 @@ Bu uygulama <strong>Sürdürülebilir Kalkınma Amaçları</strong>'nın 4. amac
 
 # Ekran Görüntüleri
 <div style="display:flex; gap:10px;">
-<img src="https://github.com/onurhan1999/Quizy/blob/master/screenshots/category.gif?raw=true" width=50% height=40%>
-<img src="https://github.com/onurhan1999/Quizy/blob/master/screenshots/last_question.gif?raw=true" width=50% height=40%>
+    <img src="https://github.com/onurhan1999/Quizy/blob/master/screenshots/category.gif?raw=true" width=50% height=40%>
+    <img src="https://github.com/onurhan1999/Quizy/blob/master/screenshots/last_question.gif?raw=true" width=50% height=40%>
 </div>
 
 
