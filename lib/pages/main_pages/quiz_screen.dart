@@ -40,9 +40,15 @@ class QuizScreen extends StatefulWidget {
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
+
+
+
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+
+
+
   String categoryId(String input) {
     switch (input) {
       case "Kültür":
@@ -126,7 +132,9 @@ class _QuizScreenState extends State<QuizScreen> {
                       centerTitle: true,
                       leading: IconButton(
                           onPressed: () {
-                            Navigator.of(context).pop();
+                           showAlertDialog(context);
+
+
                           },
                           icon: Icon(Icons.clear),
 
@@ -553,8 +561,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                                                         print(
                                                                             "test bitti");
 
-                                                                        _userService
-                                                                            .addSolved(widget.quizId);
+
 
                                                                         if (widget
                                                                             .isSolved) {
@@ -774,5 +781,50 @@ class _QuizScreenState extends State<QuizScreen> {
                     ],
                   )));
         });
+  }
+
+
+
+  void  showAlertDialog(BuildContext context) {
+
+
+
+    Widget cancelButton = TextButton(
+      child: Text("Testten çık",style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
+      onPressed:  () {
+        Navigator.pop(context);
+        Navigator.of(context, rootNavigator: true).pop('dialog');
+
+
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Devam et",style: TextStyle(color: Color(0xff26CE55),fontWeight: FontWeight.bold)),
+      onPressed:  () {
+
+        Navigator.of(context, rootNavigator: true).pop('dialog');
+
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+
+      backgroundColor: Color(0xff14154F),
+      title: Text("Uyarı!",style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
+      content: Text("Testten çıkarsanız bir daha bu testten puan kazanamayacaksınız!!",style: TextStyle(color: Colors.white)),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

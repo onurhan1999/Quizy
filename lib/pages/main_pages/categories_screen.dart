@@ -73,14 +73,14 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     color: Color(0xff14154F),
                     height: 71,
                     child: ListView(
-                      padding: const EdgeInsets.all(8.0),
+
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
                         AnimatedContainer(
                           duration: Duration(milliseconds: 500),
                           child: CircleAvatar(
                             backgroundColor: Colors.transparent,
-                            radius: 50,
+                            radius: 44,
                             child: ElevatedButton(
                               onPressed: () {
                                 setState(() {
@@ -97,7 +97,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                       Colors.transparent)),
                               child: Icon(
                                 FontAwesomeIcons.earthAmericas,
-                                size: 50,
+                                size: 44,
                                 color: kulturColor,
                               ),
                             ),
@@ -105,7 +105,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                         ),
                         CircleAvatar(
                           backgroundColor: Colors.transparent,
-                          radius: 50,
+                          radius: 44,
                           child: ElevatedButton(
                             onPressed: () {
                               setState(() {
@@ -123,14 +123,14 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                     Colors.transparent)),
                             child: Icon(
                               FontAwesomeIcons.seedling,
-                              size: 50,
+                              size: 44,
                               color: cevreColor,
                             ),
                           ),
                         ),
                         CircleAvatar(
                           backgroundColor: Colors.transparent,
-                          radius: 50,
+                          radius: 44,
                           child: ElevatedButton(
                             onPressed: () {
                               setState(() {
@@ -148,14 +148,39 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                     Colors.transparent)),
                             child: Icon(
                               FontAwesomeIcons.dove,
-                              size: 50,
+                              size: 44,
                               color: insanColor,
                             ),
                           ),
                         ),
                         CircleAvatar(
                           backgroundColor: Colors.transparent,
-                          radius: 50,
+                          radius: 44,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                iconListener=4;
+
+                                categoryController.text = "Su";
+                                categoryColors = Color(0xff68D0FF);
+                                cleanIconColors();
+                                suColor = Color(0xff68D0FF);
+                              });
+                            },
+                            style: ButtonStyle(
+                                elevation: MaterialStateProperty.all(0),
+                                backgroundColor: MaterialStateProperty.all(
+                                    Colors.transparent)),
+                            child: Icon(
+                              FontAwesomeIcons.droplet,
+                              size: 44,
+                              color: suColor,
+                            ),
+                          ),
+                        ),
+                        CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          radius: 44,
                           child: ElevatedButton(
                             onPressed: () {
                               setState(() {
@@ -174,36 +199,12 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                     Colors.transparent)),
                             child: Icon(
                               FontAwesomeIcons.boltLightning,
-                              size: 50,
+                              size: 44,
                               color: enerjiColor,
                             ),
                           ),
                         ),
-                        CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          radius: 50,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                iconListener=4;
 
-                                categoryController.text = "Su";
-                                categoryColors = Color(0xff68D0FF);
-                                cleanIconColors();
-                                suColor = Color(0xff68D0FF);
-                              });
-                            },
-                            style: ButtonStyle(
-                                elevation: MaterialStateProperty.all(0),
-                                backgroundColor: MaterialStateProperty.all(
-                                    Colors.transparent)),
-                            child: Icon(
-                              FontAwesomeIcons.droplet,
-                              size: 50,
-                              color: suColor,
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -264,7 +265,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (BuildContext context, int index) {
                         DocumentSnapshot mypost = snapshot.data!.docs[index];
-                        print("deneme" + snapshot.data!.docs.length.toString());
 
                         return Card(
 
@@ -307,6 +307,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                     color: Colors.white,
                                   ),
                                   onPressed: () {
+
+
+
                                     Navigator.of(context)
                                         .pushReplacement(PageTransition(
                                             child: QuizScreen(
@@ -323,9 +326,13 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                                 Duration(milliseconds: 400),
                                             reverseDuration:
                                                 Duration(milliseconds: 400)))
-                                        .then((value) => setState(() {}));
+                                        .then((value) => setState(() {
+                                          print("navigenin içindeki setstate");
 
-                                    print("navigeden sonra");
+                                    }));
+
+                                    userService.addSolved("${mypost['q_id']}");
+
                                   },
                                 ),
                                 Spacer(),
