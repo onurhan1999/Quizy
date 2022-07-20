@@ -181,14 +181,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ],
       ),
       onTap: () {
-        _authService.ResetPassword(
-                FirebaseAuth.instance.currentUser!.email.toString(),context)
-            .whenComplete(() => Fluttertoast.showToast(
-                  msg: "Sıfırlama maili gönderildi...", // message
-                  toastLength: Toast.LENGTH_SHORT, // length
-                  gravity: ToastGravity.BOTTOM, // location
-                  // duration
-                ));
+        _authService.ResetPasswordOnApp(
+                FirebaseAuth.instance.currentUser!.email.toString(),context);
       },
     );
   }

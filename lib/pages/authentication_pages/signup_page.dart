@@ -49,74 +49,63 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-
-          if(snapshot.data!=null)
-            return LoginPage();
-          else{
-            return Container(
-              decoration: DecorationProperties.backgroundDecoration,
-              child: Scaffold(
-                resizeToAvoidBottomInset: false,
-                backgroundColor: Colors.transparent,
-                body: Padding(
-                  padding: EdgeInsets.all(context.dynamicHeight(0.05)),
-                  child: ColumnWidget(context),
-                ),
-              ),
-            );
-          }
-
-
-      }
+    return Container(
+      decoration: DecorationProperties.backgroundDecoration,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.transparent,
+        body: Padding(
+          padding: EdgeInsets.all(context.dynamicHeight(0.05)),
+          child: ColumnWidget(context),
+        ),
+      ),
     );
   }
 
   Column ColumnWidget(BuildContext context) {
     return Column(
-            children: [
-              const Spacer(
-                flex: 10,
-              ),
-              Expanded(
-                flex: 50,
-                child: Image.asset("assets/images/logo.png"),
-              ),
-              Expanded(
-                flex: 20,
-                child: Text("QUIZY",style: GoogleFonts.bayon(color: Color(0xff595CFF),fontSize: 48),),
-              ),
-              const Spacer(
-                flex: 5,
-              ),
-              UsernameTextField(),
-              const Spacer(
-                flex: 5,
-              ),
-              EmailTextField(),
-              const Spacer(
-                flex: 5,
-              ),
-              PasswordTextField(),
-              const Spacer(
-                flex: 5,
-              ),
-
-              SignUpButton(),
-              const Spacer(
-                flex: 5,
-              ),
-
-              const Divider(
-                thickness: 1,
-                height: 30,
-                color: Color(0xff595CFF),
-              ),
-              DoYouHaveAccountButton(context)
-            ],
-          );
+      children: [
+        const Spacer(
+          flex: 10,
+        ),
+        Expanded(
+          flex: 50,
+          child: Image.asset("assets/images/logo.png"),
+        ),
+        Expanded(
+          flex: 20,
+          child: Text(
+            "QUIZY",
+            style: GoogleFonts.bayon(color: Color(0xff595CFF), fontSize: 48),
+          ),
+        ),
+        const Spacer(
+          flex: 5,
+        ),
+        UsernameTextField(),
+        const Spacer(
+          flex: 5,
+        ),
+        EmailTextField(),
+        const Spacer(
+          flex: 5,
+        ),
+        PasswordTextField(),
+        const Spacer(
+          flex: 5,
+        ),
+        SignUpButton(),
+        const Spacer(
+          flex: 5,
+        ),
+        const Divider(
+          thickness: 1,
+          height: 30,
+          color: Color(0xff595CFF),
+        ),
+        DoYouHaveAccountButton(context)
+      ],
+    );
   }
 
   Row DoYouHaveAccountButton(BuildContext context) {
@@ -125,7 +114,7 @@ class _SignupPageState extends State<SignupPage> {
       children: [
         Text(
           "Hesabınız var mı?",
-          style: GoogleFonts.inter(color: Colors.white,fontSize: 22),
+          style: GoogleFonts.inter(color: Colors.white, fontSize: 22),
         ),
         TextButton(
             onPressed: () {
@@ -135,10 +124,13 @@ class _SignupPageState extends State<SignupPage> {
                   duration: Duration(milliseconds: 400),
                   reverseDuration: Duration(milliseconds: 400)));
             },
-            child: Text("Giriş Yapın",style: GoogleFonts.inter(color: Color(0xff595CFF),fontSize: 20,fontWeight: FontWeight.bold),)
-
-
-        ),
+            child: Text(
+              "Giriş Yapın",
+              style: GoogleFonts.inter(
+                  color: Color(0xff595CFF),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            )),
       ],
     );
   }
@@ -185,26 +177,18 @@ class _SignupPageState extends State<SignupPage> {
         height: 60,
         width: double.infinity,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            color: Color(0xff595CFF)),
+            borderRadius: BorderRadius.circular(100), color: Color(0xff595CFF)),
         child: MaterialButton(
           onPressed: () async {
-            if(_username.text.length>7||_username.text.length<1)
-              {
-                Fluttertoast.showToast(msg: "Kullanıcı adı 1-7 karakter olmalıdır.");
-              }else{
-
+            if (_username.text.length > 7 || _username.text.length < 1) {
+              Fluttertoast.showToast(
+                  msg: "Kullanıcı adı 1-7 karakter olmalıdır.");
+            } else {
               final email = _email.text.trim();
               final password = _password.text.trim();
               final username = _username.text.trim();
-              _authService.SignUp(email, password, username,context);
-
-
-
+              _authService.SignUp(email, password, username, context);
             }
-
-
-
           },
           child: const Text(
             "Kayıt Ol ",
@@ -221,15 +205,13 @@ class _SignupPageState extends State<SignupPage> {
       child: Container(
         decoration: BoxDecoration(
             color: Color(0xffE8E8E8),
-            borderRadius: BorderRadius.all(Radius.circular(30))
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(30))),
         child: TextFormField(
           controller: _password,
           keyboardType: TextInputType.visiblePassword,
           obscureText: true,
           decoration: InputDecoration(
             border: InputBorder.none,
-
             labelText: "Şifre giriniz",
             prefixIcon: Icon(Icons.lock),
             suffixIcon: Icon(Icons.remove_red_eye),
@@ -245,14 +227,12 @@ class _SignupPageState extends State<SignupPage> {
       child: Container(
         decoration: BoxDecoration(
             color: Color(0xffE8E8E8),
-            borderRadius: BorderRadius.all(Radius.circular(30))
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(30))),
         child: TextFormField(
           controller: _email,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
               border: InputBorder.none,
-
               labelText: "E-mail giriniz",
               prefixIcon: const Icon(Icons.email)),
         ),
@@ -266,15 +246,12 @@ class _SignupPageState extends State<SignupPage> {
       child: Container(
         decoration: BoxDecoration(
             color: Color(0xffE8E8E8),
-            borderRadius: BorderRadius.all(Radius.circular(30))
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(30))),
         child: TextFormField(
           controller: _username,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
               border: InputBorder.none,
-
-
               labelText: "Kullanıcı adınızı giriniz",
               prefixIcon: const Icon(Icons.person)),
         ),
