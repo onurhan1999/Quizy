@@ -171,16 +171,30 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _showDialog(BuildContext context) {
+
     return showDialog(
+
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: new Text("Takımımız Hakkında"),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20))
+              ),
+
+            backgroundColor: Color(0xff14154F),
+            title: Column(
+              children: [
+                new Text("Takımımız",style: GoogleFonts.montserrat(textStyle: Theme.of(context).textTheme.headline4,color: Color(0xff595CFF),fontWeight: FontWeight.w600),textAlign: TextAlign.center,),
+                SizedBox(height: 10,),
+                Divider(height: 2,thickness: 2,color: Color(0xff595CFF),)
+              ],
+            ),
             content: Text(
-                "Onurhan KAYA-Selçuk Üniversitesi 3.Sınıf\nKaan Güler-Kocaeli Üniversitesi 3.Sınıf\nDurmuş Cem Koca-Kocaeli Üniversitesi 3.Sınıf\nÇiğdem Bircan-Pamukkale Üniversitesi 3.Sınıf\nAvni Burak Çıtlak-Bilgi Üniversitesi 3.Sınıf"),
+                "Onurhan KAYA\nSelçuk Üniversitesi 3.Sınıf\n\nKaan Güler\nKocaeli Üniversitesi 3.Sınıf\n\nDurmuş Cem Koca\nKocaeli Üniversitesi 4.Sınıf\n\nÇiğdem Bircan\nPamukkale Üniversitesi 4.Sınıf\n\nAvni Burak Çıtlak\nBilgi Üniversitesi 4.Sınıf",textAlign: TextAlign.center,style: TextStyle(color: Colors.white),),
             actions: <Widget>[
+
               new FlatButton(
-                child: new Text("Geri"),
+                child: new Text("Geri",style: TextStyle(color: Color(0xff00B2FF),fontSize: 20),),
                 onPressed: () {
                   //Navigator.pushNamed(context, "/screen1");
                   Navigator.pop(context);
